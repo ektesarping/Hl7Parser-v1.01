@@ -134,6 +134,48 @@ OBR	25	0	1	ID	C		Result Status
 OBR	26	0	400	CM	O		Parent Result	
 OBR	27	0	200	TQ	O	Y	Quantity/Timing	
 OBR	28	0	150	XCN	O	Y/5	Result Copies To	
+OBR	28	1					Kopi 1: HPR-nr	
+OBR	28	2					Kopi 1: Etternavn	
+OBR	28	3					Kopi 1: Fornavn	
+OBR	28	4					Kopi1: *	
+OBR	28	5					Kopi1: *	
+OBR	28	6					Kopi1: *	
+OBR	28	7					Kopi1: *	
+OBR	28	8					Kopi1: *	
+OBR	28	9					Kopi1: *	
+OBR	28	10					Kopi1: *	
+OBR	28	11					Kopi1: *	
+OBR	28	12					Kopi1: *	
+OBR	28	13					Kopi1: *	
+OBR	28	14					Kopi 1: Institusjon&Kode	
+OBR	28	15					Kopi 2: HPR-nr	
+OBR	28	16					Kopi 2: Etternavn	
+OBR	28	17					Kopi 2: Fornavn	
+OBR	28	18					Kopi2: *	
+OBR	28	19					Kopi2: *	
+OBR	28	20					Kopi2: *	
+OBR	28	21					Kopi2: *	
+OBR	28	22					Kopi2: *	
+OBR	28	23					Kopi2: *	
+OBR	28	24					Kopi2: *	
+OBR	28	25					Kopi2: *	
+OBR	28	26					Kopi2: *	
+OBR	28	27					Kopi2: *	
+OBR	28	28					Kopi 2: Institusjon&Kode	
+OBR	28	29					Kopi 3: HPR-nr	
+OBR	28	30					Kopi 3: Etternavn	
+OBR	28	31					Kopi 3: Fornavn	
+OBR	28	32					Kopi3: *	
+OBR	28	33					Kopi3: *	
+OBR	28	34					Kopi3: *	
+OBR	28	35					Kopi3: *	
+OBR	28	36					Kopi3: *	
+OBR	28	37					Kopi3: *	
+OBR	28	38					Kopi3: *	
+OBR	28	39					Kopi3: *	
+OBR	28	40					Kopi3: *	
+OBR	28	41					Kopi3: *	
+OBR	28	42					Kopi 3: Institusjon&Kode	
 OBR	29	0	150	CM	O		Parent	
 OBR	30	0	20	ID	O		Transportation Mode	
 OBR	31	0	300	CE	O	Y	Reason for Study	
