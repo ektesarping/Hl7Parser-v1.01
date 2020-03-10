@@ -25,15 +25,6 @@ namespace HL7Parser.DataModel.GUI
         public UcHL7()
         {
             InitializeComponent();
-
-
-            //this.tvHL7.Dock = DockStyle.Fill;
-            //FileInfo fi = new FileInfo(Properties.Settings.Default.Filename);
-            //if (fi.Exists)
-            //{
-            //    OpenMessageFile(fi);
-            //}
-
         }
 
 
@@ -49,10 +40,6 @@ namespace HL7Parser.DataModel.GUI
             this.tvHL7.Nodes.Clear();
             TreeNode root = new TreeNode();
             root.Text = RootnodeText;
-
-
-            this.tvHL7.BringToFront(); // fjernes
-
 
             this.tvHL7.Nodes.Add(root);
 
@@ -92,7 +79,7 @@ namespace HL7Parser.DataModel.GUI
                 {
                     TreenodeHL7Base childnode = new TreenodeHL7Base(subsegment);
                     node.Nodes.Add(childnode);
-                    childnode.UpdateNodeText();
+                    childnode.UpdateSubNodeText();
                     PopulateRecursively(childnode);
                 }
             }
@@ -104,12 +91,6 @@ namespace HL7Parser.DataModel.GUI
         #region  -- File methods --
         public void OpenMessageFile(FileInfo fi)
         {
-            //_HL7.Mapping.ImportMapping(_HL7.MappingFileFi);
-
-            //this._HL7 = new HL7();
-            //FileInfo fiMapping = new FileInfo(@"C:\DailyTemp\200225\HL7 Parameterlist 200226.txt");
-            //_HL7.Mapping.ImportMapping(fiMapping);
-
             this.RootnodeText = fi.FullName;
 
             _HL7.MsgFile = fi;

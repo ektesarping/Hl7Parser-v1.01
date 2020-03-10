@@ -18,12 +18,12 @@ namespace HL7Parser.DataModel
 
         public void UpdateNodeText()
         {
-            this.Text = "[" +this._HL7Segment.SectionName + " " + this._HL7Segment.IndexComplete + ": " + this._HL7Segment.SegmentName+ "]"  + " =  " + this._HL7Segment.Value;
+            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.Index.ToString() + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.Value;
         }
 
         public void UpdateSubNodeText()
         {
-            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.IndexComplete + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.Value;
+            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.Index.ToString() + "." + this._HL7Segment.SubIndex.ToString() + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.Value;
         }
 
     }

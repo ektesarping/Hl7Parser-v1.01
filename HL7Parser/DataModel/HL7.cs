@@ -160,7 +160,11 @@ namespace HL7Parser.DataModel
                         //_HL7Segments.Add(segment);
                         segment.Value = value;
 
-                        //segment.Index = i;
+                        // Erstatter "" med tom string
+                        if (segment.Value == "\"\"")
+                        {
+                            segment.Value = "";
+                        }
 
                         // Brukes meldingsinnholdet til å opprette midlertidige subsegmenter. Slår opp i 
                         // eksisterende segmenter for å se om de allerede eksisterer
@@ -168,6 +172,12 @@ namespace HL7Parser.DataModel
                         int subindex = 1;
                         foreach (HL7SegmentString subsegmentTmp in subSegmentsTmp)
                         {
+                            // Erstatter "" med tom string
+                            if (subsegmentTmp.Value == "\"\"")
+                            {
+                                subsegmentTmp.Value = "";
+                            }
+
                             HL7SegmentString subsegment = (HL7SegmentString)Mapping._HL7Segments.GetSegment(currentCategory.CategoryName, subsegmentTmp.Index, subsegmentTmp.SubIndex);
 
                             if (subsegment != null)
@@ -183,7 +193,6 @@ namespace HL7Parser.DataModel
                                 subsegmentTmp.ParentSegment = segment;
                                 segment.SubSegments.Add(subsegmentTmp);
                             }
-
                             subindex++;
                         }
 
@@ -192,7 +201,7 @@ namespace HL7Parser.DataModel
             }
             #endregion -- Importerer segmentene i nivå 1 --
 
-            // -- Separere HL7 meldingen under respektive segmentnavn. --
+           // -- Separere HL7 meldingen under respektive segmentnavn. --
            // PopulateCategories();
         }
 
@@ -209,6 +218,7 @@ namespace HL7Parser.DataModel
                     string value = subFields[subindex];
                     HL7SegmentString subsegment = new HL7SegmentString(segmentName, value, parentSegment.Index, subindex + 1);
                     subsegment.ParentSegment = parentSegment;
+                    subsegment.SectionName = parentSegment.SectionName;
                     subsegments.Add(subsegment);
                 }
             }

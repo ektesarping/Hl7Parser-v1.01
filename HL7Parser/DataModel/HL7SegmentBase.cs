@@ -40,7 +40,7 @@ namespace HL7Parser.DataModel
                 else
                 {
                     // segment is subsegment
-                    return this.ParentSegment.IndexComplete + "." + this.SubIndex.ToString();
+                    return this.ParentSegment.Index.ToString() + "." + this.SubIndex.ToString();
                 }
             }
         }
