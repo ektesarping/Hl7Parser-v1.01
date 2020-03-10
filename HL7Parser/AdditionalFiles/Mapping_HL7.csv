@@ -1,0 +1,151 @@
+﻿			LEN	DT	OPT	RP/#	ELEMENT NAME	Comment
+MSH	1	0	1	ST	R		Field Separator	
+MSH	2	0	4	ST	R		Encoding Characters	
+MSH	3	0	180	HD	O		Sending Application	
+MSH	4	0	180	HD	O		Sending Facility	
+MSH	5	0	180	HD	O		Receiving Application	
+MSH	6	0	180	HD	O		Receiving Facility	
+MSH	7	0	26	TS	O		Date/Time of Message	
+MSH	8	0	40	ST	O		Security	
+MSH	9	0	7	CM_MSG	R		Message Type	
+MSH	10	0	20	ST	R		Message Control Id	
+MSH	11	0	3	PT	R		Processing Id	
+MSH	12	0	8	ID	R		Version Id	
+MSH	13	0	15	NM	O		Sequence Number	
+MSH	14	0	180	ST	O		Continuation Pointer	
+MSH	15	0	2	ID	O		Accept Acknowledgement Type	
+MSH	16	0	2	ID	O		Application Acknowledgement Type	
+MSH	17	0	2	ID	O		Country Code	
+MSH	18	0	6	ID	O		Character Set	
+MSH	19	0	3	CE	O		Principal Language of Message	
+								
+PID	1	0	4	SI	O		Set ID – Patient ID	
+PID	2	0	20	CX	O		Patient ID (External ID)	
+PID	3	0	20	CX	R	Y	Patient ID (Internal ID)	
+PID	4	0	20	CX	O	Y	Alternate Patient ID – PID	
+PID	5	0	48	XPN	R	Y	Patient Name	
+PID	5	1	48	XPN	R	Y	Etternavn	
+PID	5	2	48	XPN	R	Y	Mellomnavn	
+PID	5	3	48	XPN	R	Y	Fornavn	
+PID	6	0	48	XPN	O		Mother’s Maiden Name	
+PID	7	0	26	TS	O		Date/Time of Birth	
+PID	8	0	1	IS	O		Sex	
+PID	9	0	48	XPN	O	Y	Patient Alias	
+PID	10	0	1	IS	O		Race	
+PID	11	0	106	XAD	O	Y	Patient Address	
+PID	12	0	4	IS	B		Country Code	
+PID	13	0	40	XTN	O	Y	Phone Number – Home	
+PID	14	0	40	XTN	O	Y	Phone Number – Business	
+PID	15	0	60	CE	O		Primary Language	
+PID	16	0	1	IS	O		Marital Status	
+PID	17	0	3	IS	O		Religion	
+PID	18	0	20	CX	O		Patient Account Number	
+PID	19	0	16	ST	O		SSN Number – Patient	
+PID	20	0	25	DLN	O		Driver’s License Number – Patient	
+PID	21	0	20	CX	O	Y	Mother’s Identifier	
+PID	22	0	3	IS	O		Ethnic Group	
+PID	23	0	60	ST	O		Birth Place	
+PID	24	0	2	ID	O		Multiple Birth Indicator	
+PID	25	0	2	NM	O		Birth Order	
+PID	26	0	4	IS	O	Y	Citizenship	
+PID	27	0	60	CE	O		Veterans Military Status	
+PID	28	0	80	CE	O		Nationality	
+PID	29	0	26	TS	O		Patient Death Date and Time	
+PID	30	0	1	ID	O		Patient Death Indicator	
+								
+PV1	1	0	4	SI	O			Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1
+PV1	2	0	1	IS	R		Patient Class	
+PV1	3	0	80	PL	O		Assigned Patient Location	
+PV1	4	0	2	IS	O		Admission Type	
+PV1	5	0	250	CX	O		Preadmit Number	
+PV1	6	0	80	PL	O		Prior Patient Location	
+PV1	7	0	250	XCN	O	Y	Attending Doctor	
+PV1	8	0	250	XCN	O	Y	Referring Doctor	
+PV1	9	0	250	XCN	B	Y	Consulting Doctor	
+PV1	10	0	3	IS	O		Hospital Service	
+PV1	11	0	80	PL	O		Temporary Location	
+PV1	12	0	2	IS	O		Preadmit Test Indicator	
+PV1	13	0	2	IS	O		Re-admission Indicator	
+PV1	14	0	6	IS	O		Admit Source	
+PV1	15	0	2	IS	O	Y	Ambulatory Status	
+PV1	16	0	2	IS	O		VIP Indicator	
+PV1	17	0	250	XCN	O	Y	Admitting Doctor	
+PV1	18	0	2	IS	O		Patient Type	
+PV1	19	0	250	CX	O		Visit Number	
+PV1	20	0	50	FC	O	Y	Financial Class	
+PV1	21	0	2	IS	O		Charge Price Indicator	
+PV1	22	0	2	IS	O		Courtesy Code	
+PV1	23	0	2	IS	O		Credit Rating	
+PV1	24	0	2	IS	O	Y	Contract Code	
+PV1	25	0	8	DT	O	Y	Contract Effective Date	
+PV1	26	0	12	NM	O	Y	Contract Amount	
+PV1	27	0	3	NM	O	Y	Contract Period	
+PV1	28	0	2	IS	O		Interest Code	
+PV1	29	0	4	IS	O		Transfer to Bad Debt Code	
+PV1	30	0	8	DT	O		Transfer to Bad Debt Date	
+PV1	31	0	10	IS	O		Bad Debt Agency Code	
+PV1	32	0	12	NM	O		Bad Debt Transfer Amount	
+PV1	33	0	12	NM	O		Bad Debt Recovery Amount	
+PV1	34	0	1	IS	O		Delete Account Indicator	
+PV1	35	0	8	DT	O		Delete Account Date	
+PV1	36	0	3	IS	O		Discharge Disposition	
+PV1	37	0	47	DLD	O		Discharged to Location	
+PV1	38	0	250	CE	O		Diet Type	
+PV1	39	0	2	IS	O		Servicing Facility	
+PV1	40	0	1	IS	B		Bed Status	
+PV1	41	0	2	IS	O		Account Status	
+PV1	42	0	80	PL	O		Pending Location	
+PV1	43	0	80	PL	O		Prior Temporary Location	
+PV1	44	0	26	TS	O		Admit Date/Time	
+PV1	45	0	26	TS	O	Y	Discharge Date/Time	
+PV1	46	0	12	NM	O		Current Patient Balance	
+PV1	47	0	12	NM	O		Total Charges	
+PV1	48	0	12	NM	O		Total Adjustments	
+PV1	49	0	12	NM	O		Total Payments	
+PV1	50	0	250	CX	O		Alternate Visit ID	
+PV1	51	0	1	IS	O		Visit Indicator	
+PV1	52	0	250	XCN	B	Y	Other Healthcare Provider	
+								
+OBR	1	0	4	SI	C			Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – OBR
+OBR	2	0	75	EI	C		Placer Order Number	
+OBR	3	0	75	EI	C		Filler Order Number	
+OBR	4	0	200	CE	R		Universal Service ID	
+OBR	5	0	2	ID	B		Priority	
+OBR	6	0	26	TS	B		Requested Date/time	
+OBR	7	0	26	TS	C		Observation Date/Time	
+OBR	8	0	26	TS	O		Observation End Date/Time	
+OBR	9	0	20	CQ	O		Collection Volume	
+OBR	10	0	60	XCN	O	Y	Collector Identifier	
+OBR	11	0	1	ID	O		Specimen Action Code	
+OBR	12	0	60	CE	O		Danger Code	
+OBR	13	0	300	ST	O		Relevant Clinical Info.	
+OBR	14	0	26	TS	C		Specimen Received Date/Time	
+OBR	15	0	300	CM	O		Specimen Source	
+OBR	16	0	80	XCN	O	Y	Ordering Provider	
+OBR	17	0	40	XTN	O	Y/2	Order Callback Phone Number	
+OBR	18	0	60	ST	O		Placer field 1	
+OBR	19	0	60	ST	O		Placer field 2	
+OBR	20	0	60	ST	O		Filler Field 1	
+OBR	21	0	60	ST	O		Filler Field 2	
+OBR	22	0	26	TS	C		Results Rpt/Status Chng – Date/Time	
+OBR	23	0	40	CM	O		Charge to Practice	
+OBR	24	0	10	ID	O		Diagnostic Serv Sect ID	
+OBR	25	0	1	ID	C		Result Status	
+OBR	26	0	400	CM	O		Parent Result	
+OBR	27	0	200	TQ	O	Y	Quantity/Timing	
+OBR	28	0	150	XCN	O	Y/5	Result Copies To	
+OBR	29	0	150	CM	O		Parent	
+OBR	30	0	20	ID	O		Transportation Mode	
+OBR	31	0	300	CE	O	Y	Reason for Study	
+OBR	32	0	200	CM	O		Principal Result Interpreter	
+OBR	33	0	200	CM	O	Y	Assistant Result Interpreter	
+OBR	34	0	200	CM	O	Y	Technician	
+OBR	35	0	200	CM	O	Y	Transcriptionist	
+OBR	36	0	26	TS	O		Scheduled Date/Time	
+OBR	37	0	4	NM	O		Number of Sample Containers	
+OBR	38	0	60	CE	O	Y	Transport Logistics of Collected Sample	
+OBR	39	0	200	CE	O	Y	Collector’s Comment	
+OBR	40	0	60	CE	O		Transport Arrangement Responsibility	
+OBR	41	0	30	ID	O		Transport Arranged	
+OBR	42	0	1	ID	O		Escort Required	
+OBR	43	0	200	CE	O	Y	Planned Patient Transport Comment	
