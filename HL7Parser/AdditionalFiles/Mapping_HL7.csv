@@ -21,7 +21,7 @@ MSH	19	0	3	CE	O		Principal Language of Message
 								
 PID	1	0	4	SI	O		Set ID – Patient ID	
 PID	2	0	20	CX	O		Patient ID (External ID)	
-PID	3	0	20	CX	R	Y	Patient ID (Internal ID)	
+PID	3	0	20	CX	R	Y	Patient ID (Personnummer)	
 PID	4	0	20	CX	O	Y	Alternate Patient ID – PID	
 PID	5	0	48	XPN	R	Y	Patient Name	
 PID	5	1	48	XPN	R	Y	Etternavn	
