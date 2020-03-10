@@ -1,4 +1,4 @@
-﻿namespace HL7Parser.DataModel.GUI
+﻿namespace HL7Viewer.DataModel.GUI
 {
     partial class UcHL7
     {

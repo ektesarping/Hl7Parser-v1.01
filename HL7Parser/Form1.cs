@@ -1,4 +1,4 @@
-﻿using HL7Parser.DataModel;
+﻿using HL7Viewer.DataModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HL7Parser
+namespace HL7Viewer
 {
     public partial class FormHL7Viewer : Form
     {

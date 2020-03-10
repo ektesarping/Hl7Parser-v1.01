@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HL7Parser.DataModel
+namespace HL7Viewer.DataModel
 {
     public class Hl7Mapping
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HL7Parser")]
+[assembly: AssemblyTitle("HL7Viewer")]
 [assembly: AssemblyDescription("HL7 visningsprogram")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HEMIT")]
-[assembly: AssemblyProduct("HL7Parser")]
+[assembly: AssemblyProduct("HL7Viewer")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HL7Parser
+namespace HL7Viewer
 {
     static class Program
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace HL7Parser.DataModel.GUI
+namespace HL7Viewer.DataModel.GUI
 {
 
     public partial class UcHL7 : UserControl

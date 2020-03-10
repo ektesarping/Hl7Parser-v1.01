@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9B20BC7C-2DCE-4DBA-B812-E45D106C3733}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>HL7Parser</RootNamespace>
-    <AssemblyName>HL7Parser</AssemblyName>
+    <RootNamespace>HL7Viewer</RootNamespace>
+    <AssemblyName>HemitHL7Viewer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,7 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>HL7Parser.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,6 +88,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="AdditionalFiles\Eksempel.HL7" />
     <None Include="AdditionalFiles\HL7 Parameterlist 200225.xlsx" />

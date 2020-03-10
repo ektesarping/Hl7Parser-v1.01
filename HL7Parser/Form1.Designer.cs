@@ -1,4 +1,4 @@
-﻿namespace HL7Parser
+﻿namespace HL7Viewer
 {
     partial class FormHL7Viewer
     {
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            HL7Parser.DataModel.HL7 hL71 = new HL7Parser.DataModel.HL7();
-            HL7Parser.DataModel.Hl7Mapping hl7Mapping1 = new HL7Parser.DataModel.Hl7Mapping();
+            HL7Viewer.DataModel.HL7 hL71 = new HL7Viewer.DataModel.HL7();
+            HL7Viewer.DataModel.Hl7Mapping hl7Mapping1 = new HL7Viewer.DataModel.Hl7Mapping();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHL7Viewer));
-            this.ucHL71 = new HL7Parser.DataModel.GUI.UcHL7();
+            this.ucHL71 = new HL7Viewer.DataModel.GUI.UcHL7();
             this.SuspendLayout();
             // 
             // ucHL71

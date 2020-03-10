@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HL7Parser.DataModel
+namespace HL7Viewer.DataModel
 {
     public class HL7SegmentCategory
     {
