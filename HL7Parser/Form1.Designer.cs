@@ -55,8 +55,6 @@
             this.ucHL71.RootnodeText = null;
             this.ucHL71.Size = new System.Drawing.Size(552, 530);
             this.ucHL71.TabIndex = 0;
-            this.ucHL71.DragDrop += new System.Windows.Forms.DragEventHandler(this.ucHL71_DragDrop);
-            this.ucHL71.DragEnter += new System.Windows.Forms.DragEventHandler(this.ucHL71_DragEnter);
             // 
             // FormHL7Viewer
             // 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tvHL7 = new System.Windows.Forms.TreeView();
             this.chkHideEmptyFields = new System.Windows.Forms.CheckBox();
             this.menuStripHL7 = new System.Windows.Forms.MenuStrip();
@@ -36,12 +37,17 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierSegmenterTilClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripTreeview = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyNavnOgVerdiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripHL7.SuspendLayout();
+            this.contextMenuStripTreeview.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvHL7
             // 
             this.tvHL7.AllowDrop = true;
+            this.tvHL7.ContextMenuStrip = this.contextMenuStripTreeview;
             this.tvHL7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvHL7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
@@ -112,6 +118,28 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem.Text = "Lim inn HL7 fil fra clipboard";
             this.limInnHL7FilFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnHL7FilFraClipboardToolStripMenuItem_Click);
             // 
+            // contextMenuStripTreeview
+            // 
+            this.contextMenuStripTreeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.copyNavnOgVerdiToolStripMenuItem});
+            this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(181, 70);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyToolStripMenuItem.Text = "Copy Value";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // copyNavnOgVerdiToolStripMenuItem
+            // 
+            this.copyNavnOgVerdiToolStripMenuItem.Name = "copyNavnOgVerdiToolStripMenuItem";
+            this.copyNavnOgVerdiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyNavnOgVerdiToolStripMenuItem.Text = "Copy NAme and Value";
+            this.copyNavnOgVerdiToolStripMenuItem.Click += new System.EventHandler(this.copyNavnOgVerdiToolStripMenuItem_Click);
+            // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -125,6 +153,7 @@
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
             this.menuStripHL7.ResumeLayout(false);
             this.menuStripHL7.PerformLayout();
+            this.contextMenuStripTreeview.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,5 +169,8 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kopierSegmenterTilClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem limInnHL7FilFraClipboardToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTreeview;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyNavnOgVerdiToolStripMenuItem;
     }
 }

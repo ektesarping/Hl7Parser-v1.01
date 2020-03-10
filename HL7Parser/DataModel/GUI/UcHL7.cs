@@ -187,6 +187,7 @@ namespace HL7Parser.DataModel.GUI
 
 
 
+
         private void UcHL7_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(File)))
@@ -225,5 +226,40 @@ namespace HL7Parser.DataModel.GUI
             }
         }
 
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreenodeHL7Base selectedNode = (TreenodeHL7Base)tvHL7.SelectedNode;
+
+            if (selectedNode != null)
+            {
+                HL7SegmentString segment = selectedNode._HL7Segment;
+                if (segment != null)
+                {
+                    string value = segment.Value;
+                    if (value != null)
+                    {
+                        Clipboard.SetText(value);
+                    }
+                }
+            }
+        }
+
+        private void copyNavnOgVerdiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreenodeHL7Base selectedNode = (TreenodeHL7Base)tvHL7.SelectedNode;
+
+            if (selectedNode != null)
+            {
+                HL7SegmentString segment = selectedNode._HL7Segment;
+                if (segment != null)
+                {
+                    string value = segment.Value;
+                    if (value != null)
+                    {
+                        Clipboard.SetText(segment.SectionName + "\t" + segment.SegmentName + "\t" + value);
+                    }
+                }
+            }
+        }
     }
 }
