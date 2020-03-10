@@ -90,9 +90,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="AdditionalFiles\Eksempel.HL7" />
-    <None Include="AdditionalFiles\HL7 Parameterlist 200225.xlsx" />
-    <None Include="AdditionalFiles\Mapping_HL7.csv">
+    <None Include="DataModel\AdditionalFiles\Eksempel.HL7" />
+    <None Include="DataModel\AdditionalFiles\HL7 Parameterlist 200225.xlsx" />
+    <None Include="DataModel\AdditionalFiles\Mapping_HL7.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
