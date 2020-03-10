@@ -25,8 +25,7 @@ namespace HL7Parser
             string version = fvi.FileVersion;
             this.Text += " - V" + version;
 
-
-
+            // -- Åpne sist brukte HL7 fil --
             try
             {
                 FileInfo fi = new FileInfo(Properties.Settings.Default.Filename);
