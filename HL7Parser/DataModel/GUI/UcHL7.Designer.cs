@@ -41,12 +41,15 @@
             // 
             // tvHL7
             // 
+            this.tvHL7.AllowDrop = true;
             this.tvHL7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvHL7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
             this.tvHL7.Size = new System.Drawing.Size(432, 220);
             this.tvHL7.TabIndex = 0;
+            this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
+            this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
             // 
             // chkHideEmptyFields
             // 
@@ -61,6 +64,7 @@
             // 
             // menuStripHL7
             // 
+            this.menuStripHL7.AllowDrop = true;
             this.menuStripHL7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem});
@@ -118,6 +122,7 @@
             this.Controls.Add(this.menuStripHL7);
             this.Name = "UcHL7";
             this.Size = new System.Drawing.Size(432, 244);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
             this.menuStripHL7.ResumeLayout(false);
             this.menuStripHL7.PerformLayout();
             this.ResumeLayout(false);

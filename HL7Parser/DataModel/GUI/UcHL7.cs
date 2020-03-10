@@ -185,5 +185,45 @@ namespace HL7Parser.DataModel.GUI
         }
         #endregion -- Menu methods --
 
+
+
+        private void UcHL7_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(File)))
+            {
+                MessageBox.Show("File");
+            }
+            else
+            {
+                MessageBox.Show("Not File");
+            }
+        }
+
+        private void tvHL7_DragEnter(object sender, DragEventArgs e)
+        {
+            // https://www.youtube.com/watch?v=OyKv1Xcod6c
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+            {
+                e.Effect = DragDropEffects.All;
+            }
+        }
+
+        private void tvHL7_DragDrop(object sender, DragEventArgs e)
+        {
+            string fileName = String.Empty;
+            try
+            {
+                string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+                fileName = droppedFiles[0];
+                FileInfo fi = new FileInfo(fileName);
+                OpenMessageFile(fi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunne ikke åpne filen" + fileName + "\r\n" + ex.Message, "Drag drop file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }

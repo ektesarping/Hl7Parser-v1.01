@@ -59,6 +59,16 @@ namespace HL7Parser
             //this.ucHL7TreeView1.Populate();
         }
 
+        private void ucHL71_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void ucHL71_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
         //private void OpenMessageFile(FileInfo fi)
         //{
         //    ucHL7TreeView1._HL7.Mapping.ImportMapping();

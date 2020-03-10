@@ -47,6 +47,7 @@
             hL71.VersionInfo = null;
             this.ucHL71._HL7 = hL71;
             this.ucHL71._HL7SegmentCategories = null;
+            this.ucHL71.AllowDrop = true;
             this.ucHL71.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucHL71.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucHL71.Location = new System.Drawing.Point(0, 0);
@@ -54,9 +55,12 @@
             this.ucHL71.RootnodeText = null;
             this.ucHL71.Size = new System.Drawing.Size(552, 530);
             this.ucHL71.TabIndex = 0;
+            this.ucHL71.DragDrop += new System.Windows.Forms.DragEventHandler(this.ucHL71_DragDrop);
+            this.ucHL71.DragEnter += new System.Windows.Forms.DragEventHandler(this.ucHL71_DragEnter);
             // 
             // FormHL7Viewer
             // 
+            this.AllowDrop = true;
             this.ClientSize = new System.Drawing.Size(552, 530);
             this.Controls.Add(this.ucHL71);
             this.Name = "FormHL7Viewer";
