@@ -92,9 +92,7 @@
     </Compile>
     <None Include="DataModel\AdditionalFiles\Eksempel.HL7" />
     <None Include="DataModel\AdditionalFiles\HL7 Parameterlist 200225.xlsx" />
-    <None Include="DataModel\AdditionalFiles\Mapping_HL7.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="DataModel\AdditionalFiles\Mapping_HL7.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,4 +107,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)Datamodel\AdditionalFiles\Mapping_HL7.csv" "$(TargetDir)Datamodel\*.*" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

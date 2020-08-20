@@ -33,7 +33,9 @@ namespace HL7Viewer.DataModel
 
 
         private char[] SEPARATOR_SECTIONS = new char[] { '|' };
-        private char[] SEPARATOR_SUBSECTIONS = new char[] { '^' };
+        private char[] SEPARATOR_SUBSECTIONS = new char[] { '^' , '~' };
+
+        //private char[] SEPARATOR_SUBSECTIONS_REPEAT = new char[] { '~' };
         private const string MSG_NOT_INCLUDED_IN_MAPPING = "(*)";
 
 
@@ -62,147 +64,156 @@ namespace HL7Viewer.DataModel
         /// <param name="str"></param>
         public void ImportHL7MsgFile(string str)
         {
-            _HL7SegmentCategories = new HL7SegmentCategories();
-
-            #region -- Import mapping --
-            FileInfo executableFi = new FileInfo(Application.ExecutablePath);
-            MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "AdditionalFiles", MappingFileName));
-            Mapping.ImportMapping(MappingFileFi);
-            #endregion -- Import mapping --
-
-            #region -- Parse raw text file into value pairs --
-            
-            List<string> sectionNames = Mapping.GetSectionNames();
-            foreach (string sectionName in sectionNames)
+            try
             {
-                HL7SegmentCategory category = new HL7SegmentCategory();
-                category.CategoryName = sectionName;
-                _HL7SegmentCategories.Add(category);
-            }
-            
-            // Kun section names fra mappingen i første omgang
-            SectionIndexPairs sectionPairs = new SectionIndexPairs();
+                _HL7SegmentCategories = new HL7SegmentCategories();
 
-            // Finnes startpos for hver av seksjonene i HL7 meldingen. 
-            // Bruker SectionIndexPairs
-            foreach (string sectionName in sectionNames)
-            {
-                string key = sectionName + "|";
-                int pos = str.IndexOf(key);
-                //pair.startIndex = pos;
-                SectionIndexPair pair = new SectionIndexPair(sectionName, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
-                sectionPairs.Add(pair);
-            }
+                #region -- Import mapping --
+                FileInfo executableFi = new FileInfo(Application.ExecutablePath);
+                MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
+                Mapping.ImportMapping(MappingFileFi);
+                #endregion -- Import mapping --
 
-            sectionPairs.Sort();
-            #endregion -- Parse raw text file into valuepairs--
+                #region -- Parse raw text file into value pairs --
 
-            #region -- Splitter innholdet i HL7 filen i respektive sectionPair, og legger inn hver del i .SourceString --
-            for (int i = 0; i < sectionPairs.Count; i++)
-            {
-                int posStart = sectionPairs[i].startPos;
 
-                if (i < sectionPairs.Count - 1)
+                // -- Finner hoveddelene av filen, F.eks MSH, PV1, PID, OBR osv --
+                List<string> sectionNames = Mapping.GetSectionNames();
+                foreach (string sectionName in sectionNames)
                 {
-                    int length = sectionPairs[i + 1].startPos - sectionPairs[i + 1].Name.Length - 1 - posStart;  // - 1 er for skilletegnet etter section navnet.
-                    sectionPairs[i].SourceString = str.Substring(posStart, length);  // - Legger Sectionname for i sourceString for å justere mot feltindex 0 for seksjonen i mappingen.
+                    HL7SegmentCategory category = new HL7SegmentCategory();
+                    category.CategoryName = sectionName;
+                    _HL7SegmentCategories.Add(category);
+                }
 
-                    sectionPairs[i].SourceString = sectionPairs[i].SourceString.Trim();
+                // Kun section names fra mappingen i første omgang
+                SectionIndexPairs sectionPairs = new SectionIndexPairs();
 
-                    // Legger inn én ekstra | fordi feltet separators  inneholder en separator i feltverdien.
-                    if (sectionPairs[i].Name == "MSH")
+                // Finner startpos for hver av seksjonene i HL7 meldingen. 
+                // Bruker SectionIndexPairs
+                foreach (string sectionName in sectionNames)
+                {
+                    string key = sectionName + "|";
+                    int pos = str.IndexOf(key);
+                    //pair.startIndex = pos;
+                    SectionIndexPair pair = new SectionIndexPair(sectionName, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
+                    sectionPairs.Add(pair);
+                }
+
+                sectionPairs.Sort();
+                #endregion -- Parse raw text file into valuepairs--
+
+                #region -- Splitter innholdet i HL7 filen i respektive sectionPair, og legger inn hver del i .SourceString --
+                for (int i = 0; i < sectionPairs.Count; i++)
+                {
+                    int posStart = sectionPairs[i].startPos;
+
+                    if (i < sectionPairs.Count - 1)
                     {
-                        sectionPairs[i].SourceString = sectionPairs[i].Name + "|" + sectionPairs[i].SourceString;
-                    }
-                }
-                else
-                {
-                    sectionPairs[i].SourceString = str.Substring(posStart);
-                }
-            }
-            #endregion -- Splitter innholdet i HL7 filen i respektive sectionPair, og legger inn hver del i .SourceString --
+                        int length = sectionPairs[i + 1].startPos - sectionPairs[i + 1].Name.Length - 1 - posStart;  // - 1 er for skilletegnet etter section navnet.
+                        sectionPairs[i].SourceString = str.Substring(posStart, length);  // - Legger Sectionname for i sourceString for å justere mot feltindex 0 for seksjonen i mappingen.
 
+                        sectionPairs[i].SourceString = sectionPairs[i].SourceString.Trim();
 
-            #region -- Importerer segmentene i nivå 1 --
-
-            HL7SegmentCategory currentCategory = null;
-
-            foreach (SectionIndexPair sectPair in sectionPairs)
-            {
-                // Bruker Sectionpair.Name til å finne currentCategory
-                // Slår opp segmentnavnet i categories. Bruker denne som current category hvis den finnes.
-                HL7SegmentCategory catTmp = _HL7SegmentCategories.Get(sectPair.Name);
-                if (catTmp != null)
-                {
-                    currentCategory = catTmp;
-                }
-
-                // Importer i første omgang alle segmenter som string
-                string[] fieldsSegments = sectPair.SourceString.Split(SEPARATOR_SECTIONS);
-                for (int index = 1; index < fieldsSegments.Length; index++)
-                {
-                    string value = fieldsSegments[index];
-                    // Opprett segmentet
-                    HL7SegmentString segment = (HL7SegmentString)Mapping._HL7Segments.GetSegment(sectPair.Name, index, 0);
-                    
-
-                    if (segment == null)
-                    {
-                        segment = new HL7SegmentString(sectPair.Name + MSG_NOT_INCLUDED_IN_MAPPING, value, index, 0);
-                        segment._HL7SegmentCategory = currentCategory;
-                        Mapping._HL7Segments.Add(segment);
+                        // Legger inn én ekstra | fordi feltet separators  inneholder en separator i feltverdien.
+                        if (sectionPairs[i].Name == "MSH")
+                        {
+                            sectionPairs[i].SourceString = sectionPairs[i].Name + "|" + sectionPairs[i].SourceString;
+                        }
                     }
                     else
                     {
-                        segment._HL7SegmentCategory = currentCategory;
-                        //segment.Value = sectPair.Name;
-                        currentCategory._HL7Segments.Add(segment);
-                        //_HL7Segments.Add(segment);
-                        segment.Value = value;
-
-                        // Erstatter "" med tom string
-                        if (segment.Value == "\"\"")
-                        {
-                            segment.Value = "";
-                        }
-
-                        // Brukes meldingsinnholdet til å opprette midlertidige subsegmenter. Slår opp i 
-                        // eksisterende segmenter for å se om de allerede eksisterer
-                        HL7Segments subSegmentsTmp = CreateSubSegments(value, segment, segment.SegmentName);
-                        int subindex = 1;
-                        foreach (HL7SegmentString subsegmentTmp in subSegmentsTmp)
-                        {
-                            // Erstatter "" med tom string
-                            if (subsegmentTmp.Value == "\"\"")
-                            {
-                                subsegmentTmp.Value = "";
-                            }
-
-                            HL7SegmentString subsegment = (HL7SegmentString)Mapping._HL7Segments.GetSegment(currentCategory.CategoryName, subsegmentTmp.Index, subsegmentTmp.SubIndex);
-
-                            if (subsegment != null)
-                            {
-                                subsegment.Value = subsegmentTmp.Value;
-                            }
-                            else
-                            {
-                                //subsegment = new HL7SegmentString(segment.SegmentName + " <unmapped subsegment>", value, segment.Index, subindex);
-                                // Subsegmentet eksisterer ikke i den importerte mappingen. Oppretter nytt segment. Legger til '<missing in mapping>' i segmentnavnet.
-                                subsegmentTmp.SegmentName += MSG_NOT_INCLUDED_IN_MAPPING;
-                                subsegmentTmp.Value = subsegmentTmp.Value;
-                                subsegmentTmp.ParentSegment = segment;
-                                segment.SubSegments.Add(subsegmentTmp);
-                            }
-                            subindex++;
-                        }
-
+                        sectionPairs[i].SourceString = str.Substring(posStart);
                     }
                 }
-            }
-            #endregion -- Importerer segmentene i nivå 1 --
+                #endregion -- Splitter innholdet i HL7 filen i respektive sectionPair, og legger inn hver del i .SourceString --
 
-           // -- Separere HL7 meldingen under respektive segmentnavn. --
-           // PopulateCategories();
+
+                #region -- Importerer segmentene i nivå 1 --
+
+                HL7SegmentCategory currentCategory = null;
+
+                foreach (SectionIndexPair sectPair in sectionPairs)
+                {
+                    // Bruker Sectionpair.Name til å finne currentCategory
+                    // Slår opp segmentnavnet i categories. Bruker denne som current category hvis den finnes.
+                    HL7SegmentCategory catTmp = _HL7SegmentCategories.Get(sectPair.Name);
+                    if (catTmp != null)
+                    {
+                        currentCategory = catTmp;
+                    }
+
+                    // Importer i første omgang alle segmenter som string
+                    string[] fieldsSegments = sectPair.SourceString.Split(SEPARATOR_SECTIONS);
+                    for (int index = 1; index < fieldsSegments.Length; index++)
+                    {
+                        string value = fieldsSegments[index];
+                        // Opprett segmentet
+                        HL7SegmentString segment = (HL7SegmentString)Mapping._HL7Segments.GetSegment(sectPair.Name, index, 0);
+
+
+                        if (segment == null)
+                        {
+                            segment = new HL7SegmentString(sectPair.Name + MSG_NOT_INCLUDED_IN_MAPPING, value, index, 0);
+                            segment._HL7SegmentCategory = currentCategory;
+                            Mapping._HL7Segments.Add(segment);
+                        }
+                        else
+                        {
+                            segment._HL7SegmentCategory = currentCategory;
+                            //segment.Value = sectPair.Name;
+                            currentCategory._HL7Segments.Add(segment);
+                            //_HL7Segments.Add(segment);
+                            segment.Value = value;
+
+                            // Erstatter "" med tom string
+                            if (segment.Value == "\"\"")
+                            {
+                                segment.Value = "";
+                            }
+
+                            // Brukes meldingsinnholdet til å opprette midlertidige subsegmenter. Slår opp i 
+                            // eksisterende segmenter for å se om de allerede eksisterer
+                            HL7Segments subSegmentsTmp = CreateSubSegments(value, segment, segment.SegmentName);
+                            int subindex = 1;
+                            foreach (HL7SegmentString subsegmentTmp in subSegmentsTmp)
+                            {
+                                // Erstatter "" med tom string
+                                if (subsegmentTmp.Value == "\"\"")
+                                {
+                                    subsegmentTmp.Value = "";
+                                }
+
+                                HL7SegmentString subsegment = (HL7SegmentString)Mapping._HL7Segments.GetSegment(currentCategory.CategoryName, subsegmentTmp.Index, subsegmentTmp.SubIndex);
+
+                                if (subsegment != null)
+                                {
+                                    subsegment.Value = subsegmentTmp.Value;
+                                }
+                                else
+                                {
+                                    //subsegment = new HL7SegmentString(segment.SegmentName + " <unmapped subsegment>", value, segment.Index, subindex);
+                                    // Subsegmentet eksisterer ikke i den importerte mappingen. Oppretter nytt segment. Legger til '<missing in mapping>' i segmentnavnet.
+                                    subsegmentTmp.SegmentName += MSG_NOT_INCLUDED_IN_MAPPING;
+                                    subsegmentTmp.Value = subsegmentTmp.Value;
+                                    subsegmentTmp.ParentSegment = segment;
+                                    segment.SubSegments.Add(subsegmentTmp);
+                                }
+                                subindex++;
+                            }
+
+                        }
+                    }
+                }
+                #endregion -- Importerer segmentene i nivå 1 --
+
+                // -- Separere HL7 meldingen under respektive segmentnavn. --
+                // PopulateCategories();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kan ikke vise meldingen. \r\nFeilmelding:" + ex.Message + "\r\n\n" + ex.StackTrace);
+            }
         }
 
         private HL7Segments CreateSubSegments(string substringSource, HL7SegmentBase parentSegment, string segmentName)

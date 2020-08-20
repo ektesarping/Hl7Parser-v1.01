@@ -60,7 +60,10 @@ PV1	4	0	2	IS	O		Admission Type
 PV1	5	0	250	CX	O		Preadmit Number	
 PV1	6	0	80	PL	O		Prior Patient Location	
 PV1	7	0	250	XCN	O	Y	Attending Doctor	
-PV1	8	0	250	XCN	O	Y	Referring Doctor	
+PV1	8	0	250	XCN	O	Y	Henvisende lege	
+PV1	8	1	250	XCN	O	Y	Henvisende lege (HER Id/HPR nr)	
+PV1	8	2	250	XCN	O	Y	Henvisende lege - Etternavn	
+PV1	8	3	250	XCN	O	Y	Henvisende lege - Fornavn	
 PV1	9	0	250	XCN	B	Y	Consulting Doctor	
 PV1	10	0	3	IS	O		Hospital Service	
 PV1	11	0	80	PL	O		Temporary Location	
@@ -191,3 +194,30 @@ OBR	40	0	60	CE	O		Transport Arrangement Responsibility
 OBR	41	0	30	ID	O		Transport Arranged	
 OBR	42	0	1	ID	O		Escort Required	
 OBR	43	0	200	CE	O	Y	Planned Patient Transport Comment	
+OBX	1	0	200	??	O		Field 1
+OBX	2	0	200	??	O		Field 2
+OBX	3	0	200	??	O		Field 3
+OBX	4	0	200	??	O		Field 4
+OBX	5	0	200	??	O		Field 5
+OBX	6	0	200	??	O		Field 6
+OBX	7	0	200	??	O		Field 7
+OBX	8	0	200	??	O		Field 8
+OBX	9	0	200	??	O		Field 9
+OBX	10	0	200	??	O		Field 10
+OBX	11	0	200	??	O		Field 11
+ZEI	1	0	200	??	O		Field 1
+ZEI	2	0	200	??	O		Field 2
+ZEI	3	0	200	??	O		Field 3
+ZEI	4	0	200	??	O		Field 4
+ZEI	5	0	200	??	O		Field 5
+ZEI	6	0	200	??	O		Field 6
+ZEI	7	0	200	??	O		Field 7
+ZDS	1	0	200	??	O		Field 1
+ZEI	1	0	200	??	O		Field 1
+ZEI	2	0	200	??	O		Field 2
+ZEI	3	0	200	??	O		Field 3
+ZEI	4	0	200	??	O		Field 4
+ZEI	5	0	200	??	O		Field 5
+ZEI	6	0	200	??	O		Field 6
+ZEI	7	0	200	??	O		Field 7
+ZDS	1	0	200	??	O		Field 1
