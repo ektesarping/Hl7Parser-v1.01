@@ -209,20 +209,33 @@ namespace HL7Viewer.DataModel.GUI
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreenodeHL7Base selectedNode = (TreenodeHL7Base)tvHL7.SelectedNode;
-
-            if (selectedNode != null)
+            try
             {
-                HL7SegmentString segment = selectedNode._HL7Segment;
-                if (segment != null)
+                TreenodeHL7Base selectedNode = (TreenodeHL7Base)tvHL7.SelectedNode;
+
+                if (selectedNode != null)
                 {
-                    string value = segment.Value;
-                    if (value != null)
+                    HL7SegmentString segment = selectedNode._HL7Segment;
+                    if (segment != null)
                     {
-                        Clipboard.SetText(value);
+                        string value = segment.Value;
+                        if (value != null)
+                        {
+                            Clipboard.SetText(value);
+                        }
                     }
                 }
             }
+            catch (InvalidCastException ec)
+            {
+                MessageBox.Show("Ingen gyldig felt valgt. Prøv igjen.", "Kopiere Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("En feil oppstod. Prøv igjen.", "Kopiere Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
         }
 
         private void copyNavnOgVerdiToolStripMenuItem_Click(object sender, EventArgs e)
@@ -244,9 +257,13 @@ namespace HL7Viewer.DataModel.GUI
                     }
                 }
             }
-            catch (InvalidCastException ec )
+            catch (InvalidCastException ec)
             {
                 MessageBox.Show("Ingen gyldig felt valgt. Prøv igjen.", "Kopiere Felt/Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("En feil oppstod. Prøv igjen.", "Kopiere Felt/Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
