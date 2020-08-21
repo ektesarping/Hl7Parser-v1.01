@@ -18,18 +18,7 @@ MSH	16	0	2	ID	O		Application Acknowledgement Type
 MSH	17	0	2	ID	O		Country Code	
 MSH	18	0	6	ID	O		Character Set	
 MSH	19	0	3	CE	O		Principal Language of Message	
-ZEI	0	0	200	??	O		Field 1
-ZEI	1	0	200	??	O		Field 1
-ZEI	2	0	200	??	O		Field 2
-ZEI	3	0	200	??	O		Field 3
-ZEI	4	0	200	??	O		Field 4
-ZEI	5	0	200	??	O		Field 5
-ZEI	6	0	200	??	O		Field 6
-ZEI	6	1	150	XCN	O	Y/5	Kopi1: FELT 1!	
-ZEI	6	2	150	XCN	O	Y/5	Kopi1: FELT 2!	
-ZEI	6	3	150	XCN	O	Y/5	Kopi1: FELT 3!	
-ZEI	7	0	200	??	O		Field 7
-							
+
 PID	1	0	4	SI	O		Set ID – Patient ID	
 PID	2	0	20	CX	O		Patient ID (External ID)	
 PID	3	0	20	CX	R	Y	Patient ID (Personnummer)	
@@ -204,7 +193,8 @@ OBR	39	0	200	CE	O	Y	Collector’s Comment
 OBR	40	0	60	CE	O		Transport Arrangement Responsibility	
 OBR	41	0	30	ID	O		Transport Arranged	
 OBR	42	0	1	ID	O		Escort Required	
-OBR	43	0	200	CE	O	Y	Planned Patient Transport Comment	
+OBR	43	0	200	CE	O	Y	Planned Patient Transport Comment
+
 OBX	1	0	200	??	O		Field 1
 OBX	2	0	200	??	O		Field 2
 OBX	3	0	200	??	O		Field 3
@@ -216,6 +206,8 @@ OBX	8	0	200	??	O		Field 8
 OBX	9	0	200	??	O		Field 9
 OBX	10	0	200	??	O		Field 10
 OBX	11	0	200	??	O		Field 11
+
+ZEI	0	0	200	??	O		Field 1
 ZEI	1	0	200	??	O		Field 1
 ZEI	2	0	200	??	O		Field 2
 ZEI	3	0	200	??	O		Field 3
@@ -223,6 +215,7 @@ ZEI	4	0	200	??	O		Field 4
 ZEI	5	0	200	??	O		Field 5
 ZEI	6	0	200	??	O		Field 6
 ZEI	7	0	200	??	O		Field 7
+
 ZDS	1	0	200	??	O		Field 1
 ZDS	0	0	200	??	O		Field 0
 ZDS	1	1	200	??	O	Y	Field *
