@@ -227,19 +227,26 @@ namespace HL7Viewer.DataModel.GUI
 
         private void copyNavnOgVerdiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreenodeHL7Base selectedNode = (TreenodeHL7Base)tvHL7.SelectedNode;
-
-            if (selectedNode != null)
+            try
             {
-                HL7SegmentString segment = selectedNode._HL7Segment;
-                if (segment != null)
+                TreenodeHL7Base selectedNode = (TreenodeHL7Base)tvHL7.SelectedNode;
+
+                if (selectedNode != null)
                 {
-                    string value = segment.Value;
-                    if (value != null)
+                    HL7SegmentString segment = selectedNode._HL7Segment;
+                    if (segment != null)
                     {
-                        Clipboard.SetText(segment.SectionName + "\t" + segment.SegmentName + "\t" + value);
+                        string value = segment.Value;
+                        if (value != null)
+                        {
+                            Clipboard.SetText(segment.SectionName + "\t" + segment.SegmentName + "\t" + value);
+                        }
                     }
                 }
+            }
+            catch (InvalidCastException ec )
+            {
+                MessageBox.Show("Ingen gyldig felt valgt. Prøv igjen.", "Kopiere Felt/Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

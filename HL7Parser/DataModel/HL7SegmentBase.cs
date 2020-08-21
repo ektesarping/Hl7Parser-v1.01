@@ -21,7 +21,7 @@ namespace HL7Viewer.DataModel
         public string SectionName { get; set; }
 
         public int Index { get; set; }
-        
+
         /// <summary>
         /// Subindex. Subnoder har index verdi > 0
         /// </summary>
@@ -71,15 +71,16 @@ namespace HL7Viewer.DataModel
         public HL7SegmentBase()
         { }
 
-        public HL7SegmentBase(string section, int index, int length, string elementName, string dt, string opt, string rp) : this()
-        {
-            this.Index = index;
-            this.Length = length;
-            this.SegmentName = elementName;
-            this.Dt = dt;
-            this.Opt = opt;
-            this.Rp = rp;
-        }
+        //public HL7SegmentBase(string section, int index, int length, string elementName, string dt, string opt, string rp, bool collapsedDefault) : this()
+        //{
+        //    this.Index = index;
+        //    //this.Length = length;
+        //    this.SegmentName = elementName;
+        //    //this.Dt = dt;
+        //    //this.Opt = opt;
+        //    //this.Rp = rp;
+        //    this.CollapsedDefault = collapsedDefault;
+        //}
 
         public override string ToString()
         {

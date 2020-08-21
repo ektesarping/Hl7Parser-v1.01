@@ -17,11 +17,13 @@ namespace HL7Viewer.DataModel
         private const int INDEX_SECTION = 0;
         private const int INDEX_INDEX = 1;
         private const int INDEX_SUBINDEX = 2;
-        private const int INDEX_LENGTH = 3;
-        private const int INDEX_DT = 4;
-        private const int INDEX_OPT = 5;
-        private const int INDEX_RP = 6;
-        private const int INDEX_NAME = 7;
+        //private const int INDEX_LENGTH = 3; // obsolete
+        //private const int INDEX_DT = 4;// obsolete
+        //private const int INDEX_OPT = 5;// obsolete
+        //private const int INDEX_RP = 6;// obsolete
+
+        private const int INDEX_COLLAPSED_DEFAULT = 3;
+        private const int INDEX_NAME = 4;
 
 
         public void ImportMapping(FileInfo fi)
@@ -58,12 +60,18 @@ namespace HL7Viewer.DataModel
                         int.TryParse(fields[INDEX_SUBINDEX], out int subIndexTmp);
                         segment.SubIndex = subIndexTmp;
 
-                        int.TryParse(fields[INDEX_LENGTH], out int lengthTmp);
-                        segment.Length = lengthTmp;
+                        //int.TryParse(fields[INDEX_LENGTH], out int lengthTmp);
+                        //segment.Length = lengthTmp;
 
-                        segment.Dt = fields[INDEX_DT];
-                        segment.Opt = fields[INDEX_OPT];
-                        segment.Rp = fields[INDEX_RP];
+                        //segment.Dt = fields[INDEX_DT];
+                        //segment.Opt = fields[INDEX_OPT];
+                        //segment.Rp = fields[INDEX_RP];
+
+                        if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
+                        {
+                            segment.CollapsedDefault = true;
+                        }
+
                         segment.SegmentName = fields[INDEX_NAME];
 
                         // -- Håndtering av parent/subsegment --

@@ -14,9 +14,16 @@ namespace HL7Viewer
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormHL7Viewer());
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new FormHL7Viewer());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Feil oppstod. \r\n\n" + ex.Message + "\r\n\n" + ex.StackTrace, "HL7 viewer" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

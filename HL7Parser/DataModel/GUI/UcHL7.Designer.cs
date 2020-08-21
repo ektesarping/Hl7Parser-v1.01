@@ -130,14 +130,14 @@
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.copyToolStripMenuItem.Text = "Copy Value";
+            this.copyToolStripMenuItem.Text = "Kopier Verdi";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // copyNavnOgVerdiToolStripMenuItem
             // 
             this.copyNavnOgVerdiToolStripMenuItem.Name = "copyNavnOgVerdiToolStripMenuItem";
             this.copyNavnOgVerdiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.copyNavnOgVerdiToolStripMenuItem.Text = "Copy NAme and Value";
+            this.copyNavnOgVerdiToolStripMenuItem.Text = "Kopier Navn og Verdi";
             this.copyNavnOgVerdiToolStripMenuItem.Click += new System.EventHandler(this.copyNavnOgVerdiToolStripMenuItem_Click);
             // 
             // UcHL7
