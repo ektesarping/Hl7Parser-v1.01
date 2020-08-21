@@ -24,12 +24,6 @@ namespace HL7Viewer.DataModel
         private const int INDEX_NAME = 7;
 
 
-        //public void ImportMapping()
-        //{
-        //    ImportMapping(mapping)
-        //}
-
-
         public void ImportMapping(FileInfo fi)
         {
             using (StreamReader sr = new StreamReader(fi.FullName, Encoding.ASCII))

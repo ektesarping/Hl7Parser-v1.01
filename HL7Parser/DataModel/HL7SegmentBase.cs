@@ -26,10 +26,23 @@ namespace HL7Viewer.DataModel
         /// Subindex. Subnoder har index verdi > 0
         /// </summary>
         public int SubIndex { get; set; }
+
+        [Obsolete]
         public int Length { get; set; }
+
+        [Obsolete]
         public string Dt { get; set; }
+
+        [Obsolete]
         public string Opt { get; set; }
+
+        [Obsolete]
         public string Rp { get; set; }
+
+        /// <summary>
+        /// Collapsed default ved innlesing.
+        /// </summary>
+        public bool CollapsedDefault { get; set; }
 
         public string SegmentName { get; set; }
 
