@@ -32,7 +32,7 @@ namespace HL7Viewer.DataModel
 
         public void ImportMapping(FileInfo fi)
         {
-            using (StreamReader sr = new StreamReader(fi.FullName,  Encoding.ASCII))
+            using (StreamReader sr = new StreamReader(fi.FullName, Encoding.ASCII))
             {
                 string str = String.Empty;
                 HL7SegmentString parentSegment = null;
@@ -47,6 +47,11 @@ namespace HL7Viewer.DataModel
                         if (String.IsNullOrEmpty(fields[INDEX_SECTION]))
                         {
                             continue; // Do not save segments with empty names
+                        }
+
+                        if (fields[INDEX_SECTION].Contains("//"))
+                        {
+                            continue;
                         }
 
 

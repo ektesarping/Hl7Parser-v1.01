@@ -21,6 +21,10 @@ namespace HL7Viewer.DataModel
         public string SectionName { get; set; }
 
         public int Index { get; set; }
+        
+        /// <summary>
+        /// Subindex. Subnoder har index verdi > 0
+        /// </summary>
         public int SubIndex { get; set; }
         public int Length { get; set; }
         public string Dt { get; set; }

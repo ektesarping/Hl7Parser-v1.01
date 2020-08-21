@@ -1,4 +1,4 @@
-﻿			LEN	DT	OPT	RP/#	ELEMENT NAME	Comment
+﻿//			LEN	DT	OPT	RP/#	ELEMENT NAME	Comment
 MSH	1	0	1	ST	R		Field Separator	
 MSH	2	0	4	ST	R		Encoding Characters	
 MSH	3	0	180	HD	O		Sending Application	
@@ -18,7 +18,18 @@ MSH	16	0	2	ID	O		Application Acknowledgement Type
 MSH	17	0	2	ID	O		Country Code	
 MSH	18	0	6	ID	O		Character Set	
 MSH	19	0	3	CE	O		Principal Language of Message	
-								
+ZEI	0	0	200	??	O		Field 1
+ZEI	1	0	200	??	O		Field 1
+ZEI	2	0	200	??	O		Field 2
+ZEI	3	0	200	??	O		Field 3
+ZEI	4	0	200	??	O		Field 4
+ZEI	5	0	200	??	O		Field 5
+ZEI	6	0	200	??	O		Field 6
+ZEI	6	1	150	XCN	O	Y/5	Kopi1: FELT 1!	
+ZEI	6	2	150	XCN	O	Y/5	Kopi1: FELT 2!	
+ZEI	6	3	150	XCN	O	Y/5	Kopi1: FELT 3!	
+ZEI	7	0	200	??	O		Field 7
+							
 PID	1	0	4	SI	O		Set ID – Patient ID	
 PID	2	0	20	CX	O		Patient ID (External ID)	
 PID	3	0	20	CX	R	Y	Patient ID (Personnummer)	
@@ -213,11 +224,6 @@ ZEI	5	0	200	??	O		Field 5
 ZEI	6	0	200	??	O		Field 6
 ZEI	7	0	200	??	O		Field 7
 ZDS	1	0	200	??	O		Field 1
-ZEI	1	0	200	??	O		Field 1
-ZEI	2	0	200	??	O		Field 2
-ZEI	3	0	200	??	O		Field 3
-ZEI	4	0	200	??	O		Field 4
-ZEI	5	0	200	??	O		Field 5
-ZEI	6	0	200	??	O		Field 6
-ZEI	7	0	200	??	O		Field 7
-ZDS	1	0	200	??	O		Field 1
+ZDS	0	0	200	??	O		Field 0
+ZDS	1	1	200	??	O	Y	Field *
+ZDS	1	2	200	??	O	Y	Field *

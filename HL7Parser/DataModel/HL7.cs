@@ -172,7 +172,7 @@ namespace HL7Viewer.DataModel
                                 segment.Value = "";
                             }
 
-                            // Brukes meldingsinnholdet til å opprette midlertidige subsegmenter. Slår opp i 
+                            // Bruker meldingsinnholdet til å opprette midlertidige subsegmenter. Slår opp i 
                             // eksisterende segmenter for å se om de allerede eksisterer
                             HL7Segments subSegmentsTmp = CreateSubSegments(value, segment, segment.SegmentName);
                             int subindex = 1;
