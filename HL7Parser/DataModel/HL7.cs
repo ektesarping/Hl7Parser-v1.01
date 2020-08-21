@@ -33,7 +33,7 @@ namespace HL7Viewer.DataModel
 
 
         private char[] SEPARATOR_SECTIONS = new char[] { '|' };
-        private char[] SEPARATOR_SUBSECTIONS = new char[] { '^' , '~' };
+        private char[] SEPARATOR_SUBSECTIONS = new char[] { '^', '~' };
 
         //private char[] SEPARATOR_SUBSECTIONS_REPEAT = new char[] { '~' };
         private const string MSG_NOT_INCLUDED_IN_MAPPING = "(*)";
@@ -41,7 +41,7 @@ namespace HL7Viewer.DataModel
 
         public HL7()
         {
-          
+
         }
 
 
@@ -51,7 +51,8 @@ namespace HL7Viewer.DataModel
         /// <param name="fi"></param>
         public void ImportHL7MsgFile(FileInfo fi)
         {
-            StreamReader sr = new StreamReader(fi.FullName);
+            StreamReader sr = new StreamReader(fi.FullName, Encoding.GetEncoding(1252));
+            
             string str = sr.ReadToEnd();
             sr.Close();
             ImportHL7MsgFile(str);
