@@ -11,7 +11,15 @@ namespace HL7Viewer.DataModel
     {
         public string Name { get; set; }
         public string VersionInfo { get; set; }
+
+        /// <summary>
+        /// Liste med navn på hovedseksjonene i mappingen. F.eks MSH, PID osv.
+        /// </summary>
+        public List<string> SectionNames { get; set; }
+
         public HL7Segments _HL7Segments { get; set; } = new HL7Segments();
+
+
 
         // Parts of input files.
         private const int INDEX_SECTION = 0;
@@ -87,6 +95,7 @@ namespace HL7Viewer.DataModel
                             parentSegment.SubSegments.Add(segment);
                         }
                     }
+                    PopulateListOfSectionNames();
                 }
                 sr.Close();
             }
@@ -97,18 +106,19 @@ namespace HL7Viewer.DataModel
         /// Scan gjennom alle segmentnavn i den innleste mappingen og ta vare på unike verdiee.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetSectionNames()
+        [Obsolete]
+        public List<string> PopulateListOfSectionNames()
         {
-            List<string> sectionNames = new List<string>();
+            //List<string> sectionNames = new List<string>(); -> Endret til public property
 
             foreach (HL7SegmentBase segment in this._HL7Segments)
             {
-                if ((!sectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
+                if ((!SectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
                 {
-                    sectionNames.Add(segment.SectionName);
+                    SectionNames.Add(segment.SectionName);
                 }
             }
-            return sectionNames;
+            return SectionNames;
         }
     }
 }

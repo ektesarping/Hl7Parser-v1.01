@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
-    public class SectionIndexPair: IComparable
+    public class SectionIndexPair : IComparable
     {
         public string Name { get; set; }
         public int startPos { get; set; }
@@ -27,7 +27,7 @@ namespace HL7Viewer.DataModel
 
         public override string ToString()
         {
-            return this.Name + " / " + this.startPos.ToString();
+            return this.Name + " / " + this.startPos.ToString() + "  /  " + this.SourceString;
         }
     }
 }

@@ -165,21 +165,7 @@ OBR	28	24		Kopi2: *
 OBR	28	25		Kopi2: *					
 OBR	28	26		Kopi2: *					
 OBR	28	27		Kopi2: *					
-OBR	28	28		Kopi2: Institusjon&Kode					
-OBR	28	29		Kopi3: HPR-nr					
-OBR	28	30		Kopi3: Etternavn					
-OBR	28	31		Kopi3: Fornavn					
-OBR	28	32		Kopi3: *					
-OBR	28	33		Kopi3: *					
-OBR	28	34		Kopi3: *					
-OBR	28	35		Kopi3: *					
-OBR	28	36		Kopi3: *					
-OBR	28	37		Kopi3: *					
-OBR	28	38		Kopi3: *					
-OBR	28	39		Kopi3: *					
-OBR	28	40		Kopi3: *					
-OBR	28	41		Kopi3: *					
-OBR	28	42		Kopi3: Institusjon&Kode					
+OBR	28	28		Kopi2: Institusjon&Kode									
 OBR	29	0		Parent					
 OBR	30	0		Transportation Mode					
 OBR	31	0		Reason for Study					
