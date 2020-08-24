@@ -15,6 +15,19 @@ namespace HL7Viewer.DataModel
 
         public TreeNode Treenode { get; set; }
 
+        public bool AddedFromMessageFile { get; set; }
+
+        #region -- Constructor--
+        public HL7SegmentCategory()
+        { }
+
+        public HL7SegmentCategory(string categoryName, bool addedFromMessage) : this()
+        {
+            this.CategoryName = categoryName;
+            this.AddedFromMessageFile = addedFromMessage;
+        }
+        #endregion -- Constructor--
+
         public override string ToString()
         {
             return this.CategoryName;

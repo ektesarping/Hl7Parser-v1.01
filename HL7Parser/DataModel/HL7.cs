@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -76,6 +77,22 @@ namespace HL7Viewer.DataModel
                 #endregion -- Import mapping --
 
 
+                // -- Søker gjennom meldingsfilen på nytt for å finne evt seksjoner som ikke ligger i mappingfilen. --
+                string[] lines = str.Split(new char[] { '\r' });
+                foreach (string line in lines)
+                {
+                    string sectionNameTmp = GetSectionNameFromMessageFile(line);
+                    if (sectionNameTmp != null)
+                    {
+                        if (!Mapping.SectionNames.Contains(sectionNameTmp))
+                        {
+                            HL7SegmentCategory newCategory = new HL7SegmentCategory(sectionNameTmp, true);
+                            Mapping.SectionNames.Add  <<<--- Fortsett her!
+                            //Mapping._HL7Segments.Add(new HL7SegmentCategory(sectionNameTmp, true));
+                        }
+                    }
+                }
+
                 #region -- Parser meldingsfilen til sectionpairs --
 
                 // -- Finner hoveddelene av filen, F.eks MSH, PV1, PID, OBR osv --
@@ -98,23 +115,19 @@ namespace HL7Viewer.DataModel
                     string key = sectionName + "|";
                     int pos = str.IndexOf(key);
                     //pair.startIndex = pos;
-                    SectionIndexPair pair = new SectionIndexPair(sectionName, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
-                    sectionPairs.Add(pair);
+
+                    if (pos >= 0)
+                    {
+                        SectionIndexPair pair = new SectionIndexPair(sectionName, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
+                        sectionPairs.Add(pair);
+                    }
+                    else
+                    {
+                        // Meldingsfilen inneholder ikke den aktuelle seksjonen.
+                    }
                 }
 
-                ////// -- Søker gjennom meldingsfilen på nytt for å finne evt seksjoner som ikke ligger i mappingfilen. --
-                ////string[] lines = str.Split(new char[] { '\r' });
-                ////foreach (string line in lines)
-                ////{
-                ////    string sectionNameTmp = GetSectionNameFromMessageFile(line);
-                ////    if (sectionNameTmp != null)
-                ////    {
-                ////        if (!Mapping.SectionNames.Contains(sectionNameTmp))
-                ////        {
-                ////            Mapping
-                ////        }
-                ////    }
-                ////}
+
 
 
                 sectionPairs.Sort();
@@ -236,23 +249,23 @@ namespace HL7Viewer.DataModel
             }
         }
 
-        /////// <summary>
-        /////// Finner Section name fra en linge i meldingsfilen. Returnerer null hvis den ikke finner section name i linjen. 
-        /////// </summary>
-        /////// <param name="line">linje fra meldingsfilen</param>
-        /////// <returns></returns>
-        ////private string GetSectionNameFromMessageFile(string line)
-        ////{
-        ////    if (line == null)
-        ////    { return null; }
+        /// <summary>
+        /// Finner Section name fra en linge i meldingsfilen. Returnerer null hvis den ikke finner section name i linjen. 
+        /// </summary>
+        /// <param name="line">linje fra meldingsfilen</param>
+        /// <returns></returns>
+        private string GetSectionNameFromMessageFile(string line)
+        {
+            if (line == null)
+            { return null; }
 
-        ////    string[] strTmp = line.Split(SEPARATOR_SECTIONS);
-        ////    if (strTmp.Length > 0)
-        ////    {
-        ////        return strTmp[0];
-        ////    }
-        ////    else return null;
-        ////}
+            string[] strTmp = line.Split(SEPARATOR_SECTIONS);
+            if (strTmp.Length > 0)
+            {
+                return strTmp[0];
+            }
+            else return null;
+        }
 
         private HL7Segments CreateSubSegments(string substringSource, HL7SegmentBase parentSegment, string segmentName)
         {

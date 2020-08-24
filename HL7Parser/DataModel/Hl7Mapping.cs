@@ -15,7 +15,7 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Liste med navn på hovedseksjonene i mappingen. F.eks MSH, PID osv.
         /// </summary>
-        public List<string> SectionNames { get; set; }
+        public List<string> SectionNames { get; set; } = new List<string>();
 
         public HL7Segments _HL7Segments { get; set; } = new HL7Segments();
 
@@ -95,9 +95,10 @@ namespace HL7Viewer.DataModel
                             parentSegment.SubSegments.Add(segment);
                         }
                     }
-                    PopulateListOfSectionNames();
+                   
                 }
                 sr.Close();
+                PopulateListOfSectionNames();
             }
         }
 
