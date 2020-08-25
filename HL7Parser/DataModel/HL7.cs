@@ -41,14 +41,11 @@ namespace HL7Viewer.DataModel
         private const string MappingFileName = "Mapping_HL7.csv";
 
 
-        private char[] SEPARATOR_LEVEL_0 = new char[] { '\r' };
+        private char[] SEPARATOR_LEVEL_0 = new char[] { '\n' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
-        private char[] SEPARATOR_LEVEL_2 = new char[] { '^' };
+        private char[] SEPARATOR_LEVEL_2 = new char[] { '^', '~' };
         private char[] SEPARATOR_LEVEL_3 = new char[] { '~' };
 
-
-
-        //private char[] SEPARATOR_SUBSECTIONS_REPEAT = new char[] { '~' };
         private const string MSG_NOT_INCLUDED_IN_MAPPING = "(*)";
 
 
@@ -72,7 +69,7 @@ namespace HL7Viewer.DataModel
         }
 
 
-        public void ImportHL7MsgFile2(string str)
+        public void ImportHL7MsgFile2(string strFileContent)
         {
             _HL7SegmentCategories = new HL7SegmentCategories();
 
@@ -83,23 +80,22 @@ namespace HL7Viewer.DataModel
             #endregion -- Import mapping --
 
 
-            // -- Leser inn meldingsfilen, linje for linje. --
-            //   this._HL7SegmentCategories = new HL7SegmentCategories();
+            this.msgRootnode = new MsgNode("Root", strFileContent, 0,0);
 
-
-            #region -- Parser meldingsfilen til sectionpairs --
-
-            this.msgRootnode = new MsgNode("Root");
-            msgRootnode.CreateChildNodes(SEPARATOR_LEVEL_0);
+            msgRootnode.CreateChildNodes_L0(SEPARATOR_LEVEL_0, true);
+            foreach (MsgNode childnode in msgRootnode.Children)
+            {
+                childnode.ExtractNameAndSourceString(SEPARATOR_LEVEL_1);
+            }
 
             foreach (MsgNode subNode_L0 in msgRootnode.Children)
             {
                 // -- Parse subnodes level 1 --
-                subNode_L0.CreateChildNodes(SEPARATOR_LEVEL_1);
+                subNode_L0.CreateChildNodes_L0(SEPARATOR_LEVEL_1);
 
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
-                    subNode_L1.CreateChildNodes(SEPARATOR_LEVEL_2);
+                    subNode_L1.CreateChildNodes_L0(SEPARATOR_LEVEL_2);
                 }
             }
         }
