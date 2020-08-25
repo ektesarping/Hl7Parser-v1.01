@@ -57,6 +57,7 @@
       <DependentUpon>UcHL7.cs</DependentUpon>
     </Compile>
     <Compile Include="DataModel\HL7.cs" />
+    <Compile Include="DataModel\Hl7SegmentSection.cs" />
     <Compile Include="DataModel\HL7SegmentBase.cs" />
     <Compile Include="DataModel\HL7SegmentCategories.cs" />
     <Compile Include="DataModel\HL7SegmentCategory.cs" />

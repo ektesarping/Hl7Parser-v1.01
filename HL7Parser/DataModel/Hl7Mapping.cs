@@ -17,6 +17,8 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public List<string> SectionNames { get; set; } = new List<string>();
 
+        public Section MyProperty { get; set; }
+
         public HL7Segments _HL7Segments { get; set; } = new HL7Segments();
 
 
