@@ -84,135 +84,25 @@ namespace HL7Viewer.DataModel
 
 
             // -- Leser inn meldingsfilen, linje for linje. --
-            this._HL7SegmentCategories = new HL7SegmentCategories();
+            //   this._HL7SegmentCategories = new HL7SegmentCategories();
 
-            //// -- Søker gjennom meldingsfilen på nytt for å finne evt seksjoner som ikke ligger i mappingfilen. --
-
-
-            //// -- Finner hoveddelene av filen, F.eks MSH, PV1, PID, OBR osv --
-            ////List<string> sectionNames = Mapping.GetSectionNames();
-            //foreach (string sectionName in Mapping.SectionNames)
-            //{
-            //    HL7SegmentCategory category = new HL7SegmentCategory();
-            //    category.CategoryName = sectionName;
-            //    _HL7SegmentCategories.Add(category);
-            //}
 
             #region -- Parser meldingsfilen til sectionpairs --
 
-            //// -- Opprettet sectionpairs fra meldingen --
-            //SectionIndexPairs sectionPairs = new SectionIndexPairs();
             this.msgRootnode = new MsgNode("Root");
-
-            // -- Oppretter sectionpairs ut for hver av linjene i meldingen. --
-            //string[] lines = str.Split(SEPARATOR_LEVEL_0);
-            //foreach (string line in lines)
-            //{
-
-
-            CreateChildNodes(msgRootnode, SEPARATOR_LEVEL_0);
+            msgRootnode.CreateChildNodes(SEPARATOR_LEVEL_0);
 
             foreach (MsgNode subNode_L0 in msgRootnode.Children)
             {
-                //string nameTmp = GetSectionNameFromSourceString(line);
-
-                //if (nameTmp != null)
-                //{
-                //MsgNode newNode = new MsgNode(nameTmp, msgRootnode);
-                //newNode.SourceString = line.Substring(nameTmp.Length + 1);  // - Legger Sectionname for i sourceString for å justere mot feltindex 0 for seksjonen i mappingen.
-
                 // -- Parse subnodes level 1 --
-                CreateChildNodes(subNode_L0, SEPARATOR_LEVEL_1);
+                subNode_L0.CreateChildNodes(SEPARATOR_LEVEL_1);
 
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
-                    CreateChildNodes(subNode_L1, SEPARATOR_LEVEL_2);
+                    subNode_L1.CreateChildNodes(SEPARATOR_LEVEL_2);
                 }
-
-                //}
             }
-
-            #region -- Splitter innholdet i linjen i respektive sectionPair, og legger inn hver del i .SourceString --
-
-            //SectionIndexPairs sectionPairsSlettes = new SectionIndexPairs();
-            //for (int i = 0; i < sectionPairsSlettes.Count; i++)
-            //{
-            //    SectionIndexPair sectionPair = sectionPairsSlettes[i]; // Oppretter tmp variabel for enklere å vise properties i debugging.
-            //    SectionIndexPair sectionPairNext = sectionPairsSlettes[i + 1]; // Oppretter tmp variabel for enklere å vise properties i debugging.
-
-            //    int posStart = sectionPair.startPos;
-
-            //    if (i < sectionPairsSlettes.Count - 1)
-            //    {
-            //        int length = sectionPairNext.startPos - sectionPairNext.Name.Length - 1 - posStart;  // - 1 er for skilletegnet etter section navnet.
-            //        sectionPair.SourceString = str.Substring(posStart, length);  // - Legger Sectionname for i sourceString for å justere mot feltindex 0 for seksjonen i mappingen.
-
-            //        sectionPair.SourceString = sectionPair.SourceString.Trim();
-
-            //        // Legger inn én ekstra | fordi feltet separators  inneholder en separator i feltverdien.
-            //        if (sectionPair.Name == "MSH")
-            //        {
-            //            sectionPair.SourceString = sectionPair.Name + "|" + sectionPair.SourceString;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        sectionPair.SourceString = str.Substring(posStart);
-            //    }
-
-            #endregion -- Splitter innholdet i HL7 filen i respektive sectionPair, og legger inn hver del i .SourceString --
-
-
-            //// -- Finner startpos for hver av seksjonene i HL7 meldingen. --
-            //// Søker gjennom meldingsfilen og finnes start for hver av seksjonene i mappingen.
-            //// Bruker SectionIndexPairs
-            //foreach (string sectionName in Mapping.SectionNames)
-            //{
-            //    string key = sectionName + "|";
-            //    int pos = str.IndexOf(key);
-            //    //pair.startIndex = pos;
-
-            //    //    if (pos >= 0)
-            //    //    {
-            //    SectionIndexPair pair = new SectionIndexPair(sectionName, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
-            //    sectionPairsSlettes.Add(pair);
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        // Meldingsfilen inneholder ikke den aktuelle seksjonen.
-            //    //    }
-            //}
-
-            //sectionPairsSlettes.Sort();
-            #endregion -- Parser meldingsfilen til sectionpairs --
         }
-
-
-
-
-        /// <summary>
-        /// Oppretter subnode. Setter ParentNode og legger til i Parentnode.Children.
-        /// </summary>
-        /// <param name="sourceString"></param>
-        /// <param name="parent"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
-        private MsgNodes CreateChildNodes(MsgNode parent, char[] separator)
-        {
-            MsgNodes nodes = new MsgNodes();
-            string[] strNodesLevel = parent.SourceString.Split(separator);
-            foreach (string strNode in strNodesLevel)
-            {
-                //string name = GetSectionNameFromSourceString(strNode, separator);
-                MsgNode msgsubnode = new MsgNode();
-                msgsubnode.Value = strNode;
-                msgsubnode.Parent = parent;
-                msgsubnode.Children.Add(msgsubnode);
-            }
-            return nodes;
-        }
-
-
 
 
 
