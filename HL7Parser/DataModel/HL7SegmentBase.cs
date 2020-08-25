@@ -27,17 +27,17 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public int SubIndex { get; set; }
 
-        [Obsolete]
-        public int Length { get; set; }
+        //[Obsolete]
+        //public int Length { get; set; }
 
-        [Obsolete]
-        public string Dt { get; set; }
+        //[Obsolete]
+        //public string Dt { get; set; }
 
-        [Obsolete]
-        public string Opt { get; set; }
+        //[Obsolete]
+        //public string Opt { get; set; }
 
-        [Obsolete]
-        public string Rp { get; set; }
+        //[Obsolete]
+        //public string Rp { get; set; }
 
         /// <summary>
         /// Collapsed default ved innlesing.

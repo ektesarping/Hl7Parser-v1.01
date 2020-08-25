@@ -63,6 +63,8 @@
     <Compile Include="DataModel\HL7SegmentString.cs" />
     <Compile Include="DataModel\HL7Segments.cs" />
     <Compile Include="DataModel\Hl7Mapping.cs" />
+    <Compile Include="DataModel\Msg\MsgNode.cs" />
+    <Compile Include="DataModel\Msg\MsgNodes.cs" />
     <Compile Include="DataModel\SectionIndexPair.cs" />
     <Compile Include="DataModel\SectionIndexPairs.cs" />
     <Compile Include="DataModel\TreenodeHL7Base.cs" />
