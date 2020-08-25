@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using HL7Viewer.DataModel.Msg;
 
 namespace HL7Viewer.DataModel.GUI
 {
@@ -31,7 +32,7 @@ namespace HL7Viewer.DataModel.GUI
         #region -- Populate --
         public void Populate(HL7SegmentCategories _hL7SegmentCategories)
         {
-            this._HL7SegmentCategories = _hL7SegmentCategories;
+            //this._HL7SegmentCategories = _hL7SegmentCategories;
             Repopulate();
         }
 
@@ -39,50 +40,79 @@ namespace HL7Viewer.DataModel.GUI
         {
             this.tvHL7.Nodes.Clear();
             TreeNode root = new TreeNode();
-            root.Text = RootnodeText;
+            _HL7.msgRootnode.Treenode = root;
 
+            root.Text = RootnodeText;
             this.tvHL7.Nodes.Add(root);
 
-            foreach (HL7SegmentCategory cat in _HL7SegmentCategories)
+            foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
             {
-                TreeNode nodeCategory = new TreeNode(cat.CategoryName);
-                cat.Treenode = nodeCategory;
-                nodeCategory.Text = cat.CategoryName;
-                root.Nodes.Add(nodeCategory);
-                nodeCategory.Expand();
-
-                foreach (HL7SegmentString segment in cat._HL7Segments)
+                if ((!this.chkHideEmptyFields.Checked) && (msgChildNode.Value != null))
                 {
-                    if (!((this.chkHideEmptyFields.Checked) && (string.IsNullOrEmpty(segment.Value))))
-                    {
-                        TreenodeHL7Base node = new TreenodeHL7Base(segment);
-                        nodeCategory.Nodes.Add(node);
-                        node.UpdateNodeText();
-                        PopulateRecursively(node);
-                    }
+                    TreeNode treenode = new TreeNode();
+                    msgChildNode.Treenode = treenode;
+
+                    treenode.Text = msgChildNode.NodeText;
+                    root.Nodes.Add(treenode);
                 }
+                PopulateRecursively(msgChildNode);
+
             }
+
+            //foreach (HL7SegmentCategory cat in _HL7SegmentCategories)
+            //{
+            //    TreeNode nodeCategory = new TreeNode(cat.CategoryName);
+            //    cat.Treenode = nodeCategory;
+            //    nodeCategory.Text = cat.CategoryName;
+            //    root.Nodes.Add(nodeCategory);
+            //    nodeCategory.Expand();
+
+            //    foreach (HL7SegmentString segment in cat._HL7Segments)
+            //    {
+            //        if (!((this.chkHideEmptyFields.Checked) && (string.IsNullOrEmpty(segment.Value))))
+            //        {
+            //            TreenodeHL7Base node = new TreenodeHL7Base(segment);
+            //            nodeCategory.Nodes.Add(node);
+            //            node.UpdateNodeText();
+            //            PopulateRecursively(node);
+            //        }
+            //    }
+            //}
 
             // Ekspanderer root node og neste level
             root.Expand();
-            foreach (HL7SegmentCategory cat in _HL7SegmentCategories)
-            {
-                cat.Treenode.Expand();
-            }
+            //foreach (HL7SegmentCategory cat in _HL7SegmentCategories)
+            //{
+            //    cat.Treenode.Expand();
+            //}
         }
 
-        private void PopulateRecursively(TreenodeHL7Base node)
+        private void PopulateRecursively(MsgNode node)
         {
-            foreach (HL7SegmentString subsegment in node._HL7Segment.SubSegments)
+            foreach (MsgNode msgSubNode in node.Children)
             {
-                if (!((this.chkHideEmptyFields.Checked) && (string.IsNullOrEmpty(subsegment.Value))))
+                if ((!this.chkHideEmptyFields.Checked) && (msgSubNode.Value != null))
                 {
-                    TreenodeHL7Base childnode = new TreenodeHL7Base(subsegment);
-                    node.Nodes.Add(childnode);
-                    childnode.UpdateSubNodeText();
-                    PopulateRecursively(childnode);
+                    TreeNode treenode = new TreeNode();
+
+                    msgSubNode.Treenode = treenode;
+                    node.Treenode.Nodes.Add(treenode);
+                    treenode.Text = msgSubNode.NodeText;
                 }
+                PopulateRecursively(msgSubNode);
             }
+
+
+            //foreach (HL7SegmentString subsegment in node._HL7Segment.SubSegments)
+            //{
+            //    if (!((this.chkHideEmptyFields.Checked) && (string.IsNullOrEmpty(subsegment.Value))))
+            //    {
+            //        TreenodeHL7Base childnode = new TreenodeHL7Base(subsegment);
+            //        node.Nodes.Add(childnode);
+            //        childnode.UpdateSubNodeText();
+            //        PopulateRecursively(childnode);
+            //    }
+            //}
         }
 
 
@@ -95,7 +125,7 @@ namespace HL7Viewer.DataModel.GUI
 
             _HL7.MsgFile = fi;
             _HL7.ImportHL7MsgFile(_HL7.MsgFile);
-            this._HL7SegmentCategories = this._HL7._HL7SegmentCategories;
+            //this._HL7SegmentCategories = this._HL7._HL7SegmentCategories;
             this.Populate(this._HL7._HL7SegmentCategories);
         }
 

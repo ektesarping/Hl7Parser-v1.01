@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HL7Viewer.DataModel.Msg
 {
@@ -27,6 +28,13 @@ namespace HL7Viewer.DataModel.Msg
         /// Temp variable for å lage source inkludert name
         /// </summary>
         public string SourceStringRaw { get; set; }
+
+        public TreeNode Treenode { get; set; }
+
+        public string NodeText
+        {
+            get { return this.Parent.Name + " " + this.Name + " " + this.Index.ToString() + ": " + this.Value; }
+        }
 
         public MsgNode()
         { }
@@ -60,7 +68,7 @@ namespace HL7Viewer.DataModel.Msg
             this.SourceStringRaw = strRaw;
             this.Level = level;
             this.Index = Index;
-            this.SourceString = strRaw.Substring(name.Length);
+            this.SourceString = strRaw; //.Substring(name.Length);
         }
 
         #endregion -- Constructor --
@@ -91,14 +99,6 @@ namespace HL7Viewer.DataModel.Msg
             int indexsubnode = 0;
             foreach (string strNode in strNodesLevel)
             {
-                // -- Ignorerer første felt. Brukes der feltnavnet til parent ligger i første del av linjen
-                //    Ex: PID|||23034112345||Olsen^Kåre||19410456|M
-                //if (ignoreFirstField)
-                //{
-                //    ignoreFirstField = false;
-                //    continue;
-                //}
-
                 //string name = GetSectionNameFromSourceString(strNode, separator);
                 MsgNode msgsubnode = new MsgNode(this.Level + 1, indexsubnode);
                 msgsubnode.SourceStringRaw = strNode;
@@ -106,11 +106,11 @@ namespace HL7Viewer.DataModel.Msg
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 if (useFirstFieldAsName)
                 {
-                    msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
+                    msgsubnode.SourceString = strNode;
                 }
                 else
                 {
-                    msgsubnode.SourceString = strNode;
+                    msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
                 }
 
                 // -- Fjer siste char som er \r ( halvparten av CR / linjeskift ) --
