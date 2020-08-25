@@ -33,7 +33,7 @@ namespace HL7Viewer.DataModel.Msg
 
         public string NodeText
         {
-            get { return this.Parent.Name + " " + this.Name + " " + this.Index.ToString() + ": " + this.Value; }
+            get { return /*this.Parent.Name + " " +*/ this.Name + " " + this.Index.ToString() + ": " + this.Value; }
         }
 
         public MsgNode()

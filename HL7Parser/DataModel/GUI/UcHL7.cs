@@ -56,50 +56,34 @@ namespace HL7Viewer.DataModel.GUI
                     root.Nodes.Add(treenode);
                 }
                 PopulateRecursively(msgChildNode);
-
             }
-
-            //foreach (HL7SegmentCategory cat in _HL7SegmentCategories)
-            //{
-            //    TreeNode nodeCategory = new TreeNode(cat.CategoryName);
-            //    cat.Treenode = nodeCategory;
-            //    nodeCategory.Text = cat.CategoryName;
-            //    root.Nodes.Add(nodeCategory);
-            //    nodeCategory.Expand();
-
-            //    foreach (HL7SegmentString segment in cat._HL7Segments)
-            //    {
-            //        if (!((this.chkHideEmptyFields.Checked) && (string.IsNullOrEmpty(segment.Value))))
-            //        {
-            //            TreenodeHL7Base node = new TreenodeHL7Base(segment);
-            //            nodeCategory.Nodes.Add(node);
-            //            node.UpdateNodeText();
-            //            PopulateRecursively(node);
-            //        }
-            //    }
-            //}
 
             // Ekspanderer root node og neste level
             root.Expand();
-            //foreach (HL7SegmentCategory cat in _HL7SegmentCategories)
-            //{
-            //    cat.Treenode.Expand();
-            //}
         }
 
         private void PopulateRecursively(MsgNode node)
         {
-            foreach (MsgNode msgSubNode in node.Children)
+            // -- MSH felt 0 inneholder skilletegn. Ignorer dette for denne noden --
+            if (node.Parent.Name == "MSH" && node.Index == 0)
             {
-                if ((!this.chkHideEmptyFields.Checked) && (msgSubNode.Value != null))
-                {
-                    TreeNode treenode = new TreeNode();
+                return;
+            }
 
-                    msgSubNode.Treenode = treenode;
-                    node.Treenode.Nodes.Add(treenode);
-                    treenode.Text = msgSubNode.NodeText;
+            if (node.Children.Count > 1)
+            {
+                foreach (MsgNode msgSubNode in node.Children)
+                {
+                    if ((!this.chkHideEmptyFields.Checked) && (msgSubNode.Value != null))
+                    {
+                        TreeNode treenode = new TreeNode();
+
+                        msgSubNode.Treenode = treenode;
+                        node.Treenode.Nodes.Add(treenode);
+                        treenode.Text = msgSubNode.NodeText;
+                    }
+                    PopulateRecursively(msgSubNode);
                 }
-                PopulateRecursively(msgSubNode);
             }
 
 

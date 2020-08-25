@@ -68,12 +68,6 @@ namespace HL7Viewer.DataModel
                         int.TryParse(fields[INDEX_SUBINDEX], out int subIndexTmp);
                         segment.SubIndex = subIndexTmp;
 
-                        //int.TryParse(fields[INDEX_LENGTH], out int lengthTmp);
-                        //segment.Length = lengthTmp;
-
-                        //segment.Dt = fields[INDEX_DT];
-                        //segment.Opt = fields[INDEX_OPT];
-                        //segment.Rp = fields[INDEX_RP];
 
                         if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
                         {

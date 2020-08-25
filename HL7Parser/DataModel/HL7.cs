@@ -100,6 +100,11 @@ namespace HL7Viewer.DataModel
                     subNode_L1.CreateChildNodes_L0(SEPARATOR_LEVEL_2, true, false);
                 }
             }
+
+
+            // -- Matcher mot mapping --
+            Mapping._HL7Segments.Count;
+
         }
 
 
