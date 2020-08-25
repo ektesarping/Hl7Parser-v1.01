@@ -156,7 +156,7 @@ namespace HL7Viewer.DataModel.GUI
         private void limInnHL7FilFraClipboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string str = Clipboard.GetText();
-            _HL7.ImportHL7MsgFile(str);
+            _HL7.ImportHL7MsgFile2(str);
             Populate(this._HL7._HL7SegmentCategories);
         }
 

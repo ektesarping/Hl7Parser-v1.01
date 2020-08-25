@@ -21,10 +21,10 @@ namespace HL7Viewer.DataModel
         public HL7SegmentCategory()
         { }
 
-        public HL7SegmentCategory(string categoryName, bool addedFromMessage) : this()
+        public HL7SegmentCategory(string categoryName /*, bool addedFromMessage*/) : this()
         {
             this.CategoryName = categoryName;
-            this.AddedFromMessageFile = addedFromMessage;
+            //this.AddedFromMessageFile = addedFromMessage;
         }
         #endregion -- Constructor--
 

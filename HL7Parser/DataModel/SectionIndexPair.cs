@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
+    /// <summary>
+    /// Klassen inneholder Sectionname og innholdet i meldingslinjen. 
+    /// </summary>
     public class SectionIndexPair : IComparable
     {
         public string Name { get; set; }

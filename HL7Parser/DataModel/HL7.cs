@@ -41,9 +41,7 @@ namespace HL7Viewer.DataModel
 
 
         public HL7()
-        {
-
-        }
+        { }
 
 
         /// <summary>
@@ -56,8 +54,124 @@ namespace HL7Viewer.DataModel
 
             string str = sr.ReadToEnd();
             sr.Close();
-            ImportHL7MsgFile(str);
+            ImportHL7MsgFile2(str);
         }
+
+
+        public void ImportHL7MsgFile2(string str)
+        {
+            _HL7SegmentCategories = new HL7SegmentCategories();
+
+            #region -- Import mapping --
+            FileInfo executableFi = new FileInfo(Application.ExecutablePath); // Hent mappingfilen fra programfolderen.
+            MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
+            Mapping.ImportMapping(MappingFileFi);
+            #endregion -- Import mapping --
+
+
+            // -- Leser inn meldingsfilen, linje for linje. --
+            this._HL7SegmentCategories = new HL7SegmentCategories();
+
+            //// -- Søker gjennom meldingsfilen på nytt for å finne evt seksjoner som ikke ligger i mappingfilen. --
+
+
+            //// -- Finner hoveddelene av filen, F.eks MSH, PV1, PID, OBR osv --
+            ////List<string> sectionNames = Mapping.GetSectionNames();
+            //foreach (string sectionName in Mapping.SectionNames)
+            //{
+            //    HL7SegmentCategory category = new HL7SegmentCategory();
+            //    category.CategoryName = sectionName;
+            //    _HL7SegmentCategories.Add(category);
+            //}
+
+            #region -- Parser meldingsfilen til sectionpairs --
+
+            // -- Opprettet sectionpairs fra meldingen --
+            SectionIndexPairs sectionPairs = new SectionIndexPairs();
+
+            // -- Oppretter sectionpairs ut for hver av linjene i meldingen. --
+            string[] lines = str.Split(new char[] { '\r' });
+            foreach (string line in lines)
+            {
+                string sectionNameTmp = GetSectionNameFromMessageFile(line);
+                if (sectionNameTmp != null)
+                {
+                    {
+                        HL7SegmentCategory catTmp = new HL7SegmentCategory(sectionNameTmp);
+                        this._HL7SegmentCategories.Add(catTmp);
+
+
+                        string key = sectionNameTmp + "|";
+                        int pos = line.IndexOf(key);
+                        //pair.startIndex = pos;
+
+                        //    if (pos >= 0)
+                        //    {
+                        SectionIndexPair pair = new SectionIndexPair(sectionNameTmp, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
+                        sectionPairs.Add(pair);
+                        //    }
+                    }
+                }
+            }
+
+            #region -- Splitter innholdet i linjen i respektive sectionPair, og legger inn hver del i .SourceString --
+            for (int i = 0; i < sectionPairs.Count; i++)
+            {
+                SectionIndexPair sectionPair = sectionPairs[i]; // Oppretter tmp variabel for enklere å vise properties i debugging.
+                SectionIndexPair sectionPairNext = sectionPairs[i + 1]; // Oppretter tmp variabel for enklere å vise properties i debugging.
+
+                int posStart = sectionPair.startPos;
+
+                if (i < sectionPairs.Count - 1)
+                {
+                    int length = sectionPairNext.startPos - sectionPairNext.Name.Length - 1 - posStart;  // - 1 er for skilletegnet etter section navnet.
+                    sectionPair.SourceString = str.Substring(posStart, length);  // - Legger Sectionname for i sourceString for å justere mot feltindex 0 for seksjonen i mappingen.
+
+                    sectionPair.SourceString = sectionPair.SourceString.Trim();
+
+                    // Legger inn én ekstra | fordi feltet separators  inneholder en separator i feltverdien.
+                    if (sectionPair.Name == "MSH")
+                    {
+                        sectionPair.SourceString = sectionPair.Name + "|" + sectionPair.SourceString;
+                    }
+                }
+                else
+                {
+                    sectionPair.SourceString = str.Substring(posStart);
+                }
+            }
+            #endregion -- Splitter innholdet i HL7 filen i respektive sectionPair, og legger inn hver del i .SourceString --
+
+
+
+            // -- Finner startpos for hver av seksjonene i HL7 meldingen. --
+            // Søker gjennom meldingsfilen og finnes start for hver av seksjonene i mappingen.
+            // Bruker SectionIndexPairs
+            foreach (string sectionName in Mapping.SectionNames)
+            {
+                string key = sectionName + "|";
+                int pos = str.IndexOf(key);
+                //pair.startIndex = pos;
+
+                //    if (pos >= 0)
+                //    {
+                SectionIndexPair pair = new SectionIndexPair(sectionName, pos + key.Length - 1);   // Skilletegnet etter sectionname skal inkluderes!
+                sectionPairs.Add(pair);
+                //    }
+                //    else
+                //    {
+                //        // Meldingsfilen inneholder ikke den aktuelle seksjonen.
+                //    }
+            }
+
+            sectionPairs.Sort();
+            #endregion -- Parser meldingsfilen til sectionpairs --
+
+
+        }
+
+
+
 
 
         /// <summary>
@@ -86,8 +200,8 @@ namespace HL7Viewer.DataModel
                     {
                         if (!Mapping.SectionNames.Contains(sectionNameTmp))
                         {
-                            HL7SegmentCategory newCategory = new HL7SegmentCategory(sectionNameTmp, true);
-                            Mapping.SectionNames.Add  <<<--- Fortsett her!
+                            // -- utkommentert. Signatur endret  HL7SegmentCategory newCategory = new HL7SegmentCategory(sectionNameTmp, true);
+                            //                            Mapping.SectionNames.Add  <<<--- Fortsett her!
                             //Mapping._HL7Segments.Add(new HL7SegmentCategory(sectionNameTmp, true));
                         }
                     }
@@ -248,6 +362,9 @@ namespace HL7Viewer.DataModel
                 MessageBox.Show("Kan ikke vise meldingen. \r\nFeilmelding:" + ex.Message + "\r\n\n" + ex.StackTrace);
             }
         }
+
+
+
 
         /// <summary>
         /// Finner Section name fra en linge i meldingsfilen. Returnerer null hvis den ikke finner section name i linjen. 
