@@ -43,11 +43,11 @@ namespace HL7Viewer.DataModel.Msg
             this.Name = name;
         }
 
-        public MsgNode(string name, MsgNode parent) : this(name)
-        {
-            this.Parent = parent;
-            this.Parent.Children.Add(this);
-        }
+        //public MsgNode(string name, MsgNode parent) : this(name)
+        //{
+        //    this.Parent = parent;
+        //    this.Parent.Children.Add(this);
+        //}
 
         /// <summary>
         /// Oppretter msgNode med navn og setter sourcestring med name ekskludert.
@@ -65,7 +65,7 @@ namespace HL7Viewer.DataModel.Msg
 
         #endregion -- Constructor --
 
-        public bool ExtractNameAndSourceString(char[] separator)
+        public bool ExtractNameAndSourceStringFirstLevel(char[] separator)
         {
             string[] fields = this.SourceStringRaw.Split(separator);
             if (fields.Length > 0)
@@ -82,19 +82,38 @@ namespace HL7Viewer.DataModel.Msg
         /// Oppretter subnode. Setter ParentNode og legger til i Parentnode.Children.
         /// </summary>
         /// <param name="separator"></param>
+        /// <param name="useFirstFieldAsName"></param>
         /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
         /// <returns></returns>
-        public MsgNodes CreateChildNodes_L0(char[] separator, bool trimLastCharacter = false)
+        public void CreateChildNodes_L0(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
         {
-            MsgNodes nodes = new MsgNodes();
-            string[] strNodesLevel = this.SourceStringRaw.Split(separator);
+            string[] strNodesLevel = this.SourceString.Split(separator);
             int indexsubnode = 0;
             foreach (string strNode in strNodesLevel)
             {
+                // -- Ignorerer første felt. Brukes der feltnavnet til parent ligger i første del av linjen
+                //    Ex: PID|||23034112345||Olsen^Kåre||19410456|M
+                //if (ignoreFirstField)
+                //{
+                //    ignoreFirstField = false;
+                //    continue;
+                //}
+
                 //string name = GetSectionNameFromSourceString(strNode, separator);
                 MsgNode msgsubnode = new MsgNode(this.Level + 1, indexsubnode);
                 msgsubnode.SourceStringRaw = strNode;
-                msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
+
+                // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
+                if (useFirstFieldAsName)
+                {
+                    msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
+                }
+                else
+                {
+                    msgsubnode.SourceString = strNode;
+                }
+
+                // -- Fjer siste char som er \r ( halvparten av CR / linjeskift ) --
                 if (trimLastCharacter)
                 {
                     msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
@@ -110,7 +129,12 @@ namespace HL7Viewer.DataModel.Msg
                 this.Children.Add(msgsubnode);
                 indexsubnode++;
             }
-            return nodes;
+        }
+
+        public override string ToString()
+        {
+            string sep = "\t";
+            return this.Name + sep + " L:" + this.Level.ToString() + "/I:" + this.Index.ToString() + sep + " Src: " + this.SourceStringRaw;
         }
     }
 }

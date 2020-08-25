@@ -24,7 +24,7 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Root node i meldingsstrukturen.
         /// </summary>
-        public HL7Viewer.DataModel.Msg.MsgNode msgRootnode { get; set; } = new MsgNode();
+        public HL7Viewer.DataModel.Msg.MsgNode msgRootnode { get; set; } = new MsgNode(0, 0);
 
 
         public HL7SegmentCategories _HL7SegmentCategories { get; set; } = new HL7SegmentCategories();
@@ -80,22 +80,24 @@ namespace HL7Viewer.DataModel
             #endregion -- Import mapping --
 
 
-            this.msgRootnode = new MsgNode("Root", strFileContent, 0,0);
+            this.msgRootnode = new MsgNode("Root", strFileContent, 0, 0);
 
-            msgRootnode.CreateChildNodes_L0(SEPARATOR_LEVEL_0, true);
+            msgRootnode.CreateChildNodes_L0(SEPARATOR_LEVEL_0, true, false);
+
+            // Setter Name og ekstraherer SourceString for nodene i nivå 0
             foreach (MsgNode childnode in msgRootnode.Children)
             {
-                childnode.ExtractNameAndSourceString(SEPARATOR_LEVEL_1);
+                childnode.ExtractNameAndSourceStringFirstLevel(SEPARATOR_LEVEL_1);
             }
 
             foreach (MsgNode subNode_L0 in msgRootnode.Children)
             {
                 // -- Parse subnodes level 1 --
-                subNode_L0.CreateChildNodes_L0(SEPARATOR_LEVEL_1);
+                subNode_L0.CreateChildNodes_L0(SEPARATOR_LEVEL_1, false, false);
 
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
-                    subNode_L1.CreateChildNodes_L0(SEPARATOR_LEVEL_2);
+                    subNode_L1.CreateChildNodes_L0(SEPARATOR_LEVEL_2, false, false);
                 }
             }
         }
