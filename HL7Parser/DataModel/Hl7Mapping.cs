@@ -17,9 +17,9 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public List<string> SectionNames { get; set; } = new List<string>();
 
-        public Hl7MappingSections Hl7MappingSections { get; set; }
+        public Hl7MappingSections Hl7MappingSections { get; set; } = new Hl7MappingSections();
 
-        public HL7Segments _HL7Segments { get; set; } = new HL7Segments();
+        public HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
 
 
@@ -42,7 +42,7 @@ namespace HL7Viewer.DataModel
             {
                 string str = String.Empty;
                 HL7SegmentString parentSegment = null;
-                _HL7Segments = new HL7Segments();
+                _HL7Segments = new HL7MappingSegments();
 
                 while (!sr.EndOfStream)
                 {
@@ -90,7 +90,7 @@ namespace HL7Viewer.DataModel
                             // -- Opprette section hvis ikke den allerede er opprettet --
                             this.Hl7MappingSections.Add(segment.SectionName);
                             // -- Legger til som subsegmenter i mappingsection --
-                            Hl7MappingSection parentsection =   this.Hl7MappingSections.Get(segment.SectionName);
+                            Hl7MappingSection parentsection = this.Hl7MappingSections.Get(segment.SectionName);
                             segment.MappingSection = parentsection;
                             parentsection.Segments.Add(segment);
 
@@ -105,11 +105,28 @@ namespace HL7Viewer.DataModel
                     }
                 }
                 sr.Close();
-               // PopulateListOfSections();
+                // PopulateListOfSections();
+            }
+        }
+
+        public HL7SegmentString GetSegment(string name, int index, int subindex)
+        {
+            Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(name);
+            if (mappingSectionTmp == null)
+            {
+                return null;
+            }
+            else
+            {
+                
+
 
 
             }
         }
+
+
+        private HL7SegmentString GetSegment(int index, int subindex)
 
 
         /// <summary>

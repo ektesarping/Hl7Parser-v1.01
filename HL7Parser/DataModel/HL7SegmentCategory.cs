@@ -11,7 +11,7 @@ namespace HL7Viewer.DataModel
     {
         public string CategoryName { get; set; }
 
-        public HL7Segments _HL7Segments { get; set; } = new HL7Segments();
+        public HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
         public TreeNode Treenode { get; set; }
 

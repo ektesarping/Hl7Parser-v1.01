@@ -8,11 +8,9 @@ namespace HL7Viewer.DataModel
 {
     public class Hl7MappingSection
     {
-        public HL7SegmentString Segment { get; set; }
+        public HL7SegmentString Segment { get; set; } = new HL7SegmentString();
 
-        public HL7Segments Segments { get; set; }
-
-
+        public HL7MappingSegments Segments { get; set; } = new HL7MappingSegments();
 
         public string SegmentName
         {

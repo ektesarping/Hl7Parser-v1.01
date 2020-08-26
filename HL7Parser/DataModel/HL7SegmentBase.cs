@@ -70,7 +70,7 @@ namespace HL7Viewer.DataModel
 
         public HL7SegmentBase ParentSegment { get; set; }
 
-        public HL7Segments SubSegments { get; set; } = new HL7Segments();
+        public HL7MappingSegments SubSegments { get; set; } = new HL7MappingSegments();
 
 
 

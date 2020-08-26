@@ -18,6 +18,12 @@ namespace HL7Viewer.DataModel.Msg
 
         public int Index { get; set; }
 
+        /// <summary>
+        /// Index for oppslag mot mapping. Ulik this.Index ved repeterende sekvenser av felter.
+        /// F.eks ORB28 Kopimottakere som har 15 repeterende felter for hver av mottakerne.
+        /// </summary>
+        public int MappingIndex { get; set; }
+
         public MsgNode Parent { get; set; }
 
         public MsgNodes Children { get; set; } = new MsgNodes();

@@ -35,7 +35,7 @@ namespace HL7Viewer.DataModel
 
         public string Content { get; set; }
 
-        private HL7Segments _HL7Segments { get; set; } = new HL7Segments();
+        private HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
         public FileInfo MappingFileFi { get; set; }
         private const string MappingFileName = "Mapping_HL7.csv";
@@ -319,9 +319,9 @@ namespace HL7Viewer.DataModel
             else return null;
         }
 
-        private HL7Segments CreateSubSegments(string substringSource, HL7SegmentBase parentSegment, string segmentName)
+        private HL7MappingSegments CreateSubSegments(string substringSource, HL7SegmentBase parentSegment, string segmentName)
         {
-            HL7Segments subsegments = new HL7Segments();
+            HL7MappingSegments subsegments = new HL7MappingSegments();
             // Finne subsegmenter i fields[i]
             string[] subFields = substringSource.Split(SEPARATOR_LEVEL_1); // <-- Sjekk
 

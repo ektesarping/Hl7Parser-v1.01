@@ -45,6 +45,7 @@ namespace HL7Viewer.DataModel
         public void Add(string name)
         {
             Hl7MappingSection section = new Hl7MappingSection(name);
+            this.Add(section);
         }
     }
 }

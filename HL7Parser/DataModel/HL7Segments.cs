@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
-    public class HL7Segments : List<HL7SegmentString>
+    public class HL7MappingSegments : List<HL7SegmentString>
     {
-
-        public HL7Segments()
+        public HL7MappingSegments()
         { }
 
         public HL7SegmentString GetSegment(string sectionName, int index, int subindex)
