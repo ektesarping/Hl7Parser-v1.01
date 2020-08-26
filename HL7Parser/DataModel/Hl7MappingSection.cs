@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
-    public class Hl7SegmentSection
+    public class Hl7MappingSection
     {
         public HL7SegmentString Segment { get; set; }
 
         public HL7Segments Segments { get; set; }
+
+
 
         public string SegmentName
         {
@@ -25,6 +27,11 @@ namespace HL7Viewer.DataModel
                     return "";
                 }
             }
+        }
+
+        public Hl7MappingSection(string name)
+        {
+            this.Segment.SegmentName = name;
         }
     }
 }

@@ -103,7 +103,7 @@ namespace HL7Viewer.DataModel
 
 
             // -- Matcher mot mapping --
-            Mapping._HL7Segments.Count;
+           // Mapping._HL7Segments.Count;
 
         }
 

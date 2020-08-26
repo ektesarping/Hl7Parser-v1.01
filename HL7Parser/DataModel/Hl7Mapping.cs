@@ -17,7 +17,7 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public List<string> SectionNames { get; set; } = new List<string>();
 
-        public Section MyProperty { get; set; }
+        public Hl7MappingSections Hl7MappingSections { get; set; }
 
         public HL7Segments _HL7Segments { get; set; } = new HL7Segments();
 
@@ -60,7 +60,7 @@ namespace HL7Viewer.DataModel
                             continue;
                         }
 
-
+                        // -- Parse feltene i segmentet --
                         HL7SegmentString segment = new HL7SegmentString();
                         segment.SectionName = fields[INDEX_SECTION];
 
@@ -81,20 +81,33 @@ namespace HL7Viewer.DataModel
                         // -- Håndtering av parent/subsegment --
                         if (segment.SubIndex <= 0)
                         {
+
                             // Current segment er på nivå 1
+                            segment.Level = 1;
                             parentSegment = segment; // 'parentSegment' settes på parent nivå, og hentes for subsegmenter.
                             _HL7Segments.Add(segment);
+
+                            // -- Opprette section hvis ikke den allerede er opprettet --
+                            this.Hl7MappingSections.Add(segment.SectionName);
+                            // -- Legger til som subsegmenter i mappingsection --
+                            Hl7MappingSection parentsection =   this.Hl7MappingSections.Get(segment.SectionName);
+                            segment.MappingSection = parentsection;
+                            parentsection.Segments.Add(segment);
+
                         }
                         else
                         {
                             // Segmentet er et subsegment. Parentsegment ble satt i FORRIGE iterasjon.
+                            segment.Level = 2;
                             parentSegment.SubSegments.Add(segment);
                         }
+
                     }
-                   
                 }
                 sr.Close();
-                PopulateListOfSectionNames();
+               // PopulateListOfSections();
+
+
             }
         }
 
@@ -104,7 +117,7 @@ namespace HL7Viewer.DataModel
         /// </summary>
         /// <returns></returns>
         [Obsolete]
-        public List<string> PopulateListOfSectionNames()
+        public List<string> PopulateListOfSections()
         {
             //List<string> sectionNames = new List<string>(); -> Endret til public property
 
@@ -113,6 +126,7 @@ namespace HL7Viewer.DataModel
                 if ((!SectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
                 {
                     SectionNames.Add(segment.SectionName);
+                    this.Hl7MappingSections.Add(segment.SectionName);
                 }
             }
             return SectionNames;

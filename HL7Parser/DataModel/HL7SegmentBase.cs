@@ -18,7 +18,7 @@ namespace HL7Viewer.DataModel
         // -----------------------------------------------------------------------------------------------------
 
 
-        public string SectionName { get; set; }
+        
 
         public int Index { get; set; }
 
@@ -26,6 +26,8 @@ namespace HL7Viewer.DataModel
         /// Subindex. Subnoder har index verdi > 0
         /// </summary>
         public int SubIndex { get; set; }
+
+        public int Level { get; set; }
 
         //[Obsolete]
         //public int Length { get; set; }
@@ -45,6 +47,10 @@ namespace HL7Viewer.DataModel
         public bool CollapsedDefault { get; set; }
 
         public string SegmentName { get; set; }
+
+        public string SectionName { get; set; }
+
+        public Hl7MappingSection MappingSection { get; set; }
 
         public string IndexComplete
         {

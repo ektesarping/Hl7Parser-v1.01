@@ -54,7 +54,7 @@ PID	28	0		Nationality
 PID	29	0		Patient Death Date and Time					
 PID	30	0		Patient Death Indicator					
 									
-PV1	1	0			Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1				
+PV1	1	0		Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1				
 PV1	2	0		Patient Class					
 PV1	3	0		Assigned Patient Location					
 PV1	4	0		Admission Type					
