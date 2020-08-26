@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
-    public class HL7SegmentString : HL7SegmentBase
+    public class HL7MappingSegmentString : HL7MappingSegmentBase
     {
         public string Value { get; set; }
 
         public HL7SegmentCategory _HL7SegmentCategory { get; set; }
 
-        public HL7SegmentString() { }
+        public HL7MappingSegmentString() { }
 
-        public HL7SegmentString(string segmentName, string value, int index, int subindex) : this()
+        public HL7MappingSegmentString(string segmentName, string value, int index, int subindex) : this()
         {
             this.SegmentName = segmentName;
             this.Value = value;
@@ -22,7 +22,7 @@ namespace HL7Viewer.DataModel
             this.SubIndex = subindex;
         }
 
-        public HL7SegmentString(string segmentName, string value, HL7SegmentString parentSegment, int subindex) : this()
+        public HL7MappingSegmentString(string segmentName, string value, HL7MappingSegmentString parentSegment, int subindex) : this()
         {
             this.SegmentName = segmentName;
             this.Value = value;
@@ -35,7 +35,7 @@ namespace HL7Viewer.DataModel
         public string ToReport()
         {
             string str = this.SectionName + "\t" + this.Index.ToString() + "\t" + this.SubIndex.ToString() + "\t" + this.SegmentName + "\t" + Value;
-            foreach (HL7SegmentString child in this.SubSegments)
+            foreach (HL7MappingSegmentString child in this.SubSegments)
             {
                 str += "\r\n" + child.ToReport();
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
-    public class HL7SegmentBase
+    public class HL7MappingSegmentBase
     {
         // -----------------------------------------------------------------------------------------------------
         // Fields are taken from 
@@ -68,13 +68,13 @@ namespace HL7Viewer.DataModel
             }
         }
 
-        public HL7SegmentBase ParentSegment { get; set; }
+        public HL7MappingSegmentBase ParentSegment { get; set; }
 
         public HL7MappingSegments SubSegments { get; set; } = new HL7MappingSegments();
 
 
 
-        public HL7SegmentBase()
+        public HL7MappingSegmentBase()
         { }
 
         //public HL7SegmentBase(string section, int index, int length, string elementName, string dt, string opt, string rp, bool collapsedDefault) : this()

@@ -41,7 +41,7 @@ namespace HL7Viewer.DataModel
             using (StreamReader sr = new StreamReader(fi.FullName, Encoding.ASCII))
             {
                 string str = String.Empty;
-                HL7SegmentString parentSegment = null;
+                HL7MappingSegmentString parentSegment = null;
                 _HL7Segments = new HL7MappingSegments();
 
                 while (!sr.EndOfStream)
@@ -61,7 +61,7 @@ namespace HL7Viewer.DataModel
                         }
 
                         // -- Parse feltene i segmentet --
-                        HL7SegmentString segment = new HL7SegmentString();
+                        HL7MappingSegmentString segment = new HL7MappingSegmentString();
                         segment.SectionName = fields[INDEX_SECTION];
 
                         int.TryParse(fields[INDEX_INDEX], out int indexTmp);
@@ -101,7 +101,6 @@ namespace HL7Viewer.DataModel
                             segment.Level = 2;
                             parentSegment.SubSegments.Add(segment);
                         }
-
                     }
                 }
                 sr.Close();
@@ -109,24 +108,22 @@ namespace HL7Viewer.DataModel
             }
         }
 
-        public HL7SegmentString GetSegment(string name, int index, int subindex)
+        public HL7MappingSegmentString GetSegmentFromSection(string name, int index, int subindex)
         {
-            Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(name);
-            if (mappingSectionTmp == null)
+            Hl7MappingSection sectionTmp = this.Hl7MappingSections.Get(name);
+
+            if (sectionTmp == null)
             {
                 return null;
             }
             else
             {
-                
-
-
-
+                HL7MappingSegmentString segmentTmp = sectionTmp.Segments.GetSegment(name, index, subindex);
+                return segmentTmp;
             }
         }
 
 
-        private HL7SegmentString GetSegment(int index, int subindex)
 
 
         /// <summary>
@@ -138,7 +135,7 @@ namespace HL7Viewer.DataModel
         {
             //List<string> sectionNames = new List<string>(); -> Endret til public property
 
-            foreach (HL7SegmentBase segment in this._HL7Segments)
+            foreach (HL7MappingSegmentBase segment in this._HL7Segments)
             {
                 if ((!SectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
                 {

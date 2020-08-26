@@ -10,9 +10,9 @@ namespace HL7Viewer.DataModel
 {
     public class TreenodeHL7Base : TreeNode
     {
-        public HL7SegmentString _HL7Segment { get; set; }
+        public HL7MappingSegmentString _HL7Segment { get; set; }
 
-        public TreenodeHL7Base(HL7SegmentString segment)
+        public TreenodeHL7Base(HL7MappingSegmentString segment)
         {
             this._HL7Segment = segment;
         }

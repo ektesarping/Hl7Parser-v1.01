@@ -58,12 +58,12 @@
     </Compile>
     <Compile Include="DataModel\HL7.cs" />
     <Compile Include="DataModel\Hl7MappingSection.cs" />
-    <Compile Include="DataModel\HL7SegmentBase.cs" />
+    <Compile Include="DataModel\HL7MappingSegmentBase.cs" />
     <Compile Include="DataModel\HL7SegmentCategories.cs" />
     <Compile Include="DataModel\HL7SegmentCategory.cs" />
     <Compile Include="DataModel\Hl7SegmentSections.cs" />
-    <Compile Include="DataModel\HL7SegmentString.cs" />
-    <Compile Include="DataModel\HL7Segments.cs" />
+    <Compile Include="DataModel\HL7MappingSegmentString.cs" />
+    <Compile Include="DataModel\HL7MappingSegments.cs" />
     <Compile Include="DataModel\Hl7Mapping.cs" />
     <Compile Include="DataModel\Msg\MsgNode.cs" />
     <Compile Include="DataModel\Msg\MsgNodes.cs" />

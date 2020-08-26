@@ -52,7 +52,7 @@ namespace HL7Viewer.DataModel.GUI
                     TreeNode treenode = new TreeNode();
                     msgChildNode.Treenode = treenode;
 
-                    treenode.Text = msgChildNode.NodeText;
+                    treenode.Text = msgChildNode.TreeNodeText;
                     root.Nodes.Add(treenode);
                 }
                 PopulateRecursively(msgChildNode);
@@ -80,7 +80,7 @@ namespace HL7Viewer.DataModel.GUI
 
                         msgSubNode.Treenode = treenode;
                         node.Treenode.Nodes.Add(treenode);
-                        treenode.Text = msgSubNode.NodeText;
+                        treenode.Text = msgSubNode.TreeNodeText;
                     }
                     PopulateRecursively(msgSubNode);
                 }
@@ -229,7 +229,7 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (selectedNode != null)
                 {
-                    HL7SegmentString segment = selectedNode._HL7Segment;
+                    HL7MappingSegmentString segment = selectedNode._HL7Segment;
                     if (segment != null)
                     {
                         string value = segment.Value;
@@ -260,7 +260,7 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (selectedNode != null)
                 {
-                    HL7SegmentString segment = selectedNode._HL7Segment;
+                    HL7MappingSegmentString segment = selectedNode._HL7Segment;
                     if (segment != null)
                     {
                         string value = segment.Value;

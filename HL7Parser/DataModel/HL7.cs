@@ -80,7 +80,7 @@ namespace HL7Viewer.DataModel
             #endregion -- Import mapping --
 
 
-            this.msgRootnode = new MsgNode("Root", strFileContent, 0, 0);
+            this.msgRootnode = new MsgNode("Root", strFileContent, 1, 0);
 
             msgRootnode.CreateChildNodes_L0(SEPARATOR_LEVEL_0, true, false);
 
@@ -103,8 +103,21 @@ namespace HL7Viewer.DataModel
 
 
             // -- Matcher mot mapping --
-           // Mapping._HL7Segments.Count;
+            foreach (MsgNode childnode in this.msgRootnode.Children)
+            {
+                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index, childnode.MappingIndex);
+                MatchMsgNodeToMappingRecursive(childnode);
+            }
+        }
 
+
+        private void MatchMsgNodeToMappingRecursive(MsgNode node)
+        {
+            foreach (MsgNode childnode in node.Children)
+            {
+                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index, childnode.MappingIndex);
+                MatchMsgNodeToMappingRecursive(childnode);
+            }
         }
 
 
@@ -319,7 +332,7 @@ namespace HL7Viewer.DataModel
             else return null;
         }
 
-        private HL7MappingSegments CreateSubSegments(string substringSource, HL7SegmentBase parentSegment, string segmentName)
+        private HL7MappingSegments CreateSubSegments(string substringSource, HL7MappingSegmentBase parentSegment, string segmentName)
         {
             HL7MappingSegments subsegments = new HL7MappingSegments();
             // Finne subsegmenter i fields[i]
@@ -330,7 +343,7 @@ namespace HL7Viewer.DataModel
                 for (int subindex = 0; subindex < subFields.Length; subindex++)
                 {
                     string value = subFields[subindex];
-                    HL7SegmentString subsegment = new HL7SegmentString(segmentName, value, parentSegment.Index, subindex + 1);
+                    HL7MappingSegmentString subsegment = new HL7MappingSegmentString(segmentName, value, parentSegment.Index, subindex + 1);
                     subsegment.ParentSegment = parentSegment;
                     subsegment.SectionName = parentSegment.SectionName;
                     subsegments.Add(subsegment);
@@ -348,7 +361,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (HL7SegmentCategory cat in this._HL7SegmentCategories)
             {
-                foreach (HL7SegmentString segment in _HL7Segments)
+                foreach (HL7MappingSegmentString segment in _HL7Segments)
                 {
                     if (segment.SectionName == cat.CategoryName)
                     {

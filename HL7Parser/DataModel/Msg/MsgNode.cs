@@ -20,7 +20,7 @@ namespace HL7Viewer.DataModel.Msg
 
         /// <summary>
         /// Index for oppslag mot mapping. Ulik this.Index ved repeterende sekvenser av felter.
-        /// F.eks ORB28 Kopimottakere som har 15 repeterende felter for hver av mottakerne.
+        /// F.eks OBR28 Kopimottakere som har 15 repeterende felter for hver av mottakerne.
         /// </summary>
         public int MappingIndex { get; set; }
 
@@ -35,11 +35,35 @@ namespace HL7Viewer.DataModel.Msg
         /// </summary>
         public string SourceStringRaw { get; set; }
 
+        /// <summary>
+        /// Navn på section i mappingen (= 1. nivå) Brukes til å linke til rett mapping segment.
+        /// </summary>
+        public string MappingSectionName { get; set; }
+
+        /// <summary>
+        /// Peker til segment i den innleste mappingen. Brukes til å vise korrekt navn på noden.
+        /// </summary>
+        public HL7MappingSegmentString MappingSegment { get; set; }
+
+
         public TreeNode Treenode { get; set; }
 
-        public string NodeText
+        public string TreeNodeText
         {
-            get { return /*this.Parent.Name + " " +*/ this.Name + " " + this.Index.ToString() + ": " + this.Value; }
+            get
+            {
+                string str = this.Index.ToString() + " ";
+                if (this.MappingSegment != null)
+                {
+                    str = this.MappingSegment.SegmentName;
+                }
+                else
+                {
+                    str = this.Name;
+                }
+                str += ": " + this.Value;
+                return str;
+            }
         }
 
         public MsgNode()
@@ -85,6 +109,7 @@ namespace HL7Viewer.DataModel.Msg
             if (fields.Length > 0)
             {
                 this.Name = fields[0];
+                this.MappingSectionName = this.Name; // Brukes til å linke til mapping segment.
                 // Henter ut souceString. Bruker Math.Min(..) i tilfelle det kun finnes én subnode. 
                 this.SourceString = SourceStringRaw.Substring(Math.Min(this.Name.Length + 1, SourceStringRaw.Length));
                 return true;
@@ -102,7 +127,7 @@ namespace HL7Viewer.DataModel.Msg
         public void CreateChildNodes_L0(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
-            int indexsubnode = 0;
+            int indexsubnode = 1;
             foreach (string strNode in strNodesLevel)
             {
                 //string name = GetSectionNameFromSourceString(strNode, separator);
@@ -132,6 +157,10 @@ namespace HL7Viewer.DataModel.Msg
 
                 msgsubnode.Value = msgsubnode.SourceString;
                 msgsubnode.Parent = this;
+                if (msgsubnode.Parent != null)
+                {
+                    msgsubnode.MappingSectionName = msgsubnode.Parent.MappingSectionName; // Kopierer mapping section name fra parent.
+                }
                 this.Children.Add(msgsubnode);
                 indexsubnode++;
             }
