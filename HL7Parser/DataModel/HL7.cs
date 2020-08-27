@@ -82,7 +82,7 @@ namespace HL7Viewer.DataModel
 
             this.msgRootnode = new MsgNode("Root", strFileContent, 1, 0);
 
-            msgRootnode.CreateChildNodes_L0(SEPARATOR_LEVEL_0, true, false);
+            msgRootnode.CreateChildNodes_L1(SEPARATOR_LEVEL_0, true, false);
 
             // Setter Name og ekstraherer SourceString for nodene i nivå 0
             foreach (MsgNode childnode in msgRootnode.Children)
@@ -93,11 +93,11 @@ namespace HL7Viewer.DataModel
             foreach (MsgNode subNode_L0 in msgRootnode.Children)
             {
                 // -- Parse subnodes level 1 --
-                subNode_L0.CreateChildNodes_L0(SEPARATOR_LEVEL_1, true, false);
+                subNode_L0.CreateChildNodes_L1(SEPARATOR_LEVEL_1, true, false);
 
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
-                    subNode_L1.CreateChildNodes_L0(SEPARATOR_LEVEL_2, true, false);
+                    subNode_L1.CreateChildNodes_L2(SEPARATOR_LEVEL_2, true, false);
                 }
             }
 

@@ -48,23 +48,7 @@ namespace HL7Viewer.DataModel.Msg
 
         public TreeNode Treenode { get; set; }
 
-        public string TreeNodeText
-        {
-            get
-            {
-                string str = this.Index.ToString() + " ";
-                if (this.MappingSegment != null)
-                {
-                    str = this.MappingSegment.SegmentName;
-                }
-                else
-                {
-                    str = this.Name;
-                }
-                str += ": " + this.Value;
-                return str;
-            }
-        }
+
 
         public MsgNode()
         { }
@@ -118,21 +102,22 @@ namespace HL7Viewer.DataModel.Msg
         }
 
         /// <summary>
-        /// Oppretter subnode. Setter ParentNode og legger til i Parentnode.Children.
+        /// Oppretter subnode nivå 1. Setter ParentNode og legger til i Parentnode.Children.
         /// </summary>
         /// <param name="separator"></param>
         /// <param name="useFirstFieldAsName"></param>
         /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
         /// <returns></returns>
-        public void CreateChildNodes_L0(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
+        public void CreateChildNodes_L1(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
             int indexsubnode = 1;
             foreach (string strNode in strNodesLevel)
             {
                 //string name = GetSectionNameFromSourceString(strNode, separator);
-                MsgNode msgsubnode = new MsgNode(this.Level + 1, indexsubnode);
+                MsgNode msgsubnode = new MsgNode(this.Index + 1, indexsubnode);
                 msgsubnode.SourceStringRaw = strNode;
+                msgsubnode.Level = this.Level + 1;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 if (useFirstFieldAsName)
@@ -163,6 +148,75 @@ namespace HL7Viewer.DataModel.Msg
                 }
                 this.Children.Add(msgsubnode);
                 indexsubnode++;
+            }
+        }
+
+
+        /// <summary>
+        /// Oppretter subnodei nivå 2. Setter ParentNode og legger til i Parentnode.Children.
+        /// </summary>
+        /// <param name="separator"></param>
+        /// <param name="useFirstFieldAsName"></param>
+        /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
+        /// <returns></returns>
+        public void CreateChildNodes_L2(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
+        {
+            string[] strNodesLevel = this.SourceString.Split(separator);
+            int indexsubnode = 1;
+            foreach (string strNode in strNodesLevel)
+            {
+                //string name = GetSectionNameFromSourceString(strNode, separator);
+                MsgNode msgsubnode = new MsgNode(this.Index, indexsubnode); // Bruker samme index som for parent node. 
+                msgsubnode.SourceStringRaw = strNode;
+                msgsubnode.Level = this.Level + 1;
+
+                // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
+                if (useFirstFieldAsName)
+                {
+                    msgsubnode.SourceString = strNode;
+                }
+                else
+                {
+                    msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
+                }
+
+                // -- Fjer siste char som er \r ( halvparten av CR / linjeskift ) --
+                if (trimLastCharacter)
+                {
+                    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
+                    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
+                }
+                else
+                {
+                    msgsubnode.SourceString = msgsubnode.SourceStringRaw;
+                }
+
+                msgsubnode.Value = msgsubnode.SourceString;
+                msgsubnode.Parent = this;
+                if (msgsubnode.Parent != null)
+                {
+                    msgsubnode.MappingSectionName = msgsubnode.Parent.MappingSectionName; // Kopierer mapping section name fra parent.
+                }
+                this.Children.Add(msgsubnode);
+                indexsubnode++;
+            }
+        }
+
+        public string TreeNodeText
+        {
+            get
+            {
+                string str = "[" + this.MappingSectionName + " " + this.Parent.Index.ToString() + "." + this.Index.ToString() + " ";
+                if (this.MappingSegment != null)
+                {
+                    str += this.MappingSegment.SegmentName;
+                }
+                else
+                {
+                    str += this.Name;
+                }
+                str += "] = " + this.Value;
+                return str;
             }
         }
 
