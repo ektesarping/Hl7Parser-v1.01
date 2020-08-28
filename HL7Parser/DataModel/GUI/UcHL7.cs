@@ -65,7 +65,7 @@ namespace HL7Viewer.DataModel.GUI
         private void PopulateRecursively(MsgNode node)
         {
             // -- MSH felt 0 inneholder skilletegn. Ignorer dette for denne noden --
-            if (node.Parent.Name == "MSH" && node.Index == 0)
+            if (node.Parent.Name == "MSH" && node.Index_L2 == 0)
             {
                 return;
             }

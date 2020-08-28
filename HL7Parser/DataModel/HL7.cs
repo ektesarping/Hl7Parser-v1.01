@@ -82,26 +82,25 @@ namespace HL7Viewer.DataModel
 
             this.msgRootnode = new MsgNode("Root", strFileContent, 1, 0);
 
-            msgRootnode.CreateChildNodes_L1(SEPARATOR_LEVEL_0, true, false);
+            msgRootnode.CreateChildNodes_L1(SEPARATOR_LEVEL_0, true); //, false);
 
             // Setter Name og ekstraherer SourceString for nodene i nivå 0
             foreach (MsgNode childnode in msgRootnode.Children)
             {
                 childnode.ExtractNameAndSourceStringFirstLevel(SEPARATOR_LEVEL_1);
                 childnode.Level = 1;
-
             }
 
             foreach (MsgNode subNode_L0 in msgRootnode.Children)
             {
                 // -- Parse subnodes level 1 --
-                subNode_L0.CreateChildNodes_L1(SEPARATOR_LEVEL_1, true, false);
+                subNode_L0.CreateChildNodes_L2(SEPARATOR_LEVEL_1, true); //, false);
                 subNode_L0.Level = 2;
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
                     subNode_L1.CreateChildNodes_L3(SEPARATOR_LEVEL_2, true, false);
                     subNode_L1.Level = 3;
-                    subNode_L1.Index = subNode_L0.Index;
+                    subNode_L1.Index_L2 = subNode_L0.Index_L2;
                 }
             }
 
@@ -109,7 +108,7 @@ namespace HL7Viewer.DataModel
             // -- Matcher mot mapping --
             foreach (MsgNode childnode in this.msgRootnode.Children)
             {
-                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index, childnode.MappingIndex);
+                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }
@@ -119,7 +118,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (MsgNode childnode in node.Children)
             {
-                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index, childnode.MappingIndex);
+                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }

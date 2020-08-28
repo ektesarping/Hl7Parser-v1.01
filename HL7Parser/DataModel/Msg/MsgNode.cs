@@ -18,7 +18,11 @@ namespace HL7Viewer.DataModel.Msg
 
         public int Level { get => level; set => level = value; }
 
-        public int Index { get; set; }
+        public int Index_L1 { get; set; }
+
+        public int Index_L2 { get; set; }
+
+        public int Index_L3 { get; set; }
 
         /// <summary>
         /// Index for oppslag mot mapping. Ulik this.Index ved repeterende sekvenser av felter.
@@ -35,6 +39,7 @@ namespace HL7Viewer.DataModel.Msg
         /// <summary>
         /// Temp variable for å lage source inkludert name
         /// </summary>
+        [Obsolete]
         public string SourceStringRaw { get; set; }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace HL7Viewer.DataModel.Msg
 
         public MsgNode(int index) : this()
         {
-            this.Index = index;
+            this.Index_L2 = index;
         }
 
 
@@ -76,7 +81,7 @@ namespace HL7Viewer.DataModel.Msg
             this.Name = name;
             this.SourceStringRaw = strRaw;
             this.Level = level;
-            this.Index = Index;
+            this.Index_L2 = Index_L2;
             this.SourceString = strRaw; //.Substring(name.Length);
         }
 
@@ -103,37 +108,140 @@ namespace HL7Viewer.DataModel.Msg
         /// <param name="useFirstFieldAsName"></param>
         /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
         /// <returns></returns>
-        public void CreateChildNodes_L1(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
+        public void CreateChildNodes_L1(char[] separator/*, bool useFirstFieldAsName*/) //, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
             int indexsubnode = 1;
             foreach (string strNode in strNodesLevel)
             {
+                MsgNode msgsubnode = new MsgNode();
+
+                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                string tmpForDebuggingSlettes = (strNode.Substring(strNode.Length - 1, 1));
+                //string strNodeTrimmed = strNode;
+                if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                {
+                    msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
+                }
+
+
                 //string name = GetSectionNameFromSourceString(strNode, separator);
-                MsgNode msgsubnode = new MsgNode(indexsubnode);
-                msgsubnode.SourceStringRaw = strNode;
-                //msgsubnode.Level = this.Level + 1;
+                
+                msgsubnode.Index_L1 = indexsubnode;
+                //msgsubnode.SourceStringRaw = strNodeTrimmed;
+                //msgsubnode.SourceString = strNodeTrimmed;
+                msgsubnode.Index_L2 = indexsubnode;
+
+                // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
+                //if (useFirstFieldAsName)
+                //{
+                //    msgsubnode.SourceString = strNodeTrimmed;
+                //}
+                //else
+                //{
+                //    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
+                //}
+
+                #region -- fjernet --
+                //// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                //string tmp = (msgsubnode.SourceStringRaw.Substring(msgsubnode.SourceStringRaw.Length - 1, 1));
+                //if (msgsubnode.SourceStringRaw.Substring(msgsubnode.SourceStringRaw.Length - 1, 1) == "\r")
+                //{
+                //    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
+                //}
+
+                //if (msgsubnode.SourceString.Substring(msgsubnode.SourceString.Length - 1, 1) == "\r")
+                //{
+                //    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
+                //}
+
+                //if (trimLastCharacter)
+                //{
+                //    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
+                //    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
+                //}
+                //else
+                //{
+                //    msgsubnode.SourceString = msgsubnode.SourceStringRaw;
+                //}
+                #endregion -- fjernet --
+
+                msgsubnode.Value = msgsubnode.SourceString;
+                msgsubnode.Parent = this;
+                //if (msgsubnode.Parent != null)
+                //{
+                //    msgsubnode.MappingSectionName = msgsubnode.Parent.MappingSectionName; // Kopierer mapping section name fra parent.
+                //}
+                this.Children.Add(msgsubnode);
+                indexsubnode++;
+            }
+        }
+
+
+        /// <summary>
+        /// Oppretter subnode nivå 1. Setter ParentNode og legger til i Parentnode.Children.
+        /// </summary>
+        /// <param name="separator"></param>
+        /// <param name="useFirstFieldAsName"></param>
+        /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
+        /// <returns></returns>
+        public void CreateChildNodes_L2(char[] separator, bool useFirstFieldAsName) //, bool trimLastCharacter = false)
+        {
+            string[] strNodesLevel = this.SourceString.Split(separator);
+            int indexsubnode = 1;
+            foreach (string strNode in strNodesLevel)
+            {
+                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                string strNodeTrimmed = strNode;
+                string tmp = (strNode.Substring(strNode.Length - 1, 1));
+                if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                {
+                    strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
+                }
+
+
+                //string name = GetSectionNameFromSourceString(strNode, separator);
+                MsgNode msgsubnode = new MsgNode();
+                msgsubnode.Index_L1 = this.Index_L1;
+                msgsubnode.SourceStringRaw = strNodeTrimmed;
+                msgsubnode.Index_L2 = indexsubnode;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 if (useFirstFieldAsName)
                 {
-                    msgsubnode.SourceString = strNode;
+                    msgsubnode.SourceString = strNodeTrimmed;
                 }
                 else
                 {
-                    msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
+                    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
                 }
 
-                // -- Fjer siste char som er \r ( halvparten av CR / linjeskift ) --
-                if (trimLastCharacter)
-                {
-                    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
-                    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
-                }
-                else
-                {
-                    msgsubnode.SourceString = msgsubnode.SourceStringRaw;
-                }
+
+                #region --- fjernet --            
+                ////// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                ////// test:
+                ////string tmp = (msgsubnode.SourceStringRaw.Substring(msgsubnode.SourceStringRaw.Length - 1, 1));
+                ////if (msgsubnode.SourceStringRaw.Substring(msgsubnode.SourceStringRaw.Length - 1, 1) == "\r")
+                ////{
+                ////    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
+                ////}
+
+                ////if (msgsubnode.SourceString.Substring(msgsubnode.SourceString.Length - 1, 1) == "\r")
+                ////{
+                ////    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
+                ////}
+
+
+                //if (trimLastCharacter)
+                //{
+                //    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
+                //    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
+                //}
+                //else
+                //{
+                //    msgsubnode.SourceString = msgsubnode.SourceStringRaw;
+                //}
+                #endregion --- fjernet --
 
                 msgsubnode.Value = msgsubnode.SourceString;
                 msgsubnode.Parent = this;
@@ -145,6 +253,7 @@ namespace HL7Viewer.DataModel.Msg
                 indexsubnode++;
             }
         }
+
 
 
         /// <summary>
@@ -160,31 +269,46 @@ namespace HL7Viewer.DataModel.Msg
             int indexsubnode = 1;
             foreach (string strNode in strNodesLevel)
             {
+                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                string strNodeTrimmed = strNode;
+                string tmp = (strNode.Substring(strNode.Length - 1, 1));
+                if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                {
+                    strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
+                }
+
+
                 //string name = GetSectionNameFromSourceString(strNode, separator);
-                MsgNode msgsubnode = new MsgNode(indexsubnode); // Bruker samme index som for parent node. 
-                msgsubnode.SourceStringRaw = strNode;
+                MsgNode msgsubnode = new MsgNode(); // Bruker samme index som for parent node. 
+                msgsubnode.Index_L1 = this.Index_L1;
+                msgsubnode.Index_L2 = this.Index_L2;
+                msgsubnode.Index_L3 = indexsubnode;
+
+                msgsubnode.SourceStringRaw = strNodeTrimmed;
                 //msgsubnode.Level = this.Level + 1;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 if (useFirstFieldAsName)
                 {
-                    msgsubnode.SourceString = strNode;
+                    msgsubnode.SourceString = strNodeTrimmed;
                 }
                 else
                 {
-                    msgsubnode.SourceString = strNode.Substring(this.Name.Length + 1);
+                    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
                 }
 
-                // -- Fjer siste char som er \r ( halvparten av CR / linjeskift ) --
-                if (trimLastCharacter)
-                {
-                    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
-                    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
-                }
-                else
-                {
-                    msgsubnode.SourceString = msgsubnode.SourceStringRaw;
-                }
+                #region -- fjernet --
+                //// -- Fjern siste char som er \r ( halvparten av CR / linjeskift ) --
+                //if (trimLastCharacter)
+                //{
+                //    msgsubnode.SourceStringRaw = msgsubnode.SourceStringRaw.Substring(0, msgsubnode.SourceStringRaw.Length - 1);
+                //    msgsubnode.SourceString = msgsubnode.SourceString.Substring(0, msgsubnode.SourceString.Length - 1);
+                //}
+                //else
+                //{
+                //    msgsubnode.SourceString = msgsubnode.SourceStringRaw;
+                //}
+                #endregion -- fjernet --
 
                 msgsubnode.Value = msgsubnode.SourceString;
                 msgsubnode.Parent = this;
@@ -201,17 +325,28 @@ namespace HL7Viewer.DataModel.Msg
         {
             get
             {
+                string nameOrSegment = String.Empty;
+                if (this.MappingSegment != null)
+                {
+                    nameOrSegment = this.MappingSegment.SegmentName;
+                }
+                else
+                {
+                    nameOrSegment = this.Name;
+                }
+
+
                 string indexTmp = String.Empty;
                 switch (this.Level)
                 {
                     case 1:
-                        indexTmp = this.Index.ToString();
+                        indexTmp = this.Index_L2.ToString();
                         break;
                     case 2:
-                        indexTmp = this.Index.ToString();
+                        indexTmp = this.Index_L2.ToString();
                         break;
                     case 3:
-                        indexTmp = this.Parent.Index.ToString() + "." + this.Index.ToString();
+                        indexTmp = this.Parent.Index_L2.ToString() + "." + this.Index_L2.ToString();
                         break;
                     default:
                         indexTmp = "<unknown>";
@@ -237,7 +372,7 @@ namespace HL7Viewer.DataModel.Msg
         public override string ToString()
         {
             string sep = "\t";
-            return this.Name + sep + " L:" + this.Level.ToString() + "/I:" + this.Index.ToString() + sep + " Src: " + this.SourceStringRaw;
+            return this.Name + sep + " L:" + this.Level.ToString() + "/I:" + this.Index_L2.ToString() + sep + " Src: " + this.SourceStringRaw;
         }
     }
 }
