@@ -89,13 +89,13 @@ namespace HL7Viewer.DataModel.Msg
 
         public bool ExtractNameAndSourceStringFirstLevel(char[] separator)
         {
-            string[] fields = this.SourceStringRaw.Split(separator);
+            string[] fields = this.SourceString.Split(separator);
             if (fields.Length > 0)
             {
                 this.Name = fields[0];
                 this.MappingSectionName = this.Name; // Brukes til å linke til mapping segment.
                 // Henter ut souceString. Bruker Math.Min(..) i tilfelle det kun finnes én subnode. 
-                this.SourceString = SourceStringRaw.Substring(Math.Min(this.Name.Length + 1, SourceStringRaw.Length));
+                //this.SourceString = SourceString.Substring(Math.Min(this.Name.Length + 1, SourceString.Length));
                 return true;
             }
             return false;
@@ -115,6 +115,7 @@ namespace HL7Viewer.DataModel.Msg
             foreach (string strNode in strNodesLevel)
             {
                 MsgNode msgsubnode = new MsgNode();
+                msgsubnode.Level = 1;
 
                 /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
                 string tmpForDebuggingSlettes = (strNode.Substring(strNode.Length - 1, 1));
@@ -126,11 +127,11 @@ namespace HL7Viewer.DataModel.Msg
 
 
                 //string name = GetSectionNameFromSourceString(strNode, separator);
-                
+
                 msgsubnode.Index_L1 = indexsubnode;
                 //msgsubnode.SourceStringRaw = strNodeTrimmed;
                 //msgsubnode.SourceString = strNodeTrimmed;
-                msgsubnode.Index_L2 = indexsubnode;
+                msgsubnode.Index_L2 = 0;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 //if (useFirstFieldAsName)
@@ -168,6 +169,7 @@ namespace HL7Viewer.DataModel.Msg
 
                 msgsubnode.Value = msgsubnode.SourceString;
                 msgsubnode.Parent = this;
+                msgsubnode.MappingSectionName = msgsubnode.Name;
                 //if (msgsubnode.Parent != null)
                 //{
                 //    msgsubnode.MappingSectionName = msgsubnode.Parent.MappingSectionName; // Kopierer mapping section name fra parent.
@@ -188,33 +190,49 @@ namespace HL7Viewer.DataModel.Msg
         public void CreateChildNodes_L2(char[] separator, bool useFirstFieldAsName) //, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
-            int indexsubnode = 1;
+            int indexsubnode = 0;
             foreach (string strNode in strNodesLevel)
             {
-                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
-                string strNodeTrimmed = strNode;
-                string tmp = (strNode.Substring(strNode.Length - 1, 1));
-                if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                // -- Ignorer leddet med section name. --
+                if (indexsubnode == 0)
                 {
-                    strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
+                    indexsubnode++;
+                    continue;
                 }
 
+                MsgNode msgsubnode = new MsgNode();
+
+                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+
+
+
+                if (strNode.Length > 0)
+                {
+                    //string strNodeTrimmed = strNode;
+                    string tmpSlettes = (strNode.Substring(strNode.Length - 1, 1));
+                    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                    {
+                        msgsubnode.SourceStringRaw = strNode.Substring(0, strNode.Length - 1);
+                        msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
+                    }
+                }
 
                 //string name = GetSectionNameFromSourceString(strNode, separator);
-                MsgNode msgsubnode = new MsgNode();
+
                 msgsubnode.Index_L1 = this.Index_L1;
-                msgsubnode.SourceStringRaw = strNodeTrimmed;
+                //msgsubnode.SourceStringRaw = strNodeTrimmed;
                 msgsubnode.Index_L2 = indexsubnode;
 
-                // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
-                if (useFirstFieldAsName)
-                {
-                    msgsubnode.SourceString = strNodeTrimmed;
-                }
-                else
-                {
-                    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
-                }
+                //// -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
+                //  MessageBox.Show("Følg opp at navn blir håndtert");
+                //if (useFirstFieldAsName)
+                //{
+                //    msgsubnode.SourceString = strNodeTrimmed;
+                //}
+                //else
+                //{
+                //    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
+                //}
 
 
                 #region --- fjernet --            
@@ -271,12 +289,14 @@ namespace HL7Viewer.DataModel.Msg
             {
                 /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
                 string strNodeTrimmed = strNode;
-                string tmp = (strNode.Substring(strNode.Length - 1, 1));
-                if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                if (strNode.Length > 0)
                 {
-                    strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
+                    string tmp = (strNode.Substring(strNode.Length - 1, 1));
+                    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                    {
+                        strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
+                    }
                 }
-
 
                 //string name = GetSectionNameFromSourceString(strNode, separator);
                 MsgNode msgsubnode = new MsgNode(); // Bruker samme index som for parent node. 
