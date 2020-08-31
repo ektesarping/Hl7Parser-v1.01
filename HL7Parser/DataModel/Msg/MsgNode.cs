@@ -39,8 +39,8 @@ namespace HL7Viewer.DataModel.Msg
         /// <summary>
         /// Temp variable for å lage source inkludert name
         /// </summary>
-        [Obsolete]
-        public string SourceStringRaw { get; set; }
+        //[Obsolete]
+        //public string SourceStringRaw { get; set; }
 
         /// <summary>
         /// Navn på section i mappingen (= 1. nivå) Brukes til å linke til rett mapping segment.
