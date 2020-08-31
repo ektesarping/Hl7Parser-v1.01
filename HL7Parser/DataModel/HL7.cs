@@ -94,12 +94,12 @@ namespace HL7Viewer.DataModel
             {
                 // -- Parse subnodes level 1 --
                 subNode_L0.CreateChildNodes_L2(SEPARATOR_LEVEL_1, true); //, false);
-                subNode_L0.Level = 2;
+                //subNode_L0.Level = 2;
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
                     subNode_L1.CreateChildNodes_L3(SEPARATOR_LEVEL_2, true, false);
-                    subNode_L1.Level = 3;
-                    subNode_L1.Index_L2 = subNode_L0.Index_L2;
+                    //subNode_L1.Level = 3;
+                    //subNode_L1.Index_L2 = subNode_L0.Index_L2;
                 }
             }
 
