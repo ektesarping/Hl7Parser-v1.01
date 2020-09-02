@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Windows.Forms;
 
 namespace HL7Viewer.DataModel.Msg
 {
+    [DebuggerDisplay("Tostring:: value is {ToString()}")]
     public class MsgNode
     {
         public string Name { get; set; }
@@ -124,14 +126,17 @@ namespace HL7Viewer.DataModel.Msg
                 {
                     msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
                 }
+                else
+                {
+                    msgsubnode.SourceString = strNode;
+                }
 
-                msgsubnode.Index_L1 = indexsubnode;
+                msgsubnode.Index_L1 = 0;
                 msgsubnode.Index_L2 = 0;
 
                 msgsubnode.Value = msgsubnode.SourceString;
                 msgsubnode.Parent = this;
-                msgsubnode.MappingSectionName = msgsubnode.Name;
-
+                //msgsubnode.MappingSectionName = msgsubnode.Name;  // Settes i metoden 'ExtractNameAndSourceStringFirstLevel'
                 this.Children.Add(msgsubnode);
                 indexsubnode++;
             }
@@ -145,7 +150,7 @@ namespace HL7Viewer.DataModel.Msg
         /// <param name="useFirstFieldAsName"></param>
         /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
         /// <returns></returns>
-        public void CreateChildNodes_L2(char[] separator, bool useFirstFieldAsName) //, bool trimLastCharacter = false)
+        public void CreateChildNodes_L2(char[] separator) //, bool useFirstFieldAsName) //, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
             int indexsubnode = 0;
@@ -159,22 +164,24 @@ namespace HL7Viewer.DataModel.Msg
                 }
 
                 MsgNode msgsubnode = new MsgNode();
+                msgsubnode.SourceString = strNode;
 
-                if (strNode.Length > 0)
-                {
-                    //string strNodeTrimmed = strNode;
-                    string tmpSlettes = (strNode.Substring(strNode.Length - 1, 1));
-                    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
-                    {
-                        //msgsubnode.SourceStringRaw = strNode.Substring(0, strNode.Length - 1);
-                        msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
-                    }
-                    else
-                    {
-                        //msgsubnode.SourceStringRaw = strNode;
-                        msgsubnode.SourceString = strNode;
-                    }
-                }
+
+                //if (strNode.Length > 0)  // SSVIS IKKE NØDVENDIG
+                //{
+                //    //string strNodeTrimmed = strNode;
+                //    string tmpSlettes = (strNode.Substring(strNode.Length - 1, 1));
+                //    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                //    {
+                //        //msgsubnode.SourceStringRaw = strNode.Substring(0, strNode.Length - 1);
+                //        msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
+                //    }
+                //    else
+                //    {
+                //        //msgsubnode.SourceStringRaw = strNode;
+                //        msgsubnode.SourceString = strNode;
+                //    }
+                //}
 
                 msgsubnode.Level = 2;
                 msgsubnode.Index_L1 = indexsubnode;
@@ -201,22 +208,35 @@ namespace HL7Viewer.DataModel.Msg
         /// <param name="useFirstFieldAsName"></param>
         /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
         /// <returns></returns>
-        public void CreateChildNodes_L3(char[] separator, bool useFirstFieldAsName, bool trimLastCharacter = false)
+        public void CreateChildNodes_L3(char[] separator) //, bool useFirstFieldAsName, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
             int indexsubnode = 1;
             foreach (string strNode in strNodesLevel)
             {
-                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
-                string strNodeTrimmed = strNode;
-                if (strNode.Length > 0)
+                // -- Oppretter ikke subnoder hvis noden har kun en verdi --
+                if (strNodesLevel.Length <= 1)
                 {
-                    string tmp = (strNode.Substring(strNode.Length - 1, 1));
-                    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
-                    {
-                        strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
-                    }
+                    continue;
                 }
+
+                // -- MSH 1 inneholder separatorer. Ikke splitt i subnodes. --
+                if ((this.MappingSectionName.ToUpper() == "MSH") && (this.Index_L1 == 2))
+                {
+                    continue;
+                }
+
+
+                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                //string strNodeTrimmed = strNode;
+                //if (strNode.Length > 0)
+                //{
+                //    string tmp = (strNode.Substring(strNode.Length - 1, 1));
+                //    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                //    {
+                //        strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
+                //    }
+                //}
 
                 //string name = GetSectionNameFromSourceString(strNode, separator);
                 MsgNode msgsubnode = new MsgNode(); // Bruker samme index som for parent node. 
@@ -229,14 +249,14 @@ namespace HL7Viewer.DataModel.Msg
                 //msgsubnode.Level = this.Level + 1;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
-                if (useFirstFieldAsName)
-                {
-                    msgsubnode.SourceString = strNodeTrimmed;
-                }
-                else
-                {
-                    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
-                }
+                //if (useFirstFieldAsName)
+                //{
+                msgsubnode.SourceString = strNode;
+                //}
+                //else
+                //{
+                //    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
+                //}
 
                 msgsubnode.Value = msgsubnode.SourceString;
                 msgsubnode.Parent = this;
@@ -253,46 +273,97 @@ namespace HL7Viewer.DataModel.Msg
         {
             get
             {
-                string nameOrSegment = String.Empty;
-                if (this.MappingSegment != null)
-                {
-                    nameOrSegment = this.MappingSegment.SegmentName;
-                }
-                else
-                {
-                    nameOrSegment = this.Name;
-                }
-
-
-                string indexTmp = String.Empty;
+                string str = String.Empty;
                 switch (this.Level)
                 {
                     case 1:
-                        indexTmp = this.Index_L2.ToString();
+                        str = this.MappingSectionName;
+
+                        //string str = "[" + this.MappingSectionName + " " + indexTmp + " ";
+                        //if (this.MappingSegment != null)
+                        //{
+                        //    str += this.MappingSegment.SegmentName;
+                        //}
+                        //else
+                        //{
+                        //    str += this.Name;
+                        //}
+                        //str += " Level:" + this.Level.ToString();
+                        //str += "] = " + this.Value;
+
                         break;
                     case 2:
-                        indexTmp = this.Index_L2.ToString();
+                        str = "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
+                        if (this.MappingSegment != null)
+                        {
+                            str += this.MappingSegment.SegmentName;
+                        }
+                        else
+                        {
+                            str += this.Name;
+                        }
+                        str += "] = " + this.Value;
+
                         break;
                     case 3:
-                        indexTmp = this.Parent.Index_L2.ToString() + "." + this.Index_L2.ToString();
+                        str = "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " " ;
+                        if (this.MappingSegment != null)
+                        {
+                            str += this.MappingSegment.SegmentName;
+                        }
+                        else
+                        {
+                            str += this.Name;
+                        }
+                        str += "] = " + this.Value;
+
                         break;
                     default:
-                        indexTmp = "<unknown>";
+                        //indexTmp = "<unknown>";
                         break;
                 }
 
 
-                string str = "[" + this.MappingSectionName + " " + indexTmp + " ";
-                if (this.MappingSegment != null)
-                {
-                    str += this.MappingSegment.SegmentName;
-                }
-                else
-                {
-                    str += this.Name;
-                }
-                str += " Level:" + this.Level.ToString();
-                str += "] = " + this.Value;
+                //string nameOrSegment = String.Empty;
+                //if (this.MappingSegment != null)
+                //{
+                //    nameOrSegment = this.MappingSegment.SegmentName;
+                //}
+                //else
+                //{
+                //    nameOrSegment = this.Name;
+                //}
+
+
+                //string indexTmp = String.Empty;
+                //switch (this.Level)
+                //{
+                //    case 1:
+                //        indexTmp = this.Index_L2.ToString();
+                //        break;
+                //    case 2:
+                //        indexTmp = this.Index_L2.ToString();
+                //        break;
+                //    case 3:
+                //        indexTmp = this.Parent.Index_L2.ToString() + "." + this.Index_L2.ToString();
+                //        break;
+                //    default:
+                //        indexTmp = "<unknown>";
+                //        break;
+                //}
+
+
+                //string str = "[" + this.MappingSectionName + " " + indexTmp + " ";
+                //if (this.MappingSegment != null)
+                //{
+                //    str += this.MappingSegment.SegmentName;
+                //}
+                //else
+                //{
+                //    str += this.Name;
+                //}
+                //str += " Level:" + this.Level.ToString();
+                //str += "] = " + this.Value;
                 return str;
             }
         }

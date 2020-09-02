@@ -1,5 +1,8 @@
-﻿//Section	Index	SubIndex	Collapse default	ELEMENT NAME	Comment				
-// 									
+﻿//Section	Index_1	Index_L2	Collapse default	ELEMENT_NAME	Comment				
+// 			
+
+// -- Display name vises i boksen som velger meldingstype --
+DisplayName	Røntgensvar
 MSH	1	0	Y	Field Separator					
 MSH	2	0	Y	Encoding Characters					
 MSH	3	0	Y	Sending Application					

@@ -18,8 +18,8 @@ namespace HL7Viewer.DataModel
         {
             this.SegmentName = segmentName;
             this.Value = value;
-            this.Index = index;
-            this.SubIndex = subindex;
+            this.Index_L1 = index;
+            this.Index_L1 = subindex;
         }
 
         public HL7MappingSegmentString(string segmentName, string value, HL7MappingSegmentString parentSegment, int subindex) : this()
@@ -28,13 +28,13 @@ namespace HL7Viewer.DataModel
             this.Value = value;
             this.ParentSegment = parentSegment;
             this.ParentSegment.SubSegments.Add(this);
-            this.Index = parentSegment.Index;
-            this.SubIndex = subindex;
+            this.Index_L1 = parentSegment.Index_L1;
+            this.Index_L1 = subindex;
         }
 
         public string ToReport()
         {
-            string str = this.SectionName + "\t" + this.Index.ToString() + "\t" + this.SubIndex.ToString() + "\t" + this.SegmentName + "\t" + Value;
+            string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L1.ToString() + "\t" + this.SegmentName + "\t" + Value;
             foreach (HL7MappingSegmentString child in this.SubSegments)
             {
                 str += "\r\n" + child.ToReport();
@@ -50,7 +50,7 @@ namespace HL7Viewer.DataModel
                 strSubsegments = " / " + this.SubSegments.Count + " subsegments";
             }
 
-            string str = this.SectionName + " / " + this.Index + " / " + this.SubIndex + " / " + this.SegmentName + " = " + Value + strSubsegments;
+            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.Index_L1 + " / " + this.SegmentName + " = " + Value + strSubsegments;
             return str;
         }
 

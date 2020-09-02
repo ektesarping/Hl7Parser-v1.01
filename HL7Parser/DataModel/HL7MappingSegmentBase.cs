@@ -18,28 +18,11 @@ namespace HL7Viewer.DataModel
         // -----------------------------------------------------------------------------------------------------
 
 
-        
+        public int Index_L1 { get; set; }
 
-        public int Index { get; set; }
-
-        /// <summary>
-        /// Subindex. Subnoder har index verdi > 0
-        /// </summary>
-        public int SubIndex { get; set; }
+        public int Index_L2 { get; set; }
 
         public int Level { get; set; }
-
-        //[Obsolete]
-        //public int Length { get; set; }
-
-        //[Obsolete]
-        //public string Dt { get; set; }
-
-        //[Obsolete]
-        //public string Opt { get; set; }
-
-        //[Obsolete]
-        //public string Rp { get; set; }
 
         /// <summary>
         /// Collapsed default ved innlesing.
@@ -58,12 +41,12 @@ namespace HL7Viewer.DataModel
             {
                 if (this.ParentSegment == null)
                 {
-                    return this.Index.ToString();
+                    return this.Index_L1.ToString();
                 }
                 else
                 {
                     // segment is subsegment
-                    return this.ParentSegment.Index.ToString() + "." + this.SubIndex.ToString();
+                    return this.ParentSegment.Index_L1.ToString() + "." + this.Index_L1.ToString();
                 }
             }
         }
@@ -90,7 +73,7 @@ namespace HL7Viewer.DataModel
 
         public override string ToString()
         {
-            string str = this.SectionName + " / " + this.Index + " / " + this.SegmentName;
+            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.SegmentName;
             return str;
         }
     }

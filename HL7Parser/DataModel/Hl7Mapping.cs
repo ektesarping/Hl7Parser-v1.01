@@ -21,12 +21,21 @@ namespace HL7Viewer.DataModel
 
         public HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
+        /// <summary>
+        /// Viser navnet på mappingen, f.eks Røntgensvar, Labsvar etc.
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Full path til mappingfilen.
+        /// </summary>
+        public string  MappingFileFullPath { get; set; }
 
 
         // Parts of input files.
         private const int INDEX_SECTION = 0;
-        private const int INDEX_INDEX = 1;
-        private const int INDEX_SUBINDEX = 2;
+        private const int INDEX_INDEX_L1 = 1;
+        private const int INDEX_INDEX_L2 = 2;
         //private const int INDEX_LENGTH = 3; // obsolete
         //private const int INDEX_DT = 4;// obsolete
         //private const int INDEX_OPT = 5;// obsolete
@@ -35,6 +44,7 @@ namespace HL7Viewer.DataModel
         private const int INDEX_COLLAPSED_DEFAULT = 3;
         private const int INDEX_NAME = 4;
 
+        private const string DISPLAY_NAME = "DISPLAYNAME";
 
         public void ImportMapping(FileInfo fi)
         {
@@ -43,6 +53,7 @@ namespace HL7Viewer.DataModel
                 string str = String.Empty;
                 HL7MappingSegmentString parentSegment = null;
                 _HL7Segments = new HL7MappingSegments();
+                this.MappingFileFullPath = fi.FullName;
 
                 while (!sr.EndOfStream)
                 {
@@ -60,15 +71,21 @@ namespace HL7Viewer.DataModel
                             continue;
                         }
 
+                        if (fields[INDEX_SECTION].ToUpper().Contains(DISPLAY_NAME))
+                        {
+                            DisplayName = fields[1];
+                            continue;
+                        }
+
                         // -- Parse feltene i segmentet --
                         HL7MappingSegmentString segment = new HL7MappingSegmentString();
                         segment.SectionName = fields[INDEX_SECTION];
 
-                        int.TryParse(fields[INDEX_INDEX], out int indexTmp);
-                        segment.Index = indexTmp;
+                        int.TryParse(fields[INDEX_INDEX_L1], out int index_LTmp);
+                        segment.Index_L1 = index_LTmp;
 
-                        int.TryParse(fields[INDEX_SUBINDEX], out int subIndexTmp);
-                        segment.SubIndex = subIndexTmp;
+                        int.TryParse(fields[INDEX_INDEX_L2], out int index_L2Tmp);
+                        segment.Index_L2 = index_L2Tmp;
 
 
                         if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
@@ -78,27 +95,34 @@ namespace HL7Viewer.DataModel
 
                         segment.SegmentName = fields[INDEX_NAME];
 
-                        // -- Håndtering av parent/subsegment --
-                        if (segment.SubIndex <= 0)
-                        {
 
+                        // -- Legger til section hvis den ikke allerede finnes --
+                        // Oppretter section hvis en ikke finnes
+                        Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
+                        if (mappingSectionTmp == null)
+                        {
+                            this.Hl7MappingSections.Add(segment.SectionName);
+                        }
+                        // Legger til som subsegment i mappingsection --
+                        segment.MappingSection = mappingSectionTmp;
+                        segment.MappingSection.Segments.Add(segment);
+
+                        // -- Håndtering av parent/subsegment --
+                        if (segment.Index_L2 <= 0)
+                        {
                             // Current segment er på nivå 1
                             segment.Level = 1;
-                            parentSegment = segment; // 'parentSegment' settes på parent nivå, og hentes for subsegmenter.
                             _HL7Segments.Add(segment);
-
-                            // -- Opprette section hvis ikke den allerede er opprettet --
-                            this.Hl7MappingSections.Add(segment.SectionName);
-                            // -- Legger til som subsegmenter i mappingsection --
-                            Hl7MappingSection parentsection = this.Hl7MappingSections.Get(segment.SectionName);
-                            segment.MappingSection = parentsection;
-                            parentsection.Segments.Add(segment);
-
+                            segment.ParentSegment = segment.MappingSection.Segment;
                         }
                         else
                         {
                             // Segmentet er et subsegment. Parentsegment ble satt i FORRIGE iterasjon.
                             segment.Level = 2;
+
+                            // Legger til parent segment.
+                            HL7MappingSegmentString parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, segment.Index_L2);
+                            segment.ParentSegment = parentSegmentTmp;
                             parentSegment.SubSegments.Add(segment);
                         }
                     }
@@ -108,7 +132,7 @@ namespace HL7Viewer.DataModel
             }
         }
 
-        public HL7MappingSegmentString GetSegmentFromSection(string name, int index, int subindex)
+        public HL7MappingSegmentString GetSegmentFromSection(string name, int index_L1, int index_L2)
         {
             Hl7MappingSection sectionTmp = this.Hl7MappingSections.Get(name);
 
@@ -118,7 +142,7 @@ namespace HL7Viewer.DataModel
             }
             else
             {
-                HL7MappingSegmentString segmentTmp = sectionTmp.Segments.GetSegment(name, index, subindex);
+                HL7MappingSegmentString segmentTmp = sectionTmp.Segments.GetSegment(name, index_L1, index_L2);
                 return segmentTmp;
             }
         }

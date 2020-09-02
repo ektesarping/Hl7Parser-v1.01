@@ -11,17 +11,17 @@ namespace HL7Viewer.DataModel
         public HL7MappingSegments()
         { }
 
-        public HL7MappingSegmentString GetSegment(string sectionName, int index, int subindex)
+        public HL7MappingSegmentString GetSegment(string sectionName, int index_L1, int index_L2)
         {
             foreach (HL7MappingSegmentString segment in this)
             {
-                if ((segment.SectionName == sectionName) && (segment.Index == index) && (segment.SubIndex == subindex))
+                if ((segment.SectionName == sectionName) && (segment.Index_L1 == index_L1) && (segment.Index_L1 == index_L2))
                 {
                     return segment;
                 }
                 foreach (HL7MappingSegmentString subsegment in segment.SubSegments)
                 {
-                    if ((subsegment.SectionName == sectionName) && (subsegment.Index == index) && (subsegment.SubIndex == subindex))
+                    if ((subsegment.SectionName == sectionName) && (subsegment.Index_L1 == index_L1) && (subsegment.Index_L1 == index_L2))
                     {
                         return subsegment;
                     }
@@ -36,18 +36,18 @@ namespace HL7Viewer.DataModel
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        public HL7MappingSegmentString GetOrCreateSegmentLevel1(string segmentName, string value, int index, int subindex)
+        public HL7MappingSegmentString GetOrCreateSegmentLevel1(string segmentName, string value, int index_L1, int index_L2)
         {
             // Segment på 1. nivå
             foreach (HL7MappingSegmentString segment in this)
             {
-                if ((segment.Index == index) && (segment.SubIndex == subindex))
+                if ((segment.Index_L1 == index_L1) && (segment.Index_L1 == index_L2))
                 {
                     return segment;
                 }
             }
             // Opprette nytt segment
-            HL7MappingSegmentString newSegment = new HL7MappingSegmentString("!!" + segmentName + "!!", value, null, subindex);
+            HL7MappingSegmentString newSegment = new HL7MappingSegmentString("!!" + segmentName + "!!", value, null, index_L2);
             this.Add(newSegment);
             return newSegment;
         }
@@ -56,7 +56,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (HL7MappingSegmentString subsegment in parentSegment.SubSegments)
             {
-                if ((subsegment.Index == index) && (subsegment.SubIndex == subindex))
+                if ((subsegment.Index_L1 == index) && (subsegment.Index_L1 == subindex))
                 {
                     return subsegment;
                 }
