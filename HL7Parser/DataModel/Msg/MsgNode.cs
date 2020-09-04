@@ -153,7 +153,7 @@ namespace HL7Viewer.DataModel.Msg
         public void CreateChildNodes_L2(char[] separator) //, bool useFirstFieldAsName) //, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
-            int indexsubnode = 0;
+            int indexsubnode = 1;
             foreach (string strNode in strNodesLevel)
             {
                 // -- Ignorer leddet med section name. --
@@ -166,22 +166,6 @@ namespace HL7Viewer.DataModel.Msg
                 MsgNode msgsubnode = new MsgNode();
                 msgsubnode.SourceString = strNode;
 
-
-                //if (strNode.Length > 0)  // SSVIS IKKE NØDVENDIG
-                //{
-                //    //string strNodeTrimmed = strNode;
-                //    string tmpSlettes = (strNode.Substring(strNode.Length - 1, 1));
-                //    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
-                //    {
-                //        //msgsubnode.SourceStringRaw = strNode.Substring(0, strNode.Length - 1);
-                //        msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
-                //    }
-                //    else
-                //    {
-                //        //msgsubnode.SourceStringRaw = strNode;
-                //        msgsubnode.SourceString = strNode;
-                //    }
-                //}
 
                 msgsubnode.Level = 2;
                 msgsubnode.Index_L1 = indexsubnode;

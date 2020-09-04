@@ -8,24 +8,24 @@ namespace HL7Viewer.DataModel
 {
     public class HL7MappingSegmentString : HL7MappingSegmentBase
     {
-        public string Value { get; set; }
+     //   [Obsolete]
+     //   public string Value { get; set; }
 
         public HL7SegmentCategory _HL7SegmentCategory { get; set; }
 
         public HL7MappingSegmentString() { }
 
-        public HL7MappingSegmentString(string segmentName, string value, int index, int subindex) : this()
+        public HL7MappingSegmentString(string sectionName, string segementName, int index, int subindex) : this()
         {
-            this.SegmentName = segmentName;
-            this.Value = value;
+            this.SectionName= sectionName;
+            this.SegmentName = segementName;
             this.Index_L1 = index;
             this.Index_L1 = subindex;
         }
 
         public HL7MappingSegmentString(string segmentName, string value, HL7MappingSegmentString parentSegment, int subindex) : this()
         {
-            this.SegmentName = segmentName;
-            this.Value = value;
+            this.SegmentName = value;
             this.ParentSegment = parentSegment;
             this.ParentSegment.SubSegments.Add(this);
             this.Index_L1 = parentSegment.Index_L1;
@@ -34,7 +34,7 @@ namespace HL7Viewer.DataModel
 
         public string ToReport()
         {
-            string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L1.ToString() + "\t" + this.SegmentName + "\t" + Value;
+            string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L1.ToString() + "\t" + this.SegmentName + "\t" + SegmentName;
             foreach (HL7MappingSegmentString child in this.SubSegments)
             {
                 str += "\r\n" + child.ToReport();
@@ -50,7 +50,7 @@ namespace HL7Viewer.DataModel
                 strSubsegments = " / " + this.SubSegments.Count + " subsegments";
             }
 
-            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.Index_L1 + " / " + this.SegmentName + " = " + Value + strSubsegments;
+            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.Index_L2 + " / " + this.SegmentName + strSubsegments;
             return str;
         }
 

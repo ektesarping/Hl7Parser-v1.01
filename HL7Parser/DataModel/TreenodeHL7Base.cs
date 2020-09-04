@@ -34,12 +34,12 @@ namespace HL7Viewer.DataModel
                 this.ForeColor = FORECOLOR_DEFAULT;
             }
 
-            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.Index_L1.ToString() + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.Value;
+            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.Index_L1.ToString() + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.SegmentName;
         }
 
         public void UpdateSubNodeText()
         {
-            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.Index_L1.ToString() + "." + this._HL7Segment.Index_L1.ToString() + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.Value;
+            this.Text = "[" + this._HL7Segment.SectionName + " " + this._HL7Segment.Index_L1.ToString() + "." + this._HL7Segment.Index_L1.ToString() + ": " + this._HL7Segment.SegmentName + "]" + " =  " + this._HL7Segment.SegmentName;
         }
 
     }

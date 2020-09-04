@@ -15,13 +15,13 @@ namespace HL7Viewer.DataModel
         {
             foreach (HL7MappingSegmentString segment in this)
             {
-                if ((segment.SectionName == sectionName) && (segment.Index_L1 == index_L1) && (segment.Index_L1 == index_L2))
+                if ((segment.SectionName == sectionName) && (segment.Index_L1 == index_L1) && (segment.Index_L2 == index_L2))
                 {
                     return segment;
                 }
                 foreach (HL7MappingSegmentString subsegment in segment.SubSegments)
                 {
-                    if ((subsegment.SectionName == sectionName) && (subsegment.Index_L1 == index_L1) && (subsegment.Index_L1 == index_L2))
+                    if ((subsegment.SectionName == sectionName) && (subsegment.Index_L1 == index_L1) && (subsegment.Index_L2 == index_L2))
                     {
                         return subsegment;
                     }
@@ -29,6 +29,37 @@ namespace HL7Viewer.DataModel
             }
             return null;
         }
+
+        public bool Contains(string sectionName, int index_L1, int index_L2)
+        {
+            if (this.GetSegment(sectionName, index_L1, index_L2) != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //public void Add(string sectionName, string value, int index_L1, int index_L2)
+        //{
+        //    if (!this.Contains(sectionName, index_L1, index_L2))
+        //    {
+        //        HL7MappingSegmentString mappingSegmentNew = new HL7MappingSegmentString(sectionName, value, index_L1, index_L2);
+        //        base.Add(mappingSegmentNew);
+        //    }
+        //}
+
+        public new void Add(HL7MappingSegmentString newSegment)
+        {
+            if (!this.Contains(newSegment.SectionName, newSegment.Index_L1, newSegment.Index_L2))
+            {
+                base.Add(newSegment);
+            }
+        }
+
+
 
         /// <summary>
         /// Find segment with index/subindex. 

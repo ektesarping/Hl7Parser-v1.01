@@ -229,10 +229,10 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (selectedNode != null)
                 {
-                    HL7MappingSegmentString segment = selectedNode._HL7Segment;
-                    if (segment != null)
+                    HL7MappingSegmentString mappingSegment = selectedNode._HL7Segment;
+                    if (mappingSegment != null)
                     {
-                        string value = segment.Value;
+                        string value = mappingSegment.SegmentName;
                         if (value != null)
                         {
                             Clipboard.SetText(value);
@@ -260,13 +260,13 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (selectedNode != null)
                 {
-                    HL7MappingSegmentString segment = selectedNode._HL7Segment;
-                    if (segment != null)
+                    HL7MappingSegmentString mappingSegment = selectedNode._HL7Segment;
+                    if (mappingSegment != null)
                     {
-                        string value = segment.Value;
+                        string value = mappingSegment.SegmentName;
                         if (value != null)
                         {
-                            Clipboard.SetText(segment.SectionName + "\t" + segment.SegmentName + "\t" + value);
+                            Clipboard.SetText(mappingSegment.SectionName + "\t" + mappingSegment.SegmentName + "\t" + value);
                         }
                     }
                 }

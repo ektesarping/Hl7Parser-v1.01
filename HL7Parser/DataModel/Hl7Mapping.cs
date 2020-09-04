@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HL7Viewer.DataModel
 {
@@ -87,7 +88,6 @@ namespace HL7Viewer.DataModel
                         int.TryParse(fields[INDEX_INDEX_L2], out int index_L2Tmp);
                         segment.Index_L2 = index_L2Tmp;
 
-
                         if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
                         {
                             segment.CollapsedDefault = true;
@@ -102,28 +102,44 @@ namespace HL7Viewer.DataModel
                         if (mappingSectionTmp == null)
                         {
                             this.Hl7MappingSections.Add(segment.SectionName);
+                            mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
                         }
                         // Legger til som subsegment i mappingsection --
                         segment.MappingSection = mappingSectionTmp;
                         segment.MappingSection.Segments.Add(segment);
 
-                        // -- Håndtering av parent/subsegment --
+                        // -- Håndtering av segment --
                         if (segment.Index_L2 <= 0)
                         {
                             // Current segment er på nivå 1
                             segment.Level = 1;
                             _HL7Segments.Add(segment);
-                            segment.ParentSegment = segment.MappingSection.Segment;
+
+                         //   segment.MappingSection.Segments.Add(segment);
+                            //segment.ParentSegment = segment.MappingSection.Segment; SEGMENTER I DETTE NIVÅET HAR IKKE PARENT SEGMENT. KUN SECTION.
                         }
-                        else
+                        //else if (segment.Index_L2 > 0)
+                        //{
+                        //    segment.Level = 2;
+                        //    _HL7Segments.Add(segment);
+                        //}
+                        else if (segment.Index_L2 > 0)
                         {
                             // Segmentet er et subsegment. Parentsegment ble satt i FORRIGE iterasjon.
                             segment.Level = 2;
 
                             // Legger til parent segment.
-                            HL7MappingSegmentString parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, segment.Index_L2);
+                            HL7MappingSegmentString parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
                             segment.ParentSegment = parentSegmentTmp;
-                            parentSegment.SubSegments.Add(segment);
+                            //if (segment.ParentSegment.SubSegments == null)
+                            //{
+                            //    segment.ParentSegment.SubSegments = new HL7MappingSegments(); // HACK Denne bør ikke være null
+                            //}
+                            segment.ParentSegment.SubSegments.Add(segment);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nivå 3 ikke implementert i mappingen. Navnene på feltene vises ikke korrekt", "Importere navn for meldingsvisning", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }

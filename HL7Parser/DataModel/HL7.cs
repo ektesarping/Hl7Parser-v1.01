@@ -131,12 +131,11 @@ namespace HL7Viewer.DataModel
 
             if (subFields.Length > 1)
             {
-                for (int subindex = 0; subindex < subFields.Length; subindex++)
+                for (int index_L2 = 0; index_L2 < subFields.Length; index_L2++)
                 {
-                    string value = subFields[subindex];
-                    HL7MappingSegmentString subsegment = new HL7MappingSegmentString(segmentName, value, parentSegment.Index_L1, subindex + 1);
+                    string value = subFields[index_L2];
+                    HL7MappingSegmentString subsegment = new HL7MappingSegmentString(parentSegment.SectionName, segmentName, parentSegment.Index_L1, index_L2 + 1);
                     subsegment.ParentSegment = parentSegment;
-                    subsegment.SectionName = parentSegment.SectionName;
                     subsegments.Add(subsegment);
                 }
             }
