@@ -30,18 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tvHL7 = new System.Windows.Forms.TreeView();
-            this.chkHideEmptyFields = new System.Windows.Forms.CheckBox();
+            this.contextMenuStripTreeview = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyNavnOgVerdiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripHL7 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.åpneHL7FilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierSegmenterTilClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripTreeview = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyNavnOgVerdiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStripHL7.SuspendLayout();
+            this.rbSkjulTommeNoder = new System.Windows.Forms.RadioButton();
+            this.rbNormalvisning = new System.Windows.Forms.RadioButton();
+            this.rbVisAlle = new System.Windows.Forms.RadioButton();
             this.contextMenuStripTreeview.SuspendLayout();
+            this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvHL7
@@ -57,16 +59,27 @@
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
             // 
-            // chkHideEmptyFields
+            // contextMenuStripTreeview
             // 
-            this.chkHideEmptyFields.AutoSize = true;
-            this.chkHideEmptyFields.Location = new System.Drawing.Point(94, 5);
-            this.chkHideEmptyFields.Name = "chkHideEmptyFields";
-            this.chkHideEmptyFields.Size = new System.Drawing.Size(109, 17);
-            this.chkHideEmptyFields.TabIndex = 1;
-            this.chkHideEmptyFields.Text = "Skjul tomme felter";
-            this.chkHideEmptyFields.UseVisualStyleBackColor = true;
-            this.chkHideEmptyFields.CheckedChanged += new System.EventHandler(this.chkShowEmptyFields_CheckedChanged);
+            this.contextMenuStripTreeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.copyNavnOgVerdiToolStripMenuItem});
+            this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(186, 48);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.copyToolStripMenuItem.Text = "Kopier Verdi";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // copyNavnOgVerdiToolStripMenuItem
+            // 
+            this.copyNavnOgVerdiToolStripMenuItem.Name = "copyNavnOgVerdiToolStripMenuItem";
+            this.copyNavnOgVerdiToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.copyNavnOgVerdiToolStripMenuItem.Text = "Kopier Navn og Verdi";
+            this.copyNavnOgVerdiToolStripMenuItem.Click += new System.EventHandler(this.copyNavnOgVerdiToolStripMenuItem_Click);
             // 
             // menuStripHL7
             // 
@@ -118,42 +131,58 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem.Text = "Lim inn HL7 fil fra clipboard";
             this.limInnHL7FilFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnHL7FilFraClipboardToolStripMenuItem_Click);
             // 
-            // contextMenuStripTreeview
+            // rbSkjulTommeNode
             // 
-            this.contextMenuStripTreeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem,
-            this.copyNavnOgVerdiToolStripMenuItem});
-            this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
-            this.contextMenuStripTreeview.Size = new System.Drawing.Size(181, 70);
+            this.rbSkjulTommeNoder.AutoSize = true;
+            this.rbSkjulTommeNoder.Location = new System.Drawing.Point(88, 3);
+            this.rbSkjulTommeNoder.Name = "rbSkjulTommeNode";
+            this.rbSkjulTommeNoder.Size = new System.Drawing.Size(82, 17);
+            this.rbSkjulTommeNoder.TabIndex = 3;
+            this.rbSkjulTommeNoder.TabStop = true;
+            this.rbSkjulTommeNoder.Text = "Skjul tomme";
+            this.rbSkjulTommeNoder.UseVisualStyleBackColor = true;
+            this.rbSkjulTommeNoder.CheckedChanged += new System.EventHandler(this.rbSkjulTommeNode_CheckedChanged);
             // 
-            // copyToolStripMenuItem
+            // rbNormalvisning
             // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.copyToolStripMenuItem.Text = "Kopier Verdi";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            this.rbNormalvisning.AutoSize = true;
+            this.rbNormalvisning.Location = new System.Drawing.Point(179, 3);
+            this.rbNormalvisning.Name = "rbNormalvisning";
+            this.rbNormalvisning.Size = new System.Drawing.Size(91, 17);
+            this.rbNormalvisning.TabIndex = 3;
+            this.rbNormalvisning.TabStop = true;
+            this.rbNormalvisning.Text = "Normalvisning";
+            this.rbNormalvisning.UseVisualStyleBackColor = true;
+            this.rbNormalvisning.CheckedChanged += new System.EventHandler(this.rbNormalvisning_CheckedChanged);
             // 
-            // copyNavnOgVerdiToolStripMenuItem
+            // rbVisAlle
             // 
-            this.copyNavnOgVerdiToolStripMenuItem.Name = "copyNavnOgVerdiToolStripMenuItem";
-            this.copyNavnOgVerdiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.copyNavnOgVerdiToolStripMenuItem.Text = "Kopier Navn og Verdi";
-            this.copyNavnOgVerdiToolStripMenuItem.Click += new System.EventHandler(this.copyNavnOgVerdiToolStripMenuItem_Click);
+            this.rbVisAlle.AutoSize = true;
+            this.rbVisAlle.Location = new System.Drawing.Point(270, 3);
+            this.rbVisAlle.Name = "rbVisAlle";
+            this.rbVisAlle.Size = new System.Drawing.Size(58, 17);
+            this.rbVisAlle.TabIndex = 3;
+            this.rbVisAlle.TabStop = true;
+            this.rbVisAlle.Text = "Vis alle";
+            this.rbVisAlle.UseVisualStyleBackColor = true;
+            this.rbVisAlle.CheckedChanged += new System.EventHandler(this.rbVisAlle_CheckedChanged);
             // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.chkHideEmptyFields);
+            this.Controls.Add(this.rbVisAlle);
+            this.Controls.Add(this.rbNormalvisning);
+            this.Controls.Add(this.rbSkjulTommeNoder);
             this.Controls.Add(this.tvHL7);
             this.Controls.Add(this.menuStripHL7);
             this.Name = "UcHL7";
             this.Size = new System.Drawing.Size(432, 244);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
+            this.contextMenuStripTreeview.ResumeLayout(false);
             this.menuStripHL7.ResumeLayout(false);
             this.menuStripHL7.PerformLayout();
-            this.contextMenuStripTreeview.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,7 +191,6 @@
         #endregion
 
         private System.Windows.Forms.TreeView tvHL7;
-        private System.Windows.Forms.CheckBox chkHideEmptyFields;
         private System.Windows.Forms.MenuStrip menuStripHL7;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem åpneHL7FilToolStripMenuItem;
@@ -172,5 +200,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTreeview;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyNavnOgVerdiToolStripMenuItem;
+        private System.Windows.Forms.RadioButton rbSkjulTommeNoder;
+        private System.Windows.Forms.RadioButton rbNormalvisning;
+        private System.Windows.Forms.RadioButton rbVisAlle;
     }
 }

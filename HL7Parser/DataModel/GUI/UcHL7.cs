@@ -26,13 +26,60 @@ namespace HL7Viewer.DataModel.GUI
         public UcHL7()
         {
             InitializeComponent();
+            VisningsModusPropertyRead();
         }
+
+        #region -- Manage radiobuttons for visning av tomme noder --
+        public enum Visningsmodus
+        {
+            VisAlle = 0,
+            Normalvisning = 1,
+            SkjulTomme = 2
+        }
+
+
+        public Visningsmodus _Visningsmodus { get; set; }
+
+        private void VisningsModusPropertyRead()
+        {
+            if (Properties.Settings.Default.Visningsmodus == 1)
+            {
+                _Visningsmodus = Visningsmodus.Normalvisning;
+                if (!rbNormalvisning.Checked)
+                {
+                    rbNormalvisning.Checked = true;
+                }
+            }
+            else if (Properties.Settings.Default.Visningsmodus == 2)
+            {
+                _Visningsmodus = Visningsmodus.SkjulTomme;
+                if (!rbSkjulTommeNoder.Checked)
+                {
+                    rbSkjulTommeNoder.Checked = true;
+                }
+            }
+            else
+            {
+                _Visningsmodus = Visningsmodus.VisAlle;
+                if (!rbVisAlle.Checked)
+                {
+                    rbVisAlle.Checked = true;
+                }
+            }
+        }
+
+        private void VisningsModusPropertyWrite()
+        {
+            Properties.Settings.Default.Visningsmodus = (int)_Visningsmodus;
+        }
+
+
+        #endregion -- Manage radiobuttons for visning av tomme noder --
 
 
         #region -- Populate --
         public void Populate(HL7SegmentCategories _hL7SegmentCategories)
         {
-            //this._HL7SegmentCategories = _hL7SegmentCategories;
             Repopulate();
         }
 
@@ -47,7 +94,7 @@ namespace HL7Viewer.DataModel.GUI
 
             foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
             {
-                if ((!this.chkHideEmptyFields.Checked) && (msgChildNode.Value != null))
+                if (IsNodeHidden(msgChildNode)) //   (!this._Visningsmodus ==     chkHideEmptyFields.Checked) && (msgChildNode.Value != null))
                 {
                     TreeNode treenode = new TreeNode();
                     msgChildNode.Treenode = treenode;
@@ -70,6 +117,15 @@ namespace HL7Viewer.DataModel.GUI
                 return;
             }
 
+            // -- Skjuler tomme noder --
+            if (IsNodeHidden(node))
+            {
+                return;
+            }
+
+
+
+
             if (node.Children.Count > 1)
             {
                 foreach (MsgNode msgSubNode in node.Children)
@@ -85,21 +141,22 @@ namespace HL7Viewer.DataModel.GUI
                     PopulateRecursively(msgSubNode);
                 }
             }
-
-
-            //foreach (HL7SegmentString subsegment in node._HL7Segment.SubSegments)
-            //{
-            //    if (!((this.chkHideEmptyFields.Checked) && (string.IsNullOrEmpty(subsegment.Value))))
-            //    {
-            //        TreenodeHL7Base childnode = new TreenodeHL7Base(subsegment);
-            //        node.Nodes.Add(childnode);
-            //        childnode.UpdateSubNodeText();
-            //        PopulateRecursively(childnode);
-            //    }
-            //}
         }
 
+        private bool IsNodeHidden(MsgNode node)
+        {
+            if (_Visningsmodus == Visningsmodus.Normalvisning)
+            {
+                if (node.MappingSegment.CollapsedDefault)
 
+            }
+
+
+            return false;
+
+
+
+        }
         #endregion -- Populate --
 
         #region  -- File methods --
@@ -279,6 +336,27 @@ namespace HL7Viewer.DataModel.GUI
             {
                 MessageBox.Show("En feil oppstod. Prøv igjen.", "Kopiere Felt/Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void rbSkjulTommeNode_CheckedChanged(object sender, EventArgs e)
+        {
+            _Visningsmodus = Visningsmodus.SkjulTomme;
+            VisningsModusPropertyWrite();
+            Repopulate();
+        }
+
+        private void rbNormalvisning_CheckedChanged(object sender, EventArgs e)
+        {
+            _Visningsmodus = Visningsmodus.Normalvisning;
+            VisningsModusPropertyWrite();
+            Repopulate();
+        }
+
+        private void rbVisAlle_CheckedChanged(object sender, EventArgs e)
+        {
+            _Visningsmodus = Visningsmodus.VisAlle;
+            VisningsModusPropertyWrite();
+            Repopulate();
         }
     }
 }

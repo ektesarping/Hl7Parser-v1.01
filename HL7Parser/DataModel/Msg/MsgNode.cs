@@ -117,7 +117,7 @@ namespace HL7Viewer.DataModel.Msg
             foreach (string strNode in strNodesLevel)
             {
                 MsgNode msgsubnode = new MsgNode();
-                msgsubnode.Level = 1;
+                msgsubnode.Level = 0;
 
                 /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
                 string tmpForDebuggingSlettes = (strNode.Substring(strNode.Length - 1, 1));
