@@ -24,7 +24,7 @@ namespace HL7Viewer.DataModel.Msg
 
         public int Index_L2 { get; set; }
 
-        public int Index_L3 { get; set; }
+        //public int Index_L3 { get; set; }
 
         /// <summary>
         /// Index for oppslag mot mapping. Ulik this.Index ved repeterende sekvenser av felter.
@@ -153,7 +153,7 @@ namespace HL7Viewer.DataModel.Msg
         public void CreateChildNodes_L2(char[] separator) //, bool useFirstFieldAsName) //, bool trimLastCharacter = false)
         {
             string[] strNodesLevel = this.SourceString.Split(separator);
-            int indexsubnode = 1;
+            int indexsubnode = 0; // Starter på 0 for å fjerne section name som kommer først i stringen.
             foreach (string strNode in strNodesLevel)
             {
                 // -- Ignorer leddet med section name. --
@@ -166,10 +166,8 @@ namespace HL7Viewer.DataModel.Msg
                 MsgNode msgsubnode = new MsgNode();
                 msgsubnode.SourceString = strNode;
 
-
-                msgsubnode.Level = 2;
+                msgsubnode.Level = 1;
                 msgsubnode.Index_L1 = indexsubnode;
-                //msgsubnode.SourceStringRaw = strNodeTrimmed;
                 msgsubnode.Index_L2 = 0;
 
                 msgsubnode.Value = msgsubnode.SourceString;
@@ -210,27 +208,11 @@ namespace HL7Viewer.DataModel.Msg
                     continue;
                 }
 
-
-                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
-                //string strNodeTrimmed = strNode;
-                //if (strNode.Length > 0)
-                //{
-                //    string tmp = (strNode.Substring(strNode.Length - 1, 1));
-                //    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
-                //    {
-                //        strNodeTrimmed = strNode.Substring(0, strNode.Length - 1);
-                //    }
-                //}
-
                 //string name = GetSectionNameFromSourceString(strNode, separator);
                 MsgNode msgsubnode = new MsgNode(); // Bruker samme index som for parent node. 
-                msgsubnode.level = 3;
+                msgsubnode.level = 2;
                 msgsubnode.Index_L1 = this.Index_L1;
-                msgsubnode.Index_L2 = this.Index_L2;
-                msgsubnode.Index_L3 = indexsubnode;
-
-                //msgsubnode.SourceStringRaw = strNodeTrimmed;
-                //msgsubnode.Level = this.Level + 1;
+                msgsubnode.Index_L2 = indexsubnode;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 //if (useFirstFieldAsName)
@@ -257,27 +239,38 @@ namespace HL7Viewer.DataModel.Msg
         {
             get
             {
-                string str = String.Empty;
+                string str = "L:" + this.Level.ToString() + " ";
                 switch (this.Level)
                 {
-                    case 1:
-                        str = this.MappingSectionName;
+                    case 0:
+                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
+                        if (this.MappingSegment != null)
+                        {
+                            str += this.MappingSegment.SegmentName;
+                        }
+                        else
+                        {
+                            str += this.Name;
+                        }
+                        str += "]" ; // = " + this.Value;
 
-                        //string str = "[" + this.MappingSectionName + " " + indexTmp + " ";
-                        //if (this.MappingSegment != null)
-                        //{
-                        //    str += this.MappingSegment.SegmentName;
-                        //}
-                        //else
-                        //{
-                        //    str += this.Name;
-                        //}
-                        //str += " Level:" + this.Level.ToString();
-                        //str += "] = " + this.Value;
+                        break;
+
+                    case 1:
+                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
+                        if (this.MappingSegment != null)
+                        {
+                            str += this.MappingSegment.SegmentName;
+                        }
+                        else
+                        {
+                            str += this.Name;
+                        }
+                        str += "] = " + this.Value;
 
                         break;
                     case 2:
-                        str = "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
+                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
                         if (this.MappingSegment != null)
                         {
                             str += this.MappingSegment.SegmentName;
@@ -290,7 +283,7 @@ namespace HL7Viewer.DataModel.Msg
 
                         break;
                     case 3:
-                        str = "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " " ;
+                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " " ;
                         if (this.MappingSegment != null)
                         {
                             str += this.MappingSegment.SegmentName;

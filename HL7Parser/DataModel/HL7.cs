@@ -118,7 +118,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (MsgNode childnode in node.Children)
             {
-                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
+                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L1, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }
