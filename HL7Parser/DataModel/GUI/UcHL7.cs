@@ -23,55 +23,97 @@ namespace HL7Viewer.DataModel.GUI
 
         public string RootnodeText { get; set; }
 
+
+        public bool SkjulTomme
+        {
+            get
+            {
+                return Properties.Settings.Default.SkjulTommeNoder;
+            }
+            set
+            {
+                Properties.Settings.Default.SkjulTommeNoder = value;
+                Properties.Settings.Default.Save();
+                if (chkSkjulTomme.Checked != value)
+                {
+                    chkSkjulTomme.Checked = value;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Normalvisning. Collapser noder som er merket i mppingfilen.
+        /// </summary>
+        public bool Normalvisning
+        {
+            get
+            {
+                return Properties.Settings.Default.Normalvisning;
+            }
+            set
+            {
+                Properties.Settings.Default.Normalvisning = value;
+                Properties.Settings.Default.Save();
+                if (chkNormalVisning.Checked != value)
+                {
+                    chkNormalVisning.Checked = value;
+                }
+            }
+        }
+
+
         public UcHL7()
         {
             InitializeComponent();
-            VisningsModusPropertyRead();
+            //VisningsModusPropertyRead();
+            SkjulTomme = false; // initiell verdi
         }
 
         #region -- Manage radiobuttons for visning av tomme noder --
-        public enum Visningsmodus
-        {
-            VisAlle = 0,
-            Normalvisning = 1,
-            SkjulTomme = 2
-        }
+        //public enum Visningsmodus
+        //{
+        //    VisAlle = 0,
+        //    Normalvisning = 1,
+        //    SkjulTomme = 2
+        //}
 
 
-        public Visningsmodus _Visningsmodus { get; set; }
+        //public Visningsmodus _Visningsmodus { get; set; }
 
-        private void VisningsModusPropertyRead()
-        {
-            if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.Normalvisning)
-            {
-                _Visningsmodus = Visningsmodus.Normalvisning;
-                if (!rbNormalvisning.Checked)
-                {
-                    rbNormalvisning.Checked = true;
-                }
-            }
-            else if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.SkjulTomme)
-            {
-                _Visningsmodus = Visningsmodus.SkjulTomme;
-                if (!rbSkjulTommeNoder.Checked)
-                {
-                    rbSkjulTommeNoder.Checked = true;
-                }
-            }
-            else
-            {
-                _Visningsmodus = Visningsmodus.VisAlle;
-                if (!rbVisAlle.Checked)
-                {
-                    rbVisAlle.Checked = true;
-                }
-            }
-        }
 
-        private void VisningsModusPropertyWrite()
-        {
-            Properties.Settings.Default.Visningsmodus = (int)_Visningsmodus;
-        }
+        //private void VisningsModusPropertyRead()
+        //{
+        //    if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.Normalvisning)
+        //    {
+        //        _Visningsmodus = Visningsmodus.Normalvisning;
+        //        if (!rbNormalvisning.Checked)
+        //        {
+        //            rbNormalvisning.Checked = true;
+        //        }
+        //    }
+        //    else if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.SkjulTomme)
+        //    {
+        //        _Visningsmodus = Visningsmodus.SkjulTomme;
+        //        if (!rbSkjulTommeNoder.Checked)
+        //        {
+        //            rbSkjulTommeNoder.Checked = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        _Visningsmodus = Visningsmodus.VisAlle;
+        //        if (!rbVisAlle.Checked)
+        //        {
+        //            rbVisAlle.Checked = true;
+        //        }
+        //    }
+        //}
+
+        //private void VisningsModusPropertyWrite()
+        //{
+        //    Properties.Settings.Default.Visningsmodus = (int)_Visningsmodus;
+        //}
 
 
         #endregion -- Manage radiobuttons for visning av tomme noder --
@@ -94,8 +136,8 @@ namespace HL7Viewer.DataModel.GUI
 
             foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
             {
-                TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, _Visningsmodus);
-                
+                TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning);
+
                 // -- Legger kun til noden hvis den ikke skal vises -- 
                 if (!treenode.NodeIsHidden)
                 {
@@ -120,9 +162,12 @@ namespace HL7Viewer.DataModel.GUI
             {
                 if (node.Children.Count > 1)
                 {
-                    TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, _Visningsmodus);
-                    node.Treenode.Nodes.Add(treenode);
-                    PopulateRecursively(msgChildNode);
+                    TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning);
+                    if (!treenode.NodeIsHidden)
+                    {
+                        node.Treenode.Nodes.Add(treenode);
+                        PopulateRecursively(msgChildNode);
+                    }
                 }
             }
         }
@@ -206,9 +251,6 @@ namespace HL7Viewer.DataModel.GUI
             Repopulate();
         }
         #endregion -- Menu methods --
-
-
-
 
         private void UcHL7_DragDrop(object sender, DragEventArgs e)
         {
@@ -308,25 +350,42 @@ namespace HL7Viewer.DataModel.GUI
             }
         }
 
-        private void rbSkjulTommeNode_CheckedChanged(object sender, EventArgs e)
+        //private void rbSkjulTommeNode_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    _Visningsmodus = Visningsmodus.SkjulTomme;
+        //    VisningsModusPropertyWrite();
+        //    Repopulate();
+        //}
+
+        //private void rbNormalvisning_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    _Visningsmodus = Visningsmodus.Normalvisning;
+        //    VisningsModusPropertyWrite();
+        //    Repopulate();
+        //}
+
+        //private void rbVisAlle_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    _Visningsmodus = Visningsmodus.VisAlle;
+        //    VisningsModusPropertyWrite();
+        //    Repopulate();
+        //}
+
+        private void chkSkjulTomme_CheckedChanged(object sender, EventArgs e)
         {
-            _Visningsmodus = Visningsmodus.SkjulTomme;
-            VisningsModusPropertyWrite();
+            this.SkjulTomme = chkSkjulTomme.Checked;
             Repopulate();
         }
 
-        private void rbNormalvisning_CheckedChanged(object sender, EventArgs e)
+        private void chkNormalVisning_CheckedChanged(object sender, EventArgs e)
         {
-            _Visningsmodus = Visningsmodus.Normalvisning;
-            VisningsModusPropertyWrite();
+            this.Normalvisning = chkNormalVisning.Checked;
             Repopulate();
         }
 
-        private void rbVisAlle_CheckedChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _Visningsmodus = Visningsmodus.VisAlle;
-            VisningsModusPropertyWrite();
-            Repopulate();
+            MessageBox.Show("Ikke implementert");
         }
     }
 }

@@ -37,13 +37,25 @@ namespace HL7Viewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Visningsmodus {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SkjulTommeNoder {
             get {
-                return ((int)(this["Visningsmodus"]));
+                return ((bool)(this["SkjulTommeNoder"]));
             }
             set {
-                this["Visningsmodus"] = value;
+                this["SkjulTommeNoder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Normalvisning {
+            get {
+                return ((bool)(this["Normalvisning"]));
+            }
+            set {
+                this["Normalvisning"] = value;
             }
         }
         

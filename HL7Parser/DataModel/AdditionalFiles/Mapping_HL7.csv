@@ -5,7 +5,7 @@
 DisplayName	Røntgensvar
 MSH	1	0	Y	Field Separator					
 MSH	2	0	Y	Encoding Characters					
-MSH	3	0	Y	Sending Application					
+// MSH	3	0	Y	Sending Application					
 MSH	4	0	Y	Sending Facility					
 MSH	5	0	Y	Receiving Application					
 MSH	6	0	Y	Receiving Facility					

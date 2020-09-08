@@ -39,9 +39,9 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierSegmenterTilClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rbSkjulTommeNoder = new System.Windows.Forms.RadioButton();
-            this.rbNormalvisning = new System.Windows.Forms.RadioButton();
-            this.rbVisAlle = new System.Windows.Forms.RadioButton();
+            this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
+            this.chkNormalVisning = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +54,7 @@
             this.tvHL7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
-            this.tvHL7.Size = new System.Drawing.Size(432, 220);
+            this.tvHL7.Size = new System.Drawing.Size(465, 220);
             this.tvHL7.TabIndex = 0;
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
@@ -89,7 +89,7 @@
             this.editToolStripMenuItem});
             this.menuStripHL7.Location = new System.Drawing.Point(0, 0);
             this.menuStripHL7.Name = "menuStripHL7";
-            this.menuStripHL7.Size = new System.Drawing.Size(432, 24);
+            this.menuStripHL7.Size = new System.Drawing.Size(465, 24);
             this.menuStripHL7.TabIndex = 2;
             this.menuStripHL7.Text = "menuStrip1";
             // 
@@ -131,54 +131,49 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem.Text = "Lim inn HL7 fil fra clipboard";
             this.limInnHL7FilFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnHL7FilFraClipboardToolStripMenuItem_Click);
             // 
-            // rbSkjulTommeNode
+            // chkSkjulTomme
             // 
-            this.rbSkjulTommeNoder.AutoSize = true;
-            this.rbSkjulTommeNoder.Location = new System.Drawing.Point(88, 3);
-            this.rbSkjulTommeNoder.Name = "rbSkjulTommeNode";
-            this.rbSkjulTommeNoder.Size = new System.Drawing.Size(82, 17);
-            this.rbSkjulTommeNoder.TabIndex = 3;
-            this.rbSkjulTommeNoder.TabStop = true;
-            this.rbSkjulTommeNoder.Text = "Skjul tomme";
-            this.rbSkjulTommeNoder.UseVisualStyleBackColor = true;
-            this.rbSkjulTommeNoder.CheckedChanged += new System.EventHandler(this.rbSkjulTommeNode_CheckedChanged);
+            this.chkSkjulTomme.AutoSize = true;
+            this.chkSkjulTomme.Location = new System.Drawing.Point(84, 4);
+            this.chkSkjulTomme.Name = "chkSkjulTomme";
+            this.chkSkjulTomme.Size = new System.Drawing.Size(83, 17);
+            this.chkSkjulTomme.TabIndex = 3;
+            this.chkSkjulTomme.Text = "Skjul tomme";
+            this.chkSkjulTomme.UseVisualStyleBackColor = true;
+            this.chkSkjulTomme.CheckedChanged += new System.EventHandler(this.chkSkjulTomme_CheckedChanged);
             // 
-            // rbNormalvisning
+            // chkNormalVisning
             // 
-            this.rbNormalvisning.AutoSize = true;
-            this.rbNormalvisning.Location = new System.Drawing.Point(179, 3);
-            this.rbNormalvisning.Name = "rbNormalvisning";
-            this.rbNormalvisning.Size = new System.Drawing.Size(91, 17);
-            this.rbNormalvisning.TabIndex = 3;
-            this.rbNormalvisning.TabStop = true;
-            this.rbNormalvisning.Text = "Normalvisning";
-            this.rbNormalvisning.UseVisualStyleBackColor = true;
-            this.rbNormalvisning.CheckedChanged += new System.EventHandler(this.rbNormalvisning_CheckedChanged);
+            this.chkNormalVisning.AutoSize = true;
+            this.chkNormalVisning.Location = new System.Drawing.Point(167, 4);
+            this.chkNormalVisning.Name = "chkNormalVisning";
+            this.chkNormalVisning.Size = new System.Drawing.Size(92, 17);
+            this.chkNormalVisning.TabIndex = 4;
+            this.chkNormalVisning.Text = "Normalvisning";
+            this.chkNormalVisning.UseVisualStyleBackColor = true;
+            this.chkNormalVisning.CheckedChanged += new System.EventHandler(this.chkNormalVisning_CheckedChanged);
             // 
-            // rbVisAlle
+            // comboBox1
             // 
-            this.rbVisAlle.AutoSize = true;
-            this.rbVisAlle.Location = new System.Drawing.Point(270, 3);
-            this.rbVisAlle.Name = "rbVisAlle";
-            this.rbVisAlle.Size = new System.Drawing.Size(58, 17);
-            this.rbVisAlle.TabIndex = 3;
-            this.rbVisAlle.TabStop = true;
-            this.rbVisAlle.Text = "Vis alle";
-            this.rbVisAlle.UseVisualStyleBackColor = true;
-            this.rbVisAlle.CheckedChanged += new System.EventHandler(this.rbVisAlle_CheckedChanged);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(270, 2);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(181, 21);
+            this.comboBox1.TabIndex = 5;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.rbVisAlle);
-            this.Controls.Add(this.rbNormalvisning);
-            this.Controls.Add(this.rbSkjulTommeNoder);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.chkNormalVisning);
+            this.Controls.Add(this.chkSkjulTomme);
             this.Controls.Add(this.tvHL7);
             this.Controls.Add(this.menuStripHL7);
             this.Name = "UcHL7";
-            this.Size = new System.Drawing.Size(432, 244);
+            this.Size = new System.Drawing.Size(465, 244);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
             this.contextMenuStripTreeview.ResumeLayout(false);
             this.menuStripHL7.ResumeLayout(false);
@@ -200,8 +195,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTreeview;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyNavnOgVerdiToolStripMenuItem;
-        private System.Windows.Forms.RadioButton rbSkjulTommeNoder;
-        private System.Windows.Forms.RadioButton rbNormalvisning;
-        private System.Windows.Forms.RadioButton rbVisAlle;
+        private System.Windows.Forms.CheckBox chkSkjulTomme;
+        private System.Windows.Forms.CheckBox chkNormalVisning;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

@@ -27,7 +27,7 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Collapsed default ved innlesing.
         /// </summary>
-        public bool CollapsedDefault { get; set; }
+        public bool CollapsedDefault { get; set; } = false;
 
         public string SegmentName { get; set; }
 

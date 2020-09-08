@@ -118,6 +118,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (MsgNode childnode in node.Children)
             {
+                // -- Hvis mappingsegment == null indikeres det med annen treenode farge. --
                 childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L1, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
             }

@@ -23,28 +23,33 @@ namespace HL7Viewer.DataModel
             node.Treenode = this;
         }
 
-        public TreenodeHL7Base(MsgNode msgNode, Visningsmodus _Visningsmodus) : this(msgNode)
+        public TreenodeHL7Base(MsgNode msgNode, bool skjulTomme, bool normalvisning) : this(msgNode)
         {
             // -- Opprett noden hvis den ikke skal skjules -- 
-            if (
-                !(
-                ((_Visningsmodus == Visningsmodus.SkjulTomme) || (_Visningsmodus == Visningsmodus.Normalvisning))
-                && (String.IsNullOrEmpty(msgNode.Value))))
-            {
+            if (!((skjulTomme) && (String.IsNullOrEmpty(msgNode.Value))))
+                {
                 //TreeNode treenode = new TreeNode();
                 msgNode.Treenode = this;
 
                 this.Text = msgNode.TreeNodeText;
 
                 // -- Collapse treenode hvis den er satt som default collapsed i mappingen --
-                if ((_Visningsmodus == Visningsmodus.Normalvisning) && (msgNode.MappingSegment.CollapsedDefault))
+                if (msgNode.MappingSegment != null)
                 {
-                    this.Collapse();
+                    if ((normalvisning) && (msgNode.MappingSegment.CollapsedDefault))
+                    {
+                        this.Collapse();
+                    }
                 }
             }
             else
             {
                 NodeIsHidden = true;
+            }
+
+            if ((msgNode.Level >= 1) && (msgNode.MappingSegment == null))
+            {
+                this.ForeColor = FORECOLOR_IMPORTED_FROM_MESSAGE_FILE;
             }
         }
 
