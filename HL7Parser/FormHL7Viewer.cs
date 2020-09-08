@@ -28,7 +28,7 @@ namespace HL7Viewer
             // -- Åpne sist brukte HL7 fil --
             try
             {
-                FileInfo fi = new FileInfo(Properties.Settings.Default.Filename);
+                FileInfo fi = new FileInfo(Properties.Settings.Default.MsgFilename);
                 if (fi.Exists)
                 {
                     this.ucHL71.OpenMessageFile(fi);

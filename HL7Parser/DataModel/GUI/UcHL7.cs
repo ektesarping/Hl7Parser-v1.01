@@ -42,7 +42,7 @@ namespace HL7Viewer.DataModel.GUI
 
         private void VisningsModusPropertyRead()
         {
-            if (Properties.Settings.Default.Visningsmodus == 1)
+            if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.Normalvisning)
             {
                 _Visningsmodus = Visningsmodus.Normalvisning;
                 if (!rbNormalvisning.Checked)
@@ -50,7 +50,7 @@ namespace HL7Viewer.DataModel.GUI
                     rbNormalvisning.Checked = true;
                 }
             }
-            else if (Properties.Settings.Default.Visningsmodus == 2)
+            else if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.SkjulTomme)
             {
                 _Visningsmodus = Visningsmodus.SkjulTomme;
                 if (!rbSkjulTommeNoder.Checked)
@@ -94,14 +94,8 @@ namespace HL7Viewer.DataModel.GUI
 
             foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
             {
-                if (IsNodeHidden(msgChildNode)) //   (!this._Visningsmodus ==     chkHideEmptyFields.Checked) && (msgChildNode.Value != null))
-                {
-                    TreeNode treenode = new TreeNode();
-                    msgChildNode.Treenode = treenode;
-
-                    treenode.Text = msgChildNode.TreeNodeText;
-                    root.Nodes.Add(treenode);
-                }
+                TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, _Visningsmodus);
+                root.Nodes.Add(treenode);
                 PopulateRecursively(msgChildNode);
             }
 
@@ -117,51 +111,22 @@ namespace HL7Viewer.DataModel.GUI
                 return;
             }
 
-            // -- Skjuler tomme noder --
-            if (IsNodeHidden(node))
+            foreach (MsgNode msgChildNode in node.Children)
             {
-                return;
-            }
-
-
-
-
-            if (node.Children.Count > 1)
-            {
-                foreach (MsgNode msgSubNode in node.Children)
+                if (node.Children.Count > 1)
                 {
-                    if ((!this.chkHideEmptyFields.Checked) && (msgSubNode.Value != null))
-                    {
-                        TreeNode treenode = new TreeNode();
-
-                        msgSubNode.Treenode = treenode;
-                        node.Treenode.Nodes.Add(treenode);
-                        treenode.Text = msgSubNode.TreeNodeText;
-                    }
-                    PopulateRecursively(msgSubNode);
+                    TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, _Visningsmodus);
+                    node.Treenode.Nodes.Add(treenode);
+                    PopulateRecursively(msgChildNode);
                 }
             }
-        }
-
-        private bool IsNodeHidden(MsgNode node)
-        {
-            if (_Visningsmodus == Visningsmodus.Normalvisning)
-            {
-                if (node.MappingSegment.CollapsedDefault)
-
-            }
-
-
-            return false;
-
-
-
         }
         #endregion -- Populate --
 
         #region  -- File methods --
         public void OpenMessageFile(FileInfo fi)
         {
+
             this.RootnodeText = fi.FullName;
 
             _HL7.MsgFile = fi;
@@ -182,7 +147,7 @@ namespace HL7Viewer.DataModel.GUI
             FileInfo fi = null;
             try
             {
-                fi = new FileInfo(Properties.Settings.Default.Filename);
+                fi = new FileInfo(Properties.Settings.Default.MsgFilename);
 
                 if (fi.Directory.Exists)
                 {
@@ -205,7 +170,7 @@ namespace HL7Viewer.DataModel.GUI
             if (res == DialogResult.OK)
             {
                 _HL7.MsgFile = new FileInfo(dlg.FileName);
-                Properties.Settings.Default.Filename = _HL7.MsgFile.FullName;
+                Properties.Settings.Default.MsgFilename = _HL7.MsgFile.FullName;
                 Properties.Settings.Default.Save();
                 OpenMessageFile(_HL7.MsgFile);
             }

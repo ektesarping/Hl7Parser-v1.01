@@ -1,10 +1,12 @@
-﻿using System;
+﻿using HL7Viewer.DataModel.Msg;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static HL7Viewer.DataModel.GUI.UcHL7;
 
 namespace HL7Viewer.DataModel
 {
@@ -12,10 +14,31 @@ namespace HL7Viewer.DataModel
     {
         public HL7MappingSegmentString _HL7Segment { get; set; }
 
-        public TreenodeHL7Base(HL7MappingSegmentString segment)
+        public TreenodeHL7Base(MsgNode node)
         {
-            this._HL7Segment = segment;
+            this._HL7Segment = node.MappingSegment;
+            this.Text = node.Value;
+            node.Treenode = this;
         }
+
+        public TreenodeHL7Base(MsgNode msgNode, Visningsmodus _Visningsmodus) : this(msgNode)
+        {
+            // -- Opprett noden hvis den ikke skal skjules -- 
+            if (!((_Visningsmodus == Visningsmodus.SkjulTomme) && (String.IsNullOrEmpty(msgNode.Value))))
+            {
+                //TreeNode treenode = new TreeNode();
+                msgNode.Treenode = this;
+
+                this.Text = msgNode.TreeNodeText;
+
+                // -- Collapse treenode hvis den er satt som default collapsed i mappingen --
+                if ((_Visningsmodus == Visningsmodus.Normalvisning) && (msgNode.MappingSegment.CollapsedDefault))
+                {
+                    this.Collapse();
+                }
+            }
+        }
+
 
         private Color FORECOLOR_DEFAULT = Color.Black;
         private Color FORECOLOR_IMPORTED_FROM_MESSAGE_FILE = Color.Blue;

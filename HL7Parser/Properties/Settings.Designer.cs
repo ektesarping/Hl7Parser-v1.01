@@ -26,12 +26,12 @@ namespace HL7Viewer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Filename {
+        public string MsgFilename {
             get {
-                return ((string)(this["Filename"]));
+                return ((string)(this["MsgFilename"]));
             }
             set {
-                this["Filename"] = value;
+                this["MsgFilename"] = value;
             }
         }
         
@@ -44,6 +44,18 @@ namespace HL7Viewer.Properties {
             }
             set {
                 this["Visningsmodus"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Mappingfiler {
+            get {
+                return ((string)(this["Mappingfiler"]));
+            }
+            set {
+                this["Mappingfiler"] = value;
             }
         }
     }
