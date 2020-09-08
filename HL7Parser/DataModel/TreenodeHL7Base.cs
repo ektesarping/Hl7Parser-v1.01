@@ -14,6 +14,8 @@ namespace HL7Viewer.DataModel
     {
         public HL7MappingSegmentString _HL7Segment { get; set; }
 
+        public bool NodeIsHidden { get; set; }
+
         public TreenodeHL7Base(MsgNode node)
         {
             this._HL7Segment = node.MappingSegment;
@@ -24,7 +26,10 @@ namespace HL7Viewer.DataModel
         public TreenodeHL7Base(MsgNode msgNode, Visningsmodus _Visningsmodus) : this(msgNode)
         {
             // -- Opprett noden hvis den ikke skal skjules -- 
-            if (!((_Visningsmodus == Visningsmodus.SkjulTomme) && (String.IsNullOrEmpty(msgNode.Value))))
+            if (
+                !(
+                ((_Visningsmodus == Visningsmodus.SkjulTomme) || (_Visningsmodus == Visningsmodus.Normalvisning))
+                && (String.IsNullOrEmpty(msgNode.Value))))
             {
                 //TreeNode treenode = new TreeNode();
                 msgNode.Treenode = this;
@@ -36,6 +41,10 @@ namespace HL7Viewer.DataModel
                 {
                     this.Collapse();
                 }
+            }
+            else
+            {
+                NodeIsHidden = true;
             }
         }
 

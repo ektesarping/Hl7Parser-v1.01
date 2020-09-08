@@ -95,7 +95,12 @@ namespace HL7Viewer.DataModel.GUI
             foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
             {
                 TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, _Visningsmodus);
-                root.Nodes.Add(treenode);
+                
+                // -- Legger kun til noden hvis den ikke skal vises -- 
+                if (!treenode.NodeIsHidden)
+                {
+                    root.Nodes.Add(treenode);
+                }
                 PopulateRecursively(msgChildNode);
             }
 
