@@ -22,6 +22,8 @@ namespace HL7Viewer.DataModel
 
         public HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
+        private const string COMMENT_CHAR = "//";
+
         /// <summary>
         /// Viser navnet på mappingen, f.eks Røntgensvar, Labsvar etc.
         /// </summary>
@@ -30,7 +32,7 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Full path til mappingfilen.
         /// </summary>
-        public string  MappingFileFullPath { get; set; }
+        public string MappingFileFullPath { get; set; }
 
 
         // Parts of input files.
@@ -49,102 +51,121 @@ namespace HL7Viewer.DataModel
 
         public void ImportMapping(FileInfo fi)
         {
-            using (StreamReader sr = new StreamReader(fi.FullName, Encoding.ASCII))
+            string str = String.Empty;
+            try
             {
-                string str = String.Empty;
-                HL7MappingSegmentString parentSegment = null;
-                _HL7Segments = new HL7MappingSegments();
-                this.MappingFileFullPath = fi.FullName;
-
-                while (!sr.EndOfStream)
+                using (StreamReader sr = new StreamReader(fi.FullName, Encoding.ASCII))
                 {
-                    str = sr.ReadLine();
-                    string[] fields = str.Split(new char[] { '\t' });
-                    //for (int i = 0; i < fields.Length; i++)
+                    HL7MappingSegmentString parentSegment = null;
+                    _HL7Segments = new HL7MappingSegments();
+                    this.MappingFileFullPath = fi.FullName;
+
+                    while (!sr.EndOfStream)
                     {
-                        if (String.IsNullOrEmpty(fields[INDEX_SECTION]))
+                        str = sr.ReadLine();
+                        string[] fields = str.Split(new char[] { '\t' });
+                        //for (int i = 0; i < fields.Length; i++)
                         {
-                            continue; // Do not save segments with empty names
-                        }
+                            if (String.IsNullOrEmpty(fields[INDEX_SECTION]))
+                            {
+                                continue; // Do not save segments with empty names
+                            }
 
-                        if (fields[INDEX_SECTION].Contains("//"))
-                        {
-                            continue;
-                        }
+                            if (fields[INDEX_SECTION].Contains(COMMENT_CHAR))
+                            {
+                                continue;
+                            }
 
-                        if (fields[INDEX_SECTION].ToUpper().Contains(DISPLAY_NAME))
-                        {
-                            DisplayName = fields[1];
-                            continue;
-                        }
+                            if (fields[INDEX_SECTION].ToUpper().Contains(DISPLAY_NAME))
+                            {
+                                DisplayName = fields[1];
+                                continue;
+                            }
 
-                        // -- Parse feltene i segmentet --
-                        HL7MappingSegmentString segment = new HL7MappingSegmentString();
-                        segment.SectionName = fields[INDEX_SECTION];
+                            // -- Parse feltene i segmentet --
+                            HL7MappingSegmentString segment = new HL7MappingSegmentString();
+                            segment.SectionName = fields[INDEX_SECTION];
 
-                        int.TryParse(fields[INDEX_INDEX_L1], out int index_LTmp);
-                        segment.Index_L1 = index_LTmp;
+                            int.TryParse(fields[INDEX_INDEX_L1], out int index_LTmp);
+                            segment.Index_L1 = index_LTmp;
 
-                        int.TryParse(fields[INDEX_INDEX_L2], out int index_L2Tmp);
-                        segment.Index_L2 = index_L2Tmp;
+                            int.TryParse(fields[INDEX_INDEX_L2], out int index_L2Tmp);
+                            segment.Index_L2 = index_L2Tmp;
 
-                        if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
-                        {
-                            segment.CollapsedDefault = true;
-                        }
+                            if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
+                            {
+                                segment.CollapsedDefault = true;
+                            }
 
-                        segment.SegmentName = fields[INDEX_NAME];
+                           
+                           // segment.SegmentName = fields[INDEX_NAME];
+                            if (fields[INDEX_NAME].Contains(COMMENT_CHAR))
+                            {
+                                string strTmp = fields[INDEX_NAME];
+                                if (strTmp.IndexOf(COMMENT_CHAR) > 0)
+                                {
+                                    segment.SegmentName = strTmp.Substring(0, strTmp.IndexOf(COMMENT_CHAR) - 1);
+                                }
+                                else
+                                {
+                                    segment.SegmentName = "";
+                                }
+                            }
 
+                            // -- Legger til section hvis den ikke allerede finnes --
+                            // Oppretter section hvis en ikke finnes
+                            Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
+                            if (mappingSectionTmp == null)
+                            {
+                                this.Hl7MappingSections.Add(segment.SectionName);
+                                mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
+                            }
+                            // Legger til som subsegment i mappingsection --
+                            segment.MappingSection = mappingSectionTmp;
+                            segment.MappingSection.Segments.Add(segment);
 
-                        // -- Legger til section hvis den ikke allerede finnes --
-                        // Oppretter section hvis en ikke finnes
-                        Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
-                        if (mappingSectionTmp == null)
-                        {
-                            this.Hl7MappingSections.Add(segment.SectionName);
-                            mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
-                        }
-                        // Legger til som subsegment i mappingsection --
-                        segment.MappingSection = mappingSectionTmp;
-                        segment.MappingSection.Segments.Add(segment);
+                            // -- Håndtering av segment --
+                            if (segment.Index_L2 <= 0)
+                            {
+                                // Current segment er på nivå 1
+                                segment.Level = 1;
+                                _HL7Segments.Add(segment);
 
-                        // -- Håndtering av segment --
-                        if (segment.Index_L2 <= 0)
-                        {
-                            // Current segment er på nivå 1
-                            segment.Level = 1;
-                            _HL7Segments.Add(segment);
-
-                         //   segment.MappingSection.Segments.Add(segment);
-                            //segment.ParentSegment = segment.MappingSection.Segment; SEGMENTER I DETTE NIVÅET HAR IKKE PARENT SEGMENT. KUN SECTION.
-                        }
-                        //else if (segment.Index_L2 > 0)
-                        //{
-                        //    segment.Level = 2;
-                        //    _HL7Segments.Add(segment);
-                        //}
-                        else if (segment.Index_L2 > 0)
-                        {
-                            // Segmentet er et subsegment. Parentsegment ble satt i FORRIGE iterasjon.
-                            segment.Level = 2;
-
-                            // Legger til parent segment.
-                            HL7MappingSegmentString parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
-                            segment.ParentSegment = parentSegmentTmp;
-                            //if (segment.ParentSegment.SubSegments == null)
+                                //   segment.MappingSection.Segments.Add(segment);
+                                //segment.ParentSegment = segment.MappingSection.Segment; SEGMENTER I DETTE NIVÅET HAR IKKE PARENT SEGMENT. KUN SECTION.
+                            }
+                            //else if (segment.Index_L2 > 0)
                             //{
-                            //    segment.ParentSegment.SubSegments = new HL7MappingSegments(); // HACK Denne bør ikke være null
+                            //    segment.Level = 2;
+                            //    _HL7Segments.Add(segment);
                             //}
-                            segment.ParentSegment.SubSegments.Add(segment);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nivå 3 ikke implementert i mappingen. Navnene på feltene vises ikke korrekt", "Importere navn for meldingsvisning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            else if (segment.Index_L2 > 0)
+                            {
+                                // Segmentet er et subsegment. Parentsegment ble satt i FORRIGE iterasjon.
+                                segment.Level = 2;
+
+                                // Legger til parent segment.
+                                HL7MappingSegmentString parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
+                                segment.ParentSegment = parentSegmentTmp;
+                                //if (segment.ParentSegment.SubSegments == null)
+                                //{
+                                //    segment.ParentSegment.SubSegments = new HL7MappingSegments(); // HACK Denne bør ikke være null
+                                //}
+                                segment.ParentSegment.SubSegments.Add(segment);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Nivå 3 ikke implementert i mappingen. Navnene på feltene vises ikke korrekt", "Importere navn for meldingsvisning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
+                    sr.Close();
+                    // PopulateListOfSections();
                 }
-                sr.Close();
-                // PopulateListOfSections();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Feil under innlesing av mappingfilen (oversikt over feltnavn)\r\n" + str + "\r\n\n" + ex.Message + "\r\n\n" + ex.StackTrace, "Innlesing av mapping", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

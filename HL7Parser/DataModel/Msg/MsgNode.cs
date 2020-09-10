@@ -239,59 +239,44 @@ namespace HL7Viewer.DataModel.Msg
         {
             get
             {
+                string mappingSegmentNameTmp = String.Empty;
+                if (this.MappingSegment != null)
+                {
+                    mappingSegmentNameTmp = this.MappingSegment.SegmentName;
+                }
+                else
+                {
+                    mappingSegmentNameTmp = this.Name + " ???";
+                }
+               
+
                 string str = "L:" + this.Level.ToString() + " ";
                 switch (this.Level)
                 {
                     case 0:
                         str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
-                        if (this.MappingSegment != null)
-                        {
-                            str += this.MappingSegment.SegmentName;
-                        }
-                        else
-                        {
-                            str += this.Name;
-                        }
+                        str += mappingSegmentNameTmp;
                         str += "]" ; // = " + this.Value;
 
                         break;
 
                     case 1:
                         str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
-                        if (this.MappingSegment != null)
-                        {
-                            str += this.MappingSegment.SegmentName;
-                        }
-                        else
-                        {
-                            str += this.Name;
-                        }
+                        str += mappingSegmentNameTmp;
                         str += "] = " + this.Value;
 
                         break;
                     case 2:
                         str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
-                        if (this.MappingSegment != null)
-                        {
-                            str += this.MappingSegment.SegmentName;
-                        }
-                        else
-                        {
-                            str += this.Name;
-                        }
+                 //       if (this.MappingSegment != null)
+                            str += mappingSegmentNameTmp;
                         str += "] = " + this.Value;
 
                         break;
                     case 3:
                         str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " " ;
                         if (this.MappingSegment != null)
-                        {
-                            str += this.MappingSegment.SegmentName;
-                        }
-                        else
-                        {
-                            str += this.Name;
-                        }
+                            str += mappingSegmentNameTmp;
                         str += "] = " + this.Value;
 
                         break;

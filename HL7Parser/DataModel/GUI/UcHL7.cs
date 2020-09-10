@@ -128,11 +128,11 @@ namespace HL7Viewer.DataModel.GUI
         private void Repopulate()
         {
             this.tvHL7.Nodes.Clear();
-            TreeNode root = new TreeNode();
-            _HL7.msgRootnode.Treenode = root;
+            TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
+            _HL7.msgRootnode.Treenode = rootNode;
 
-            root.Text = RootnodeText;
-            this.tvHL7.Nodes.Add(root);
+            rootNode.Text = RootnodeText;
+            this.tvHL7.Nodes.Add(rootNode);
 
             foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
             {
@@ -141,13 +141,17 @@ namespace HL7Viewer.DataModel.GUI
                 // -- Legger kun til noden hvis den ikke skal vises -- 
                 if (!treenode.NodeIsHidden)
                 {
-                    root.Nodes.Add(treenode);
+                    rootNode.Nodes.Add(treenode);
                 }
                 PopulateRecursively(msgChildNode);
             }
 
-            // Ekspanderer root node og neste level
-            root.Expand();
+
+            // Ekspanderer root node og kjører gjennom for de som skal være 
+            rootNode.Expand();
+            ManageExpandChildTreenode(rootNode);
+
+
         }
 
         private void PopulateRecursively(MsgNode node)
@@ -171,6 +175,26 @@ namespace HL7Viewer.DataModel.GUI
                 }
             }
         }
+
+        private void ManageExpandChildTreenode(TreenodeHL7Base node)
+        {
+            foreach (TreenodeHL7Base childnode in node.Nodes)
+            {
+                if (childnode._HL7Segment != null)
+                {
+                    if (childnode._HL7Segment.CollapsedDefault)
+                    { childnode.Collapse(); }
+                    else
+                    { childnode.Expand(); }
+                }
+                else // root node
+                {
+                    childnode.Expand();
+                }
+                ManageExpandChildTreenode(childnode);
+            }
+        }
+
         #endregion -- Populate --
 
         #region  -- File methods --

@@ -3,9 +3,10 @@
 
 // -- Display name vises i boksen som velger meldingstype --
 DisplayName	Røntgensvar
+MSH	0	0	Y	-- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 MSH	1	0	Y	Field Separator					
 MSH	2	0	Y	Encoding Characters					
-// MSH	3	0	Y	Sending Application					
+MSH	3	0	Y	Sending Application					
 MSH	4	0	Y	Sending Facility					
 MSH	5	0	Y	Receiving Application					
 MSH	6	0	Y	Receiving Facility					
@@ -22,12 +23,13 @@ MSH	16	0	Y	Application Acknowledgement Type
 MSH	17	0	Y	Country Code					
 MSH	18	0	Y	Character Set					
 MSH	19	0	Y	Principal Language of Message					
-									
+		
+PID	0	0		-- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 PID	1	0		Set ID – Patient ID					
 PID	2	0		Patient ID (External ID)					
 PID	3	0		Patient ID (Personnummer)					
 PID	4	0		Alternate Patient ID – PID					
-PID	5	0		Patient Name					
+PID	5	0	Y	Patient Name					
 PID	5	1		Etternavn					
 PID	5	2		Mellomnavn					
 PID	5	3		Fornavn					
@@ -56,8 +58,9 @@ PID	27	0		Veterans Military Status
 PID	28	0		Nationality					
 PID	29	0		Patient Death Date and Time					
 PID	30	0		Patient Death Indicator					
-									
-PV1	1	0		Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1				
+
+//PV1	0	0		 -- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
+PV1	1	0		//Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1				
 PV1	2	0		Patient Class					
 PV1	3	0		Assigned Patient Location					
 PV1	4	0		Admission Type					
@@ -112,7 +115,8 @@ PV1	49	0		Total Payments
 PV1	50	0		Alternate Visit ID					
 PV1	51	0		Visit Indicator					
 PV1	52	0		Other Healthcare Provider					
-									
+								
+//OBR	0	0		 -- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 OBR	1	0			Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – OBR				
 OBR	2	0		Placer Order Number					
 OBR	3	0		Filler Order Number					
@@ -184,7 +188,8 @@ OBR	40	0		Transport Arrangement Responsibility
 OBR	41	0		Transport Arranged					
 OBR	42	0		Escort Required					
 OBR	43	0		Planned Patient Transport Comment					
-									
+		
+//OBX	0	0		 -- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 OBX	1	0	Y	Field 1					
 OBX	2	0	Y	Field 2					
 OBX	3	0	Y	Field 3					
@@ -196,7 +201,8 @@ OBX	8	0	Y	Field 8
 OBX	9	0	Y	Field 9					
 OBX	10	0	Y	Field 10					
 OBX	11	0	Y	Field 11					
-									
+		
+//ZEI	0	0		 -- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 ZEI	0	0	Y	Field 1					
 ZEI	1	0	Y	Field 1					
 ZEI	2	0	Y	Field 2					
@@ -205,7 +211,8 @@ ZEI	4	0	Y	Field 4
 ZEI	5	0	Y	Field 5					
 ZEI	6	0	Y	Field 6					
 ZEI	7	0	Y	Field 7					
-									
+	
+//ZDS	0	0		 -- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 ZDS	1	0	Y	Field 1					
 ZDS	0	0	Y	Field 0					
 									

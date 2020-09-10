@@ -16,6 +16,9 @@ namespace HL7Viewer.DataModel
 
         public bool NodeIsHidden { get; set; }
 
+        public TreenodeHL7Base(bool isRoot)
+        {}
+
         public TreenodeHL7Base(MsgNode node)
         {
             this._HL7Segment = node.MappingSegment;
@@ -34,6 +37,7 @@ namespace HL7Viewer.DataModel
                 this.Text = msgNode.TreeNodeText;
 
                 // -- Collapse treenode hvis den er satt som default collapsed i mappingen --
+                this.Expand();
                 if (msgNode.MappingSegment != null)
                 {
                     if ((normalvisning) && (msgNode.MappingSegment.CollapsedDefault))
