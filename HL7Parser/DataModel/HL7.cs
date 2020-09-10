@@ -44,7 +44,7 @@ namespace HL7Viewer.DataModel
 
         private char[] SEPARATOR_LEVEL_0 = new char[] { '\n' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
-        private char[] SEPARATOR_LEVEL_2 = new char[] { '^', '~' };
+        private char[] SEPARATOR_LEVEL_2 = new char[] { '^' }; //, '~' };
         private char[] SEPARATOR_LEVEL_3 = new char[] { '~' };
 
         private const string MSG_NOT_INCLUDED_IN_MAPPING = "(*)";

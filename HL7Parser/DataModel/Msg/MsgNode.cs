@@ -116,19 +116,23 @@ namespace HL7Viewer.DataModel.Msg
             int indexsubnode = 0;
             foreach (string strNode in strNodesLevel)
             {
+                Console.WriteLine(strNode); // fjernes
                 MsgNode msgsubnode = new MsgNode();
                 msgsubnode.Level = 0;
 
-                /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
-                string tmpForDebuggingSlettes = (strNode.Substring(strNode.Length - 1, 1));
-                //string strNodeTrimmed = strNode;
-                if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                if (strNode.Length > 0)
                 {
-                    msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
-                }
-                else
-                {
-                    msgsubnode.SourceString = strNode;
+                    /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                    string tmpForDebuggingSlettes = (strNode.Substring(strNode.Length - 1, 1));
+                    //string strNodeTrimmed = strNode;
+                    if (strNode.Substring(strNode.Length - 1, 1) == "\r")
+                    {
+                        msgsubnode.SourceString = strNode.Substring(0, strNode.Length - 1);
+                    }
+                    else
+                    {
+                        msgsubnode.SourceString = strNode;
+                    }
                 }
 
                 msgsubnode.Index_L1 = 0;
