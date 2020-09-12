@@ -70,5 +70,17 @@ namespace HL7Viewer.Properties {
                 this["Mappingfiler"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastMappingSelected {
+            get {
+                return ((string)(this["LastMappingSelected"]));
+            }
+            set {
+                this["LastMappingSelected"] = value;
+            }
+        }
     }
 }

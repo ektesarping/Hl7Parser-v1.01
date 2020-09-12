@@ -239,6 +239,70 @@ namespace HL7Viewer.DataModel.Msg
             }
         }
 
+        /// <summary>
+        /// Oppretter subnode i nivå 3. Spesialtilfelle for repeterende subnoder. F.eks kopimottakere.
+        /// </summary>
+        /// <param name="separator_L2"></param>
+        /// <param name="useFirstFieldAsName"></param>
+        /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
+        /// <returns></returns>
+        public void CreateChildNodes_L4(char[] separator_L2, char[] separator_L3)
+        {
+            string[] nodeRepeating = this.Value.Split(separator_L3);
+
+            foreach (string str in nodeRepeating)
+            {
+                MsgNode nodeRepeat = new MsgNode(str);
+                nodeRepeat.MappingSectionName = this.MappingSectionName;
+                nodeRepeat.Parent = this;
+                this.Children.Add(nodeRepeat);
+
+
+                string[] strNodesLevel3 = this.SourceString.Split(separator_L2);
+                int indexsubnode = 1;
+                foreach (string strNode in strNodesLevel3)
+                {
+                    // -- Oppretter ikke subnoder hvis noden har kun en verdi --
+                    if (strNodesLevel3.Length <= 1)
+                    {
+                        continue;
+                    }
+
+                    // -- MSH 1 inneholder separatorer. Ikke splitt i subnodes. --
+                    if ((this.MappingSectionName.ToUpper() == "MSH") && (this.Index_L1 == 2))
+                    {
+                        continue;
+                    }
+
+                    //string name = GetSectionNameFromSourceString(strNode, separator);
+                    MsgNode msgsubnode = new MsgNode(); // Bruker samme index som for parent node. 
+                    msgsubnode.level = 2;
+                    msgsubnode.Index_L1 = this.Index_L1;
+                    msgsubnode.Index_L2 = indexsubnode;
+
+                    // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
+                    //if (useFirstFieldAsName)
+                    //{
+                    msgsubnode.SourceString = strNode;
+                    //}
+                    //else
+                    //{
+                    //    msgsubnode.SourceString = strNodeTrimmed.Substring(this.Name.Length + 1);
+                    //}
+
+                    msgsubnode.Value = msgsubnode.SourceString;
+                    msgsubnode.Parent = nodeRepeat;
+                    if (msgsubnode.Parent != null)
+                    {
+                        msgsubnode.MappingSectionName = msgsubnode.Parent.MappingSectionName; // Kopierer mapping section name fra parent.
+                    }
+                    nodeRepeat.Children.Add(msgsubnode);
+                    indexsubnode++;
+                }
+            }
+        }
+
+
         public string TreeNodeText
         {
             get
@@ -252,7 +316,7 @@ namespace HL7Viewer.DataModel.Msg
                 {
                     mappingSegmentNameTmp = this.Name + " ???";
                 }
-               
+
 
                 string str = "L:" + this.Level.ToString() + " ";
                 switch (this.Level)
@@ -260,7 +324,7 @@ namespace HL7Viewer.DataModel.Msg
                     case 0:
                         str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
                         str += mappingSegmentNameTmp;
-                        str += "]" ; // = " + this.Value;
+                        str += "]"; // = " + this.Value;
 
                         break;
 
@@ -271,14 +335,14 @@ namespace HL7Viewer.DataModel.Msg
 
                         break;
                     case 2:
-                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
-                 //       if (this.MappingSegment != null)
-                            str += mappingSegmentNameTmp;
+                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + ": ";
+                        //       if (this.MappingSegment != null)
+                        str += mappingSegmentNameTmp;
                         str += "] = " + this.Value;
 
                         break;
                     case 3:
-                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " " ;
+                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " ";
                         if (this.MappingSegment != null)
                             str += mappingSegmentNameTmp;
                         str += "] = " + this.Value;

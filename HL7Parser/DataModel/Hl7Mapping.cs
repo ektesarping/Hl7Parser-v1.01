@@ -13,6 +13,8 @@ namespace HL7Viewer.DataModel
         public string Name { get; set; }
         public string VersionInfo { get; set; }
 
+        public FileInfo FileInfo { get; set; }
+
         /// <summary>
         /// Liste med navn på hovedseksjonene i mappingen. F.eks MSH, PID osv.
         /// </summary>
@@ -48,6 +50,17 @@ namespace HL7Viewer.DataModel
         private const int INDEX_NAME = 4;
 
         private const string DISPLAY_NAME = "DISPLAYNAME";
+
+        #region -- Constructor --
+        public Hl7Mapping()
+        { }
+
+        public Hl7Mapping(FileInfo fi) : this()
+        {
+            this.FileInfo = fi;
+        }
+        #endregion  -- Constructor --
+
 
         public void ImportMapping(FileInfo fi)
         {

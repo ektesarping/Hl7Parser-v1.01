@@ -24,6 +24,8 @@ namespace HL7Viewer.DataModel.GUI
         public string RootnodeText { get; set; }
 
 
+        
+
         public bool SkjulTomme
         {
             get

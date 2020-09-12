@@ -144,7 +144,7 @@ OBR	24	0		Diagnostic Serv Sect ID
 OBR	25	0		Result Status					
 OBR	26	0		Parent Result					
 OBR	27	0		Quantity/Timing					
-OBR	28	0		Kopimottakere					
+OBR	28	0	Y	Kopimottakere					
 OBR	28	1		Kopi1: HPR-nr					
 OBR	28	2		Kopi1: Etternavn					
 OBR	28	3		Kopi1: Fornavn					

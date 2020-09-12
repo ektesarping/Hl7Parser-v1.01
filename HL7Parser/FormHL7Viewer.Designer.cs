@@ -40,7 +40,7 @@
             hL71.Fi = null;
             hl7Mapping1.Name = null;
             hl7Mapping1.VersionInfo = null;
-            hL71.Mapping = hl7Mapping1;
+            hL71.MappingSelected = hl7Mapping1;
             hL71.MappingFileFi = ((System.IO.FileInfo)(resources.GetObject("hL71.MappingFileFi")));
             hL71.MsgFile = null;
             hL71.Name = null;

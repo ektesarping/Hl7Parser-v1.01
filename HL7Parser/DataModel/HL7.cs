@@ -19,7 +19,12 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Mapping med alle felter fra spec. Brukes som oppslag ved import av HL7 fil.
         /// </summary>
-        public Hl7Mapping Mapping { get; set; } = new Hl7Mapping();
+        public Hl7Mapping MappingSelected { get; set; } = new Hl7Mapping();
+
+        /// <summary>
+        /// Alle Hl7 mappings som er valgt.
+        /// </summary>
+        public HL7Mappings HL7Mappings { get; set; }
 
 
         /// <summary>
@@ -39,7 +44,11 @@ namespace HL7Viewer.DataModel
         private HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
         public FileInfo MappingFileFi { get; set; }
-        private const string MappingFileName = "Mapping_HL7.csv";
+        //        private const string MappingFileName = "Mapping_HL7.csv";
+
+
+        private const string DEFAULT_MAPPINGFOLDER = "Datamodel";
+        private const string MAPPINGFILE_EXT = ".csv"; 
 
 
         private char[] SEPARATOR_LEVEL_0 = new char[] { '\n' };
@@ -53,6 +62,15 @@ namespace HL7Viewer.DataModel
         public HL7()
         {
             this.msgRootnode.Name = "RootNode";
+
+            HL7Mappings hl7Mappings = new HL7Mappings();
+
+            DirectoryInfo di = new DirectoryInfo(Path.Combine(Application.ExecutablePath, "Datamodel"));
+
+            hl7Mappings.DefaultMappingFolderDi = new DirectoryInfo()
+
+
+
         }
 
 
@@ -76,8 +94,8 @@ namespace HL7Viewer.DataModel
 
             #region -- Import mapping --
             FileInfo executableFi = new FileInfo(Application.ExecutablePath); // Hent mappingfilen fra programfolderen.
-            MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
-            Mapping.ImportMapping(MappingFileFi);
+            //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
+            //MappingSelected.ImportMapping(MappingFileFi);
             #endregion -- Import mapping --
 
 
@@ -98,9 +116,19 @@ namespace HL7Viewer.DataModel
                 //subNode_L0.Level = 2;
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
-                    subNode_L1.CreateChildNodes_L3(SEPARATOR_LEVEL_2); //, true, false);
-                    //subNode_L1.Level = 3;
-                    //subNode_L1.Index_L2 = subNode_L0.Index_L2;
+                    if (
+                        (subNode_L1.Value.Split(SEPARATOR_LEVEL_3).Length > 1)  // Inneholder skilletegn for repeterende noder  '~'
+                        && (!(subNode_L1.MappingSectionName == "MSH" && subNode_L1.Level == 1 && subNode_L1.Index_L1 == 1 && subNode_L1.Index_L2 == 0)) //Hopp over node MSH 0,1. Den lister opp skilletegn
+                        )
+                    {
+                        subNode_L1.CreateChildNodes_L4(SEPARATOR_LEVEL_2, SEPARATOR_LEVEL_3);
+                    }
+                    else
+                    {
+                        subNode_L1.CreateChildNodes_L3(SEPARATOR_LEVEL_2); //, true, false);
+                                                                           //subNode_L1.Level = 3;
+                                                                           //subNode_L1.Index_L2 = subNode_L0.Index_L2;
+                    }
                 }
             }
 
@@ -108,7 +136,7 @@ namespace HL7Viewer.DataModel
             // -- Matcher mot mapping --
             foreach (MsgNode childnode in this.msgRootnode.Children)
             {
-                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
+                childnode.MappingSegment = MappingSelected.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }
@@ -119,7 +147,7 @@ namespace HL7Viewer.DataModel
             foreach (MsgNode childnode in node.Children)
             {
                 // -- Hvis mappingsegment == null indikeres det med annen treenode farge. --
-                childnode.MappingSegment = Mapping.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L1, childnode.Index_L2);
+                childnode.MappingSegment = MappingSelected.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L1, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }

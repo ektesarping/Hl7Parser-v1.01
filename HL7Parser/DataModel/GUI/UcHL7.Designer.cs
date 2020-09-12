@@ -41,7 +41,7 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cboMappingFiles = new System.Windows.Forms.ComboBox();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -153,21 +153,21 @@
             this.chkNormalVisning.UseVisualStyleBackColor = true;
             this.chkNormalVisning.CheckedChanged += new System.EventHandler(this.chkNormalVisning_CheckedChanged);
             // 
-            // comboBox1
+            // cboMappingFiles
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(270, 2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(181, 21);
-            this.comboBox1.TabIndex = 5;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cboMappingFiles.FormattingEnabled = true;
+            this.cboMappingFiles.Location = new System.Drawing.Point(270, 2);
+            this.cboMappingFiles.Name = "cboMappingFiles";
+            this.cboMappingFiles.Size = new System.Drawing.Size(181, 21);
+            this.cboMappingFiles.TabIndex = 5;
+            this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cboMappingFiles);
             this.Controls.Add(this.chkNormalVisning);
             this.Controls.Add(this.chkSkjulTomme);
             this.Controls.Add(this.tvHL7);
@@ -197,6 +197,6 @@
         private System.Windows.Forms.ToolStripMenuItem copyNavnOgVerdiToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkSkjulTomme;
         private System.Windows.Forms.CheckBox chkNormalVisning;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cboMappingFiles;
     }
 }
