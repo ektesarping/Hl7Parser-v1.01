@@ -54,7 +54,7 @@
             this.tvHL7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
-            this.tvHL7.Size = new System.Drawing.Size(465, 220);
+            this.tvHL7.Size = new System.Drawing.Size(456, 220);
             this.tvHL7.TabIndex = 0;
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
@@ -89,7 +89,7 @@
             this.editToolStripMenuItem});
             this.menuStripHL7.Location = new System.Drawing.Point(0, 0);
             this.menuStripHL7.Name = "menuStripHL7";
-            this.menuStripHL7.Size = new System.Drawing.Size(465, 24);
+            this.menuStripHL7.Size = new System.Drawing.Size(456, 24);
             this.menuStripHL7.TabIndex = 2;
             this.menuStripHL7.Text = "menuStrip1";
             // 
@@ -173,7 +173,7 @@
             this.Controls.Add(this.tvHL7);
             this.Controls.Add(this.menuStripHL7);
             this.Name = "UcHL7";
-            this.Size = new System.Drawing.Size(465, 244);
+            this.Size = new System.Drawing.Size(456, 244);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
             this.contextMenuStripTreeview.ResumeLayout(false);
             this.menuStripHL7.ResumeLayout(false);

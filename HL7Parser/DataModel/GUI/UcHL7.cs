@@ -24,7 +24,7 @@ namespace HL7Viewer.DataModel.GUI
         public string RootnodeText { get; set; }
 
 
-        
+
 
         public bool SkjulTomme
         {
@@ -70,6 +70,43 @@ namespace HL7Viewer.DataModel.GUI
             InitializeComponent();
             //VisningsModusPropertyRead();
             SkjulTomme = false; // initiell verdi
+
+            PopulateCboMappings();
+        }
+
+        private const string TEXT_ADD_MAPPING = "Legg til mapping...";
+
+        private void PopulateCboMappings()
+        {
+            // -- Fylle cbobox med mappinger --
+            {
+                cboMappingFiles.Items.Clear();
+                foreach (Hl7Mapping mapping in this._HL7.HL7Mappings)
+                {
+                    cboMappingFiles.Items.Add((object)mapping);
+                }
+
+                // -- Setter selected mapping --
+                if (this._HL7.MappingSelected != null)
+                {
+                    cboMappingFiles.SelectedValue = (object)this._HL7.MappingSelected;
+                }
+
+                // -- Legge til 'Add mapping file'
+                cboMappingFiles.Items.Add(((object)TEXT_ADD_MAPPING));
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.cboMappingFiles.SelectedValue == (string)TEXT_ADD_MAPPING)
+            {
+                // Legg til mapping her
+            }
+            else
+            {
+                this._HL7.MappingSelected = (Hl7Mapping) this.cboMappingFiles.SelectedValue;
+            }
         }
 
         #region -- Manage radiobuttons for visning av tomme noder --
@@ -409,9 +446,6 @@ namespace HL7Viewer.DataModel.GUI
             Repopulate();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show("Ikke implementert");
-        }
+     
     }
 }

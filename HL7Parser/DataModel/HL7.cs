@@ -16,10 +16,34 @@ namespace HL7Viewer.DataModel
         public string Name { get; set; }
         public string VersionInfo { get; set; }
 
+
+        private Hl7Mapping mappingSelected;
         /// <summary>
         /// Mapping med alle felter fra spec. Brukes som oppslag ved import av HL7 fil.
         /// </summary>
-        public Hl7Mapping MappingSelected { get; set; } = new Hl7Mapping();
+        public Hl7Mapping MappingSelected
+        {
+            get
+            {
+                string strMappingSelected = Properties.Settings.Default.MappingSelected;
+
+                this.mappingSelected = this.HL7Mappings.Get(strMappingSelected);
+                return this.mappingSelected;
+            }
+            set
+            {
+                this.mappingSelected = value;
+                if (this.mappingSelected != null)
+                {
+
+                    Properties.Settings.Default.MappingSelected = this.MappingSelected.FileInfo.FullName;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+
+
 
         /// <summary>
         /// Alle Hl7 mappings som er valgt.
@@ -46,10 +70,10 @@ namespace HL7Viewer.DataModel
         public FileInfo MappingFileFi { get; set; }
         //        private const string MappingFileName = "Mapping_HL7.csv";
 
-
-        private const string DEFAULT_MAPPINGFOLDER = "Datamodel";
-        private const string MAPPINGFILE_EXT = ".csv"; 
-
+        #region -- Default settings --
+        private const string DEFAULT_MAPPINGFOLDE_NAME = "Datamodel";
+        private const string MAPPINGFILE_EXT = ".csv";
+        #endregion -- Default settings --
 
         private char[] SEPARATOR_LEVEL_0 = new char[] { '\n' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
@@ -63,14 +87,42 @@ namespace HL7Viewer.DataModel
         {
             this.msgRootnode.Name = "RootNode";
 
-            HL7Mappings hl7Mappings = new HL7Mappings();
+            this.HL7Mappings = new HL7Mappings();
+            DirectoryInfo di = new DirectoryInfo(Path.Combine(Application.ExecutablePath, DEFAULT_MAPPINGFOLDE_NAME));
+            this.HL7Mappings.DefaultMappingFolderDi = di;
+            this.HL7Mappings.MapiingFileExtention = MAPPINGFILE_EXT;
 
-            DirectoryInfo di = new DirectoryInfo(Path.Combine(Application.ExecutablePath, "Datamodel"));
+            // -- Finn valgte mapping vha Properties.Settings.Default --
 
-            hl7Mappings.DefaultMappingFolderDi = new DirectoryInfo()
+            string strMappingSelected = null;
+            try
+            {
+                strMappingSelected = Properties.Settings.Default.MappingSelected;
+            }
+            catch (Exception ex)
+            {
+                // -- Property ikke funnet. strMappingSelected er allerede satt lik null
+            }
 
-
-
+            if (strMappingSelected != null)
+            {
+                try
+                {
+                    FileInfo SelectedMappingFi = new FileInfo(strMappingSelected);
+                    if (this.HL7Mappings.Contains(SelectedMappingFi))
+                    {
+                        this.MappingSelected = this.HL7Mappings.Get(new FileInfo(strMappingSelected));
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Ingen mapping valgt", "Importer mappingfiler", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                this.mappingSelected = null;
+            }
         }
 
 
@@ -94,8 +146,8 @@ namespace HL7Viewer.DataModel
 
             #region -- Import mapping --
             FileInfo executableFi = new FileInfo(Application.ExecutablePath); // Hent mappingfilen fra programfolderen.
-            //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
-            //MappingSelected.ImportMapping(MappingFileFi);
+                                                                              //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
+                                                                              //MappingSelected.ImportMapping(MappingFileFi);
             #endregion -- Import mapping --
 
 
@@ -113,7 +165,7 @@ namespace HL7Viewer.DataModel
             {
                 // -- Parse subnodes level 1 --
                 subNode_L0.CreateChildNodes_L2(SEPARATOR_LEVEL_1); //, true); //, false);
-                //subNode_L0.Level = 2;
+                                                                   //subNode_L0.Level = 2;
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
                     if (

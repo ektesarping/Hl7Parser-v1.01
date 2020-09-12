@@ -219,5 +219,10 @@ namespace HL7Viewer.DataModel
             }
             return SectionNames;
         }
+
+        public override string ToString()
+        {
+            return this.DisplayName;
+        }
     }
 }

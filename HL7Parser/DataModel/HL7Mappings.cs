@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HL7Viewer.DataModel
 {
@@ -34,6 +35,9 @@ namespace HL7Viewer.DataModel
                 }
             }
         }
+
+
+
 
         public HL7Mappings ImportMappings()
         {
@@ -72,16 +76,12 @@ namespace HL7Viewer.DataModel
                 }
             }
 
-
             //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
             //MappingSelected.ImportMapping(MappingFileFi);
-
-
-
             return this;
         }
 
-        private bool Contains(FileInfo fi)
+        public bool Contains(FileInfo fi)
         {
             foreach (Hl7Mapping mapping in this)
             {
@@ -92,5 +92,41 @@ namespace HL7Viewer.DataModel
             }
             return false;
         }
+
+        public Hl7Mapping Get(FileInfo fi)
+        {
+            foreach (Hl7Mapping mapping in this)
+            {
+                if (mapping.FileInfo.FullName.ToUpper() == fi.FullName.ToUpper())
+                {
+                    return mapping;
+                }
+            }
+            return null;
+        }
+
+        public Hl7Mapping Get(string fullPath)
+        {
+            FileInfo fi;
+            try
+            {
+                fi = new FileInfo(fullPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Intern feil: \r\nKunne ikke finne lapping med filnavn " + fullPath, "Mapping.Get", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            if (!String.IsNullOrEmpty( fullPath))
+            {
+                return this.Get(fi);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
     }
 }
