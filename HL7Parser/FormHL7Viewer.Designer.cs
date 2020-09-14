@@ -31,7 +31,7 @@
             HL7Viewer.DataModel.HL7 hL71 = new HL7Viewer.DataModel.HL7();
             HL7Viewer.DataModel.Hl7Mapping hl7Mapping1 = new HL7Viewer.DataModel.Hl7Mapping();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHL7Viewer));
-            this.ucHL71 = new HL7Viewer.DataModel.GUI.UcHL7();
+            this.ucHL7 = new HL7Viewer.DataModel.GUI.UcHL7();
             this.SuspendLayout();
             // 
             // ucHL71
@@ -45,22 +45,22 @@
             hL71.MsgFile = null;
             hL71.Name = null;
             hL71.VersionInfo = null;
-            this.ucHL71._HL7 = hL71;
-            this.ucHL71._HL7SegmentCategories = null;
-            this.ucHL71.AllowDrop = true;
-            this.ucHL71.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucHL71.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucHL71.Location = new System.Drawing.Point(0, 0);
-            this.ucHL71.Name = "ucHL71";
-            this.ucHL71.RootnodeText = null;
-            this.ucHL71.Size = new System.Drawing.Size(552, 530);
-            this.ucHL71.TabIndex = 0;
+            this.ucHL7._HL7 = hL71;
+            this.ucHL7._HL7SegmentCategories = null;
+            this.ucHL7.AllowDrop = true;
+            this.ucHL7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucHL7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucHL7.Location = new System.Drawing.Point(0, 0);
+            this.ucHL7.Name = "ucHL71";
+            this.ucHL7.RootnodeText = null;
+            this.ucHL7.Size = new System.Drawing.Size(552, 530);
+            this.ucHL7.TabIndex = 0;
             // 
             // FormHL7Viewer
             // 
             this.AllowDrop = true;
             this.ClientSize = new System.Drawing.Size(552, 530);
-            this.Controls.Add(this.ucHL71);
+            this.Controls.Add(this.ucHL7);
             this.Name = "FormHL7Viewer";
             this.Text = "Hemit HL7 viewer";
             this.ResumeLayout(false);
@@ -74,7 +74,7 @@
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem copySegmentsToClipboardToolStripMenuItem;
-        private DataModel.GUI.UcHL7 ucHL71;
+        private DataModel.GUI.UcHL7 ucHL7;
     }
 }
 

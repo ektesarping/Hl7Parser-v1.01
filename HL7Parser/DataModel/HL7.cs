@@ -25,9 +25,9 @@ namespace HL7Viewer.DataModel
         {
             get
             {
-                string strMappingSelected = Properties.Settings.Default.MappingSelected;
+                //string strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
 
-                this.mappingSelected = this.HL7Mappings.Get(strMappingSelected);
+                //this.mappingSelected = this.HL7Mappings.Get(strMappingSelected);
                 return this.mappingSelected;
             }
             set
@@ -35,14 +35,20 @@ namespace HL7Viewer.DataModel
                 this.mappingSelected = value;
                 if (this.mappingSelected != null)
                 {
-
-                    Properties.Settings.Default.MappingSelected = this.MappingSelected.FileInfo.FullName;
+                    Properties.Settings.Default.LastMappingSelected2 = this.MappingSelected.FileInfo.FullName;
                     Properties.Settings.Default.Save();
                 }
             }
         }
 
-
+        /// <summary>
+        /// HEnter siste valgte mapping fra default properties (under User Properties).
+        /// </summary>
+        private void SetSelectedMappingFromDefaultProperties()
+        {
+            string strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
+            this.mappingSelected = this.HL7Mappings.Get(strMappingSelected); // Kan være 'null' hvis mappingen ikke finnes.
+        }
 
 
         /// <summary>
@@ -87,42 +93,43 @@ namespace HL7Viewer.DataModel
         {
             this.msgRootnode.Name = "RootNode";
 
-            this.HL7Mappings = new HL7Mappings();
-            DirectoryInfo di = new DirectoryInfo(Path.Combine(Application.ExecutablePath, DEFAULT_MAPPINGFOLDE_NAME));
-            this.HL7Mappings.DefaultMappingFolderDi = di;
-            this.HL7Mappings.MapiingFileExtention = MAPPINGFILE_EXT;
+            FileInfo fiApplication = new FileInfo(Application.ExecutablePath);
+            DirectoryInfo di = new DirectoryInfo(Path.Combine(fiApplication.DirectoryName, DEFAULT_MAPPINGFOLDE_NAME));
+            this.HL7Mappings = new HL7Mappings(di, MAPPINGFILE_EXT);
 
-            // -- Finn valgte mapping vha Properties.Settings.Default --
+            SetSelectedMappingFromDefaultProperties();
 
-            string strMappingSelected = null;
-            try
-            {
-                strMappingSelected = Properties.Settings.Default.MappingSelected;
-            }
-            catch (Exception ex)
-            {
-                // -- Property ikke funnet. strMappingSelected er allerede satt lik null
-            }
 
-            if (strMappingSelected != null)
-            {
-                try
-                {
-                    FileInfo SelectedMappingFi = new FileInfo(strMappingSelected);
-                    if (this.HL7Mappings.Contains(SelectedMappingFi))
-                    {
-                        this.MappingSelected = this.HL7Mappings.Get(new FileInfo(strMappingSelected));
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Ingen mapping valgt", "Importer mappingfiler", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                this.mappingSelected = null;
-            }
+            //// -- Finn valgte mapping vha Properties.Settings.Default --
+            //string strMappingSelected = null;
+            //try
+            //{
+            //    strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
+            //}
+            //catch (Exception ex)
+            //{
+            //    // -- Property ikke funnet. strMappingSelected er allerede satt lik null
+            //}
+
+            //if (!String.IsNullOrEmpty(strMappingSelected))
+            //{
+            //    try
+            //    {
+            //        FileInfo SelectedMappingFi = new FileInfo(strMappingSelected);
+            //        if (this.HL7Mappings.Contains(SelectedMappingFi))
+            //        {
+            //            this.MappingSelected = this.HL7Mappings.Get(new FileInfo(strMappingSelected));
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        MessageBox.Show("Ingen mapping valgt", "Importer mappingfiler", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    }
+            //}
+            //else
+            //{
+            //    this.mappingSelected = null;
+            //}
         }
 
 

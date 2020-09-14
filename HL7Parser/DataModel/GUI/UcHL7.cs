@@ -15,7 +15,7 @@ namespace HL7Viewer.DataModel.GUI
 
     public partial class UcHL7 : UserControl
     {
-        public HL7 _HL7 { get; set; } = new HL7();
+        public HL7 _HL7 { get; set; } //= new HL7();
 
 
         //public HL7Segments _HL7Segments { get; set; }
@@ -71,7 +71,7 @@ namespace HL7Viewer.DataModel.GUI
             //VisningsModusPropertyRead();
             SkjulTomme = false; // initiell verdi
 
-            PopulateCboMappings();
+            //PopulateCboMappings();
         }
 
         private const string TEXT_ADD_MAPPING = "Legg til mapping...";

@@ -12,39 +12,64 @@ namespace HL7Viewer.DataModel
     {
         public DirectoryInfo DefaultMappingFolderDi { get; set; }
 
-        public string MapiingFileExtention { get; set; }
+        public string MappingFileExtention { get; set; }
 
 
         private string propertyString = String.Empty;
         private char[] MAPPING_FILE_SEPARATOR = new char[] { ';' };
 
-        public string PropertyString
+        //public string PropertyString
+        //{
+        //    get
+        //    {
+        //        return Properties.Settings.Default.Mappingfiler;
+        //    }
+        //    set
+        //    {
+        //        string tmp = String.Empty;
+        //        foreach (Hl7Mapping mapping in this)
+        //        {
+        //            tmp += mapping.FileInfo.FullName + MAPPING_FILE_SEPARATOR;
+        //            Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
+        //            Properties.Settings.Default.Save();
+        //        }
+        //    }
+        //}
+
+        private void SaveMappingsPropertyString()
         {
-            get
+            string tmp = String.Empty;
+            foreach (Hl7Mapping mapping in this)
             {
-                return Properties.Settings.Default.Mappingfiler;
-            }
-            set
-            {
-                string tmp = String.Empty;
-                foreach (Hl7Mapping mapping in this)
-                {
-                    tmp += mapping.FileInfo.FullName + MAPPING_FILE_SEPARATOR;
-                    Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
-                    Properties.Settings.Default.Save();
-                }
+                tmp += mapping.FileInfo.FullName + MAPPING_FILE_SEPARATOR[0].ToString();
+                Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
+                Properties.Settings.Default.Save();
             }
         }
 
 
+        #region  -- Constructor --
+        public HL7Mappings(DirectoryInfo defaultMappingFolderDi, string mappingFileExtention)
+        {
+            this.DefaultMappingFolderDi = defaultMappingFolderDi;
+            this.MappingFileExtention = mappingFileExtention;
+            ImportMappings();
+        }
+
+        #endregion  -- Constructor --
 
 
         public HL7Mappings ImportMappings()
         {
-            string[] mappingfiles = PropertyString.Split(MAPPING_FILE_SEPARATOR);
+            string[] mappingfiles = Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
 
             foreach (string fi in mappingfiles)
             {
+                if (String.IsNullOrEmpty(fi))
+                {
+                    continue;
+                }
+
                 Hl7Mapping hl7Mapping = new Hl7Mapping();
                 hl7Mapping.FileInfo = new System.IO.FileInfo(fi);
                 if (hl7Mapping.FileInfo.Exists)
@@ -56,21 +81,26 @@ namespace HL7Viewer.DataModel
             // -- Legger til mappinger som ligger i progamfolderen --
             if (DefaultMappingFolderDi != null)
             {
-
                 if (DefaultMappingFolderDi.Exists)
                 {
-                    string ext = string.Empty;
-                    if (String.IsNullOrEmpty(MapiingFileExtention))
-                    {
-                        ext = MapiingFileExtention;
-                    }
-                    FileInfo[] files = DefaultMappingFolderDi.GetFiles(ext, SearchOption.AllDirectories);
+                    //string ext = string.Empty;
+                    //if (String.IsNullOrEmpty(MappingFileExtention))
+                    //{
+                    //    ext = MappingFileExtention;
+                    //}
+
+                    string filenameMask = "*" + MappingFileExtention;
+                    FileInfo[] files = DefaultMappingFolderDi.GetFiles(filenameMask, SearchOption.AllDirectories);
                     foreach (FileInfo fi in files)
                     {
                         if (!this.Contains(fi))
                         {
                             Hl7Mapping mapping = new Hl7Mapping(fi);
                             mapping.ImportMapping(fi);
+                            if (!this.Contains(fi))
+                            {
+                                this.Add(mapping);
+                            }
                         }
                     }
                 }
@@ -79,6 +109,15 @@ namespace HL7Viewer.DataModel
             //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
             //MappingSelected.ImportMapping(MappingFileFi);
             return this;
+        }
+
+        public new void Add(Hl7Mapping mapping)
+        {
+            if (!this.Contains(mapping.FileInfo))
+            {
+                base.Add(mapping);
+                SaveMappingsPropertyString();
+            }
         }
 
         public bool Contains(FileInfo fi)
@@ -108,16 +147,21 @@ namespace HL7Viewer.DataModel
         public Hl7Mapping Get(string fullPath)
         {
             FileInfo fi;
+            if (string.IsNullOrEmpty(fullPath))
+            {
+                //MessageBox.Show("Intern melding: \r\nKunne ikke finne mapping med filnavn " + fullPath, "Mapping.Get", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
             try
             {
                 fi = new FileInfo(fullPath);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Intern feil: \r\nKunne ikke finne lapping med filnavn " + fullPath, "Mapping.Get", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Intern feil: \r\nKunne ikke finne mapping med filnavn " + fullPath, "Mapping.Get", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-            if (!String.IsNullOrEmpty( fullPath))
+            if (!String.IsNullOrEmpty(fullPath))
             {
                 return this.Get(fi);
             }
