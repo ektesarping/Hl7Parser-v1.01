@@ -226,7 +226,7 @@ namespace HL7Viewer.DataModel
                 for (int index_L2 = 0; index_L2 < subFields.Length; index_L2++)
                 {
                     string value = subFields[index_L2];
-                    HL7MappingSegmentString subsegment = new HL7MappingSegmentString(parentSegment.SectionName, segmentName, parentSegment.Index_L1, index_L2 + 1);
+                    HL7MappingSegmentBase subsegment = new HL7MappingSegmentBase(parentSegment.SectionName, segmentName, parentSegment.Index_L1, index_L2 + 1);
                     subsegment.ParentSegment = parentSegment;
                     subsegments.Add(subsegment);
                 }
@@ -243,7 +243,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (HL7SegmentCategory cat in this._HL7SegmentCategories)
             {
-                foreach (HL7MappingSegmentString segment in _HL7Segments)
+                foreach (HL7MappingSegmentBase segment in _HL7Segments)
                 {
                     if (segment.SectionName == cat.CategoryName)
                     {

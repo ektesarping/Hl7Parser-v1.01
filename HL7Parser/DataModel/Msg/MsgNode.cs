@@ -52,7 +52,7 @@ namespace HL7Viewer.DataModel.Msg
         /// <summary>
         /// Peker til segment i den innleste mappingen. Brukes til å vise korrekt navn på noden.
         /// </summary>
-        public HL7MappingSegmentString MappingSegment { get; set; }
+        public HL7MappingSegmentBase MappingSegment { get; set; }
 
 
         public TreeNode Treenode { get; set; }

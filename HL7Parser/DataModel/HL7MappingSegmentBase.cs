@@ -56,6 +56,26 @@ namespace HL7Viewer.DataModel
         public HL7MappingSegments SubSegments { get; set; } = new HL7MappingSegments();
 
 
+        public HL7SegmentCategory _HL7SegmentCategory { get; set; }
+
+        public HL7MappingSegmentBase() { }
+
+        public HL7MappingSegmentBase(string sectionName, string segementName, int index, int subindex) : this()
+        {
+            this.SectionName = sectionName;
+            this.SegmentName = segementName;
+            this.Index_L1 = index;
+            this.Index_L1 = subindex;
+        }
+
+        public HL7MappingSegmentBase(string segmentName, string value, HL7MappingSegmentBase parentSegment, int subindex) : this()
+        {
+            this.SegmentName = value;
+            this.ParentSegment = parentSegment;
+            this.ParentSegment.SubSegments.Add(this);
+            this.Index_L1 = parentSegment.Index_L1;
+            this.Index_L1 = subindex;
+        }
 
         //public HL7MappingSegmentBase()
         //{ }
@@ -71,9 +91,31 @@ namespace HL7Viewer.DataModel
         //    this.CollapsedDefault = collapsedDefault;
         //}
 
+        //public override string ToString()
+        //{
+        //    string str = this.SectionName + " / " + this.Index_L1 + " / " + this.SegmentName;
+        //    return str;
+        //}
+
+        public string ToReport()
+        {
+            string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L1.ToString() + "\t" + this.SegmentName + "\t" + SegmentName;
+            foreach (HL7MappingSegmentBase child in this.SubSegments)
+            {
+                str += "\r\n" + child.ToReport();
+            }
+            return str;
+        }
+
         public override string ToString()
         {
-            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.SegmentName;
+            string strSubsegments = string.Empty;
+            if (this.SubSegments.Count > 0)
+            {
+                strSubsegments = " / " + this.SubSegments.Count + " subsegments";
+            }
+
+            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.Index_L2 + " / " + this.SegmentName + strSubsegments;
             return str;
         }
     }

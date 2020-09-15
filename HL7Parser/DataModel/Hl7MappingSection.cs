@@ -8,7 +8,7 @@ namespace HL7Viewer.DataModel
 {
     public class Hl7MappingSection
     {
-        public HL7MappingSegmentString Segment { get; set; } = new HL7MappingSegmentString();
+        public HL7MappingSegmentBase Segment { get; set; } = new HL7MappingSegmentBase();
 
         public HL7MappingSegments Segments { get; set; } = new HL7MappingSegments();
 
@@ -39,10 +39,11 @@ namespace HL7Viewer.DataModel
             {
                 if (!String.IsNullOrWhiteSpace(str))
                 {
-                    str + = "\r\n";
+                    str += "\r\n";
                 }
                 str += segment.ToReport();
             }
+            return str;
         }
 
     }
