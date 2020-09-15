@@ -59,7 +59,7 @@
     <Compile Include="DataModel\HL7.cs" />
     <Compile Include="DataModel\HL7Mappings.cs" />
     <Compile Include="DataModel\Hl7MappingSection.cs" />
-    <Compile Include="DataModel\HL7MappingSegmentBase.cs" />
+    <Compile Include="DataModel\HL7MappingSegment.cs" />
     <Compile Include="DataModel\HL7SegmentCategories.cs" />
     <Compile Include="DataModel\HL7SegmentCategory.cs" />
     <Compile Include="DataModel\Hl7SegmentSections.cs" />

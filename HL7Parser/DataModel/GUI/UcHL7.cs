@@ -361,7 +361,7 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (selectedNode != null)
                 {
-                    HL7MappingSegmentBase mappingSegment = selectedNode._HL7Segment;
+                    HL7MappingSegment mappingSegment = selectedNode._HL7Segment;
                     if (mappingSegment != null)
                     {
                         string value = mappingSegment.SegmentName;
@@ -392,7 +392,7 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (selectedNode != null)
                 {
-                    HL7MappingSegmentBase mappingSegment = selectedNode._HL7Segment;
+                    HL7MappingSegment mappingSegment = selectedNode._HL7Segment;
                     if (mappingSegment != null)
                     {
                         string value = mappingSegment.SegmentName;

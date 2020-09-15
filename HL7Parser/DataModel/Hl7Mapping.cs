@@ -69,7 +69,7 @@ namespace HL7Viewer.DataModel
             {
                 using (StreamReader sr = new StreamReader(fi.FullName, Encoding.ASCII))
                 {
-                    HL7MappingSegmentBase parentSegment = null;
+                    HL7MappingSegment parentSegment = null;
                     _HL7Segments = new HL7MappingSegments();
                     this.MappingFileFullPath = fi.FullName;
 
@@ -96,7 +96,7 @@ namespace HL7Viewer.DataModel
                             }
 
                             // -- Parse feltene i segmentet --
-                            HL7MappingSegmentBase segment = new HL7MappingSegmentBase();
+                            HL7MappingSegment segment = new HL7MappingSegment();
                             segment.SectionName = fields[INDEX_SECTION];
 
                             int.TryParse(fields[INDEX_INDEX_L1], out int index_LTmp);
@@ -158,7 +158,7 @@ namespace HL7Viewer.DataModel
                                 segment.Level = 2;
 
                                 // Legger til parent segment.
-                                HL7MappingSegmentBase parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
+                                HL7MappingSegment parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
                                 segment.ParentSegment = parentSegmentTmp;
                                 //if (segment.ParentSegment.SubSegments == null)
                                 //{
@@ -182,7 +182,7 @@ namespace HL7Viewer.DataModel
             }
         }
 
-        public HL7MappingSegmentBase GetSegmentFromSection(string name, int index_L1, int index_L2)
+        public HL7MappingSegment GetSegmentFromSection(string name, int index_L1, int index_L2)
         {
             Hl7MappingSection sectionTmp = this.Hl7MappingSections.Get(name);
 
@@ -192,7 +192,7 @@ namespace HL7Viewer.DataModel
             }
             else
             {
-                HL7MappingSegmentBase segmentTmp = sectionTmp.Segments.GetSegment(name, index_L1, index_L2);
+                HL7MappingSegment segmentTmp = sectionTmp.Segments.GetSegment(name, index_L1, index_L2);
                 return segmentTmp;
             }
         }
@@ -209,7 +209,7 @@ namespace HL7Viewer.DataModel
         {
             //List<string> sectionNames = new List<string>(); -> Endret til public property
 
-            foreach (HL7MappingSegmentBase segment in this._HL7Segments)
+            foreach (HL7MappingSegment segment in this._HL7Segments)
             {
                 if ((!SectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
                 {

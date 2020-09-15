@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HL7Viewer.DataModel
 {
-    public class HL7MappingSegmentBase
+    public class HL7MappingSegment
     {
         // -----------------------------------------------------------------------------------------------------
         // Fields are taken from 
@@ -51,16 +51,16 @@ namespace HL7Viewer.DataModel
             }
         }
 
-        public HL7MappingSegmentBase ParentSegment { get; set; }
+        public HL7MappingSegment ParentSegment { get; set; }
 
         public HL7MappingSegments SubSegments { get; set; } = new HL7MappingSegments();
 
 
         public HL7SegmentCategory _HL7SegmentCategory { get; set; }
 
-        public HL7MappingSegmentBase() { }
+        public HL7MappingSegment() { }
 
-        public HL7MappingSegmentBase(string sectionName, string segementName, int index, int subindex) : this()
+        public HL7MappingSegment(string sectionName, string segementName, int index, int subindex) : this()
         {
             this.SectionName = sectionName;
             this.SegmentName = segementName;
@@ -68,7 +68,7 @@ namespace HL7Viewer.DataModel
             this.Index_L1 = subindex;
         }
 
-        public HL7MappingSegmentBase(string segmentName, string value, HL7MappingSegmentBase parentSegment, int subindex) : this()
+        public HL7MappingSegment(string segmentName, string value, HL7MappingSegment parentSegment, int subindex) : this()
         {
             this.SegmentName = value;
             this.ParentSegment = parentSegment;
@@ -100,7 +100,7 @@ namespace HL7Viewer.DataModel
         public string ToReport()
         {
             string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L1.ToString() + "\t" + this.SegmentName + "\t" + SegmentName;
-            foreach (HL7MappingSegmentBase child in this.SubSegments)
+            foreach (HL7MappingSegment child in this.SubSegments)
             {
                 str += "\r\n" + child.ToReport();
             }

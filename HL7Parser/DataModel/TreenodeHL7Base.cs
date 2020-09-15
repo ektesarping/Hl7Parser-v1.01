@@ -12,7 +12,7 @@ namespace HL7Viewer.DataModel
 {
     public class TreenodeHL7Base : TreeNode
     {
-        public HL7MappingSegmentBase _HL7Segment { get; set; }
+        public HL7MappingSegment _HL7Segment { get; set; }
 
         public bool NodeIsHidden { get; set; }
 
