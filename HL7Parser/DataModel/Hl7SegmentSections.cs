@@ -47,5 +47,19 @@ namespace HL7Viewer.DataModel
             Hl7MappingSection section = new Hl7MappingSection(name);
             this.Add(section);
         }
+        public string ToReport()
+        {
+            string str = String.Empty;
+            foreach (Hl7MappingSection section in this)
+            {
+                if (!String.IsNullOrWhiteSpace(str))
+                {
+                    str += "\r\n;";
+                }
+                str += section.ToReport();
+            }
+
+            return str;
+        }
     }
 }

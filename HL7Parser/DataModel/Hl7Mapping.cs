@@ -224,5 +224,9 @@ namespace HL7Viewer.DataModel
         {
             return this.DisplayName;
         }
+        public string ToReport()
+        {
+            return this.Name +"\r\n" + this.Hl7MappingSections.ToString();
+        }
     }
 }

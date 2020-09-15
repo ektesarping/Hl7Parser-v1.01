@@ -31,5 +31,19 @@ namespace HL7Viewer.DataModel
         {
             this.Segment.SegmentName = name;
         }
+
+        public string ToReport()
+        {
+            string str = String.Empty;
+            foreach (HL7MappingSegmentBase segment in this.Segments)
+            {
+                if (!String.IsNullOrWhiteSpace(str))
+                {
+                    str + = "\r\n";
+                }
+                str += segment.ToReport();
+            }
+        }
+
     }
 }

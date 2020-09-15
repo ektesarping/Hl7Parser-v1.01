@@ -35,8 +35,11 @@ namespace HL7Viewer.DataModel
                 this.mappingSelected = value;
                 if (this.mappingSelected != null)
                 {
-                    Properties.Settings.Default.LastMappingSelected2 = this.MappingSelected.FileInfo.FullName;
-                    Properties.Settings.Default.Save();
+                    if (this.MappingSelected.FileInfo != null)
+                    {
+                        Properties.Settings.Default.LastMappingSelected2 = this.MappingSelected.FileInfo.FullName;
+                        Properties.Settings.Default.Save();
+                    } 
                 }
             }
         }
@@ -99,7 +102,7 @@ namespace HL7Viewer.DataModel
 
             SetSelectedMappingFromDefaultProperties();
 
-
+            #region -- Slettes --
             //// -- Finn valgte mapping vha Properties.Settings.Default --
             //string strMappingSelected = null;
             //try
@@ -130,6 +133,7 @@ namespace HL7Viewer.DataModel
             //{
             //    this.mappingSelected = null;
             //}
+            #endregion -- Slettes --
         }
 
 

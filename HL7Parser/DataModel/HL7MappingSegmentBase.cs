@@ -57,8 +57,8 @@ namespace HL7Viewer.DataModel
 
 
 
-        public HL7MappingSegmentBase()
-        { }
+        //public HL7MappingSegmentBase()
+        //{ }
 
         //public HL7SegmentBase(string section, int index, int length, string elementName, string dt, string opt, string rp, bool collapsedDefault) : this()
         //{
