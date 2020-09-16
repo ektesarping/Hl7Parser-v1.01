@@ -12,7 +12,6 @@ using HL7Viewer.DataModel.Msg;
 
 namespace HL7Viewer.DataModel.GUI
 {
-
     public partial class UcHL7 : UserControl
     {
         public HL7 _HL7 { get; set; } //= new HL7();
@@ -69,13 +68,9 @@ namespace HL7Viewer.DataModel.GUI
         public UcHL7()
         {
             InitializeComponent();
-            //VisningsModusPropertyRead();
             SkjulTomme = false; // initiell verdi
-
-            //PopulateCboMappings();
-
             
-
+            //PopulateCboMappings();
         }
 
         private const string TEXT_ADD_MAPPING = "Legg til mapping...";
@@ -94,6 +89,7 @@ namespace HL7Viewer.DataModel.GUI
                 if (this._HL7.MappingSelected != null)
                 {
                     cboMappingFiles.SelectedValue = (object)this._HL7.MappingSelected;
+                    cboMappingFiles.Text = this._HL7.MappingSelected.DisplayName;
                 }
 
                 // --  Hvis det kun er én mapping, sett denne som selected --
@@ -115,7 +111,7 @@ namespace HL7Viewer.DataModel.GUI
                 Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
                 if (mappingTmp != null)
                 {
-                    this._HL7.MappingSelected = (Hl7Mapping)this.cboMappingFiles.SelectedValue;
+                    this._HL7.MappingSelected = mappingTmp;
                 }
             }
         }

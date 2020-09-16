@@ -124,6 +124,10 @@ namespace HL7Viewer.DataModel
                                     segment.SegmentName = "";
                                 }
                             }
+                            else
+                            {
+                                segment.SegmentName = fields[INDEX_NAME];
+                            }
 
                             // -- Legger til section hvis den ikke allerede finnes --
                             // Oppretter section hvis en ikke finnes

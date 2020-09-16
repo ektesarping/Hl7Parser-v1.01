@@ -39,6 +39,9 @@ PID	8	0		Sex
 PID	9	0		Patient Alias					
 PID	10	0		Race					
 PID	11	0		Patient Address					
+PID	11	1		Adresse
+PID	11	3		Poststed
+PID	11	5		Postnummer
 PID	12	0		Country Code					
 PID	13	0		Phone Number – Home					
 PID	14	0		Phone Number – Business					

@@ -49,7 +49,10 @@ namespace HL7Viewer.DataModel
 
 
         #region  -- Constructor --
-        public HL7Mappings(DirectoryInfo defaultMappingFolderDi, string mappingFileExtention)
+        public HL7Mappings()
+        { }
+
+        public HL7Mappings(DirectoryInfo defaultMappingFolderDi, string mappingFileExtention) : this()
         {
             this.DefaultMappingFolderDi = defaultMappingFolderDi;
             this.MappingFileExtention = mappingFileExtention;
@@ -61,6 +64,8 @@ namespace HL7Viewer.DataModel
 
         public HL7Mappings ImportMappings()
         {
+
+            // -- Importer mapping files ih fullpah for filene i Properties.Settings--
             string[] mappingfiles = Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
 
             foreach (string fi in mappingfiles)

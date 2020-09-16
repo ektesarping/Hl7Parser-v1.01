@@ -317,8 +317,11 @@ namespace HL7Viewer.DataModel.Msg
                     mappingSegmentNameTmp = this.Name + " ???";
                 }
 
-
-                string str = "L:" + this.Level.ToString() + " ";
+                string str = String.Empty;
+                if (HL7.DEBUG_GLOBAL)
+                {
+                    str += "L:" + this.Level.ToString() + " ";
+                }
                 switch (this.Level)
                 {
                     case 0:

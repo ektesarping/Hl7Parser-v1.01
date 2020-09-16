@@ -13,6 +13,12 @@ namespace HL7Viewer.DataModel
 {
     public class HL7
     {
+        // **************************************
+        public static bool DEBUG_GLOBAL = false;
+        // **************************************
+
+
+
         public string Name { get; set; }
         public string VersionInfo { get; set; }
 
@@ -110,38 +116,6 @@ namespace HL7Viewer.DataModel
 
             SetSelectedMappingFromDefaultProperties();
 
-            #region -- Slettes --
-            //// -- Finn valgte mapping vha Properties.Settings.Default --
-            //string strMappingSelected = null;
-            //try
-            //{
-            //    strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
-            //}
-            //catch (Exception ex)
-            //{
-            //    // -- Property ikke funnet. strMappingSelected er allerede satt lik null
-            //}
-
-            //if (!String.IsNullOrEmpty(strMappingSelected))
-            //{
-            //    try
-            //    {
-            //        FileInfo SelectedMappingFi = new FileInfo(strMappingSelected);
-            //        if (this.HL7Mappings.Contains(SelectedMappingFi))
-            //        {
-            //            this.MappingSelected = this.HL7Mappings.Get(new FileInfo(strMappingSelected));
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        MessageBox.Show("Ingen mapping valgt", "Importer mappingfiler", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    }
-            //}
-            //else
-            //{
-            //    this.mappingSelected = null;
-            //}
-            #endregion -- Slettes --
         }
 
 

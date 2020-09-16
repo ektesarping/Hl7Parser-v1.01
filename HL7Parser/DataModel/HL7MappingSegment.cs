@@ -115,7 +115,7 @@ namespace HL7Viewer.DataModel
                 strSubsegments = " / " + this.SubSegments.Count + " subsegments";
             }
 
-            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.Index_L2 + " / " + this.SegmentName + strSubsegments;
+            string str = this.SectionName + " / " + this.Index_L1 + " / " + this.Index_L2 + " / " + this.SegmentName + "/" + strSubsegments;
             return str;
         }
     }
