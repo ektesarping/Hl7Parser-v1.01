@@ -49,8 +49,16 @@ namespace HL7Viewer.DataModel
         /// </summary>
         private void SetSelectedMappingFromDefaultProperties()
         {
+            // -- Hent navnet på selected mapping fra Properties.Settings --
             string strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
-            this.mappingSelected = this.HL7Mappings.Get(strMappingSelected); // Kan være 'null' hvis mappingen ikke finnes.
+            this.MappingSelected = this.HL7Mappings.Get(strMappingSelected); // Kan være 'null' hvis mappingen ikke finnes.
+
+            // -- Hvis det finnes kun en mapping, sett denne som selected. --
+            if ((this.mappingSelected == null) && (this.HL7Mappings.Count == 1))
+            {
+                this.MappingSelected = this.HL7Mappings[0];
+            }
+
         }
 
 

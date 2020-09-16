@@ -42,6 +42,8 @@
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +56,7 @@
             this.tvHL7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
-            this.tvHL7.Size = new System.Drawing.Size(456, 220);
+            this.tvHL7.Size = new System.Drawing.Size(510, 220);
             this.tvHL7.TabIndex = 0;
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
@@ -86,10 +88,11 @@
             this.menuStripHL7.AllowDrop = true;
             this.menuStripHL7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.debugToolStripMenuItem});
             this.menuStripHL7.Location = new System.Drawing.Point(0, 0);
             this.menuStripHL7.Name = "menuStripHL7";
-            this.menuStripHL7.Size = new System.Drawing.Size(456, 24);
+            this.menuStripHL7.Size = new System.Drawing.Size(510, 24);
             this.menuStripHL7.TabIndex = 2;
             this.menuStripHL7.Text = "menuStrip1";
             // 
@@ -134,7 +137,7 @@
             // chkSkjulTomme
             // 
             this.chkSkjulTomme.AutoSize = true;
-            this.chkSkjulTomme.Location = new System.Drawing.Point(84, 4);
+            this.chkSkjulTomme.Location = new System.Drawing.Point(138, 4);
             this.chkSkjulTomme.Name = "chkSkjulTomme";
             this.chkSkjulTomme.Size = new System.Drawing.Size(83, 17);
             this.chkSkjulTomme.TabIndex = 3;
@@ -145,7 +148,7 @@
             // chkNormalVisning
             // 
             this.chkNormalVisning.AutoSize = true;
-            this.chkNormalVisning.Location = new System.Drawing.Point(167, 4);
+            this.chkNormalVisning.Location = new System.Drawing.Point(221, 4);
             this.chkNormalVisning.Name = "chkNormalVisning";
             this.chkNormalVisning.Size = new System.Drawing.Size(92, 17);
             this.chkNormalVisning.TabIndex = 4;
@@ -155,12 +158,29 @@
             // 
             // cboMappingFiles
             // 
+            this.cboMappingFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboMappingFiles.FormattingEnabled = true;
-            this.cboMappingFiles.Location = new System.Drawing.Point(270, 2);
+            this.cboMappingFiles.Location = new System.Drawing.Point(320, 2);
             this.cboMappingFiles.Name = "cboMappingFiles";
-            this.cboMappingFiles.Size = new System.Drawing.Size(181, 21);
+            this.cboMappingFiles.Size = new System.Drawing.Size(179, 21);
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem});
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // kopierMappingsegmenterTilUtklippstavleToolStripMenuItem
+            // 
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Name = "kopierMappingsegmenterTilUtklippstavleToolStripMenuItem";
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Text = "Kopier Mappingsegmenter til utklippstavle";
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Click += new System.EventHandler(this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click);
             // 
             // UcHL7
             // 
@@ -173,7 +193,7 @@
             this.Controls.Add(this.tvHL7);
             this.Controls.Add(this.menuStripHL7);
             this.Name = "UcHL7";
-            this.Size = new System.Drawing.Size(456, 244);
+            this.Size = new System.Drawing.Size(510, 244);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
             this.contextMenuStripTreeview.ResumeLayout(false);
             this.menuStripHL7.ResumeLayout(false);
@@ -198,5 +218,7 @@
         private System.Windows.Forms.CheckBox chkSkjulTomme;
         private System.Windows.Forms.CheckBox chkNormalVisning;
         private System.Windows.Forms.ComboBox cboMappingFiles;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kopierMappingsegmenterTilUtklippstavleToolStripMenuItem;
     }
 }

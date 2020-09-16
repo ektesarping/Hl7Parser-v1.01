@@ -161,7 +161,7 @@ namespace HL7Viewer.DataModel
                 MessageBox.Show("Intern feil: \r\nKunne ikke finne mapping med filnavn " + fullPath, "Mapping.Get", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-            if (!String.IsNullOrEmpty(fullPath))
+            if (fi != null)
             {
                 return this.Get(fi);
             }
@@ -170,6 +170,18 @@ namespace HL7Viewer.DataModel
                 return null;
             }
 
+        }
+
+        public Hl7Mapping GetBydisplayName(string displayName)
+        {
+            foreach (Hl7Mapping mapping in this)
+            {
+                if (mapping.DisplayName.ToUpper() == displayName.ToUpper())
+                {
+                    return mapping;
+                }
+            }
+            return null;
         }
 
     }

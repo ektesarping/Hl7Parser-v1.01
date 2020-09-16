@@ -65,6 +65,7 @@ namespace HL7Viewer.DataModel.GUI
         }
 
 
+        
         public UcHL7()
         {
             InitializeComponent();
@@ -72,11 +73,14 @@ namespace HL7Viewer.DataModel.GUI
             SkjulTomme = false; // initiell verdi
 
             //PopulateCboMappings();
+
+            
+
         }
 
         private const string TEXT_ADD_MAPPING = "Legg til mapping...";
 
-        private void PopulateCboMappings()
+        public void PopulateCboMappings()
         {
             // -- Fylle cbobox med mappinger --
             {
@@ -92,6 +96,9 @@ namespace HL7Viewer.DataModel.GUI
                     cboMappingFiles.SelectedValue = (object)this._HL7.MappingSelected;
                 }
 
+                // --  Hvis det kun er én mapping, sett denne som selected --
+
+
                 // -- Legge til 'Add mapping file'
                 cboMappingFiles.Items.Add(((object)TEXT_ADD_MAPPING));
             }
@@ -99,13 +106,17 @@ namespace HL7Viewer.DataModel.GUI
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.cboMappingFiles.SelectedValue == (string)TEXT_ADD_MAPPING)
+            if (this.cboMappingFiles.SelectedItem.ToString() == (string)TEXT_ADD_MAPPING)
             {
                 // Legg til mapping her
             }
             else
             {
-                this._HL7.MappingSelected = (Hl7Mapping) this.cboMappingFiles.SelectedValue;
+                Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
+                if (mappingTmp != null)
+                {
+                    this._HL7.MappingSelected = (Hl7Mapping)this.cboMappingFiles.SelectedValue;
+                }
             }
         }
 
@@ -446,6 +457,11 @@ namespace HL7Viewer.DataModel.GUI
             Repopulate();
         }
 
-     
+        private void kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string str = String.Empty;
+            str = _HL7.MappingSelected.ToReport();
+            Clipboard.SetText(str);
+        }
     }
 }
