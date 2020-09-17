@@ -27,6 +27,11 @@ namespace HL7Viewer.DataModel.Msg
         //public int Index_L3 { get; set; }
 
         /// <summary>
+        /// Flagg for nodene som kan være repeterende. F.eks 'OBR 28  Kopimottakere'.
+        /// </summary>
+        public bool ExtraLevelforRepeatingNodes { get; set; } = false;
+
+        /// <summary>
         /// Index for oppslag mot mapping. Ulik this.Index ved repeterende sekvenser av felter.
         /// F.eks OBR28 Kopimottakere som har 15 repeterende felter for hver av mottakerne.
         /// </summary>
@@ -253,12 +258,15 @@ namespace HL7Viewer.DataModel.Msg
             foreach (string str in nodeRepeating)
             {
                 MsgNode nodeRepeat = new MsgNode(str);
+                nodeRepeat.ExtraLevelforRepeatingNodes = true;
                 nodeRepeat.MappingSectionName = this.MappingSectionName;
+                nodeRepeat.Value = str;
                 nodeRepeat.Parent = this;
+                //nodeRepeat.Level = nodeRepeat.Parent.Level + 1;
                 this.Children.Add(nodeRepeat);
 
 
-                string[] strNodesLevel3 = this.SourceString.Split(separator_L2);
+                string[] strNodesLevel3 = str.Split(separator_L2);
                 int indexsubnode = 1;
                 foreach (string strNode in strNodesLevel3)
                 {
@@ -308,6 +316,7 @@ namespace HL7Viewer.DataModel.Msg
             get
             {
                 string mappingSegmentNameTmp = String.Empty;
+                // -- Markerer noden hvis den ikke finnes i mappingen. --
                 if (this.MappingSegment != null)
                 {
                     mappingSegmentNameTmp = this.MappingSegment.SegmentName;
@@ -325,10 +334,19 @@ namespace HL7Viewer.DataModel.Msg
                 switch (this.Level)
                 {
                     case 0:
-                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
-                        str += mappingSegmentNameTmp;
-                        str += "]"; // = " + this.Value;
-
+                        if (this.ExtraLevelforRepeatingNodes)
+                        {
+                            // -- Spesialhåndtering av parentnode for repeterende noder. F.eks varierende antall kopimottakere. --
+                            //str += "[" /*+ this.MappingSectionName + " " + Index_L1.ToString() + ": "*/;
+                            str += mappingSegmentNameTmp;
+                            //str += "]"; // = " + this.Value;
+                        }
+                        else
+                        {
+                            str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
+                            str += mappingSegmentNameTmp;
+                            str += "]"; // = " + this.Value;
+                        }
                         break;
 
                     case 1:

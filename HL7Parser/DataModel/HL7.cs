@@ -14,7 +14,7 @@ namespace HL7Viewer.DataModel
     public class HL7
     {
         // **************************************
-        public static bool DEBUG_GLOBAL = false;
+        public static bool DEBUG_GLOBAL = true;
         // **************************************
 
 
@@ -64,7 +64,6 @@ namespace HL7Viewer.DataModel
             {
                 this.MappingSelected = this.HL7Mappings[0];
             }
-
         }
 
 
@@ -101,7 +100,7 @@ namespace HL7Viewer.DataModel
         private char[] SEPARATOR_LEVEL_0 = new char[] { '\n' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
         private char[] SEPARATOR_LEVEL_2 = new char[] { '^' }; //, '~' };
-        private char[] SEPARATOR_LEVEL_3 = new char[] { '~' };
+        private char[] SEPARATOR_LEVEL_3_REPEATING_FIELD = new char[] { '~' };
 
         private const string MSG_NOT_INCLUDED_IN_MAPPING = "(*)";
 
@@ -162,11 +161,12 @@ namespace HL7Viewer.DataModel
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
                     if (
-                        (subNode_L1.Value.Split(SEPARATOR_LEVEL_3).Length > 1)  // Inneholder skilletegn for repeterende noder  '~'
+                        (subNode_L1.Value.Split(SEPARATOR_LEVEL_3_REPEATING_FIELD).Length > 1)  // Inneholder skilletegn for repeterende noder  '~'
                         && (!(subNode_L1.MappingSectionName == "MSH" && subNode_L1.Level == 1 && subNode_L1.Index_L1 == 1 && subNode_L1.Index_L2 == 0)) //Hopp over node MSH 0,1. Den lister opp skilletegn
                         )
                     {
-                        subNode_L1.CreateChildNodes_L4(SEPARATOR_LEVEL_2, SEPARATOR_LEVEL_3);
+                        // -- Legge inn node for hver av de reperende feltene. F.eks varienende antall kopimottakere i OBR 28.
+                        subNode_L1.CreateChildNodes_L4(SEPARATOR_LEVEL_2, SEPARATOR_LEVEL_3_REPEATING_FIELD);
                     }
                     else
                     {

@@ -48,7 +48,14 @@ namespace HL7Viewer.DataModel
             }
             else
             {
-                NodeIsHidden = true;
+                if (msgNode.ExtraLevelforRepeatingNodes == true)
+                {
+                    NodeIsHidden = false; // Vis samlenode for repeterende noder uansett
+                }
+                else
+                {
+                    NodeIsHidden = true;
+                }
             }
 
             if ((msgNode.Level >= 1) && (msgNode.MappingSegment == null))
