@@ -18,33 +18,15 @@ namespace HL7Viewer.DataModel
         private string propertyString = String.Empty;
         private char[] MAPPING_FILE_SEPARATOR = new char[] { ';' };
 
-        //public string PropertyString
-        //{
-        //    get
-        //    {
-        //        return Properties.Settings.Default.Mappingfiler;
-        //    }
-        //    set
-        //    {
-        //        string tmp = String.Empty;
-        //        foreach (Hl7Mapping mapping in this)
-        //        {
-        //            tmp += mapping.FileInfo.FullName + MAPPING_FILE_SEPARATOR;
-        //            Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
-        //            Properties.Settings.Default.Save();
-        //        }
-        //    }
-        //}
-
         private void SaveMappingsPropertyString()
         {
             string tmp = String.Empty;
             foreach (Hl7Mapping mapping in this)
             {
                 tmp += mapping.FileInfo.FullName + MAPPING_FILE_SEPARATOR[0].ToString();
-                Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
-                Properties.Settings.Default.Save();
             }
+            Properties.Settings.Default.Mappingfiler = tmp;
+            Properties.Settings.Default.Save();
         }
 
 
@@ -77,6 +59,8 @@ namespace HL7Viewer.DataModel
 
                 Hl7Mapping hl7Mapping = new Hl7Mapping();
                 hl7Mapping.FileInfo = new System.IO.FileInfo(fi);
+                hl7Mapping.ImportMapping(hl7Mapping.FileInfo);
+
                 if (hl7Mapping.FileInfo.Exists)
                 {
                     this.Add(hl7Mapping);
@@ -88,12 +72,6 @@ namespace HL7Viewer.DataModel
             {
                 if (DefaultMappingFolderDi.Exists)
                 {
-                    //string ext = string.Empty;
-                    //if (String.IsNullOrEmpty(MappingFileExtention))
-                    //{
-                    //    ext = MappingFileExtention;
-                    //}
-
                     string filenameMask = "*" + MappingFileExtention;
                     FileInfo[] files = DefaultMappingFolderDi.GetFiles(filenameMask, SearchOption.AllDirectories);
                     foreach (FileInfo fi in files)
@@ -121,6 +99,7 @@ namespace HL7Viewer.DataModel
             if (!this.Contains(mapping.FileInfo))
             {
                 base.Add(mapping);
+                this.Sort();
                 SaveMappingsPropertyString();
             }
         }
@@ -188,6 +167,5 @@ namespace HL7Viewer.DataModel
             }
             return null;
         }
-
     }
 }

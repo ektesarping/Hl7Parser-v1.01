@@ -94,7 +94,7 @@ namespace HL7Viewer.DataModel.GUI
                 // -- Setter selected mapping --
                 if (this._HL7.MappingSelected != null)
                 {
-                    cboMappingFiles.SelectedValue = (object)this._HL7.MappingSelected;
+                    cboMappingFiles.SelectedItem = (object)this._HL7.MappingSelected;
                     cboMappingFiles.Text = this._HL7.MappingSelected.DisplayName;
                 }
 
@@ -221,8 +221,11 @@ namespace HL7Viewer.DataModel.GUI
             Repopulate();
         }
 
+        private TreenodeHL7Base Selectednode { get; set; }
+
         private void Repopulate()
         {
+
             this.tvHL7.Nodes.Clear();
             TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
             _HL7.msgRootnode.Treenode = rootNode;

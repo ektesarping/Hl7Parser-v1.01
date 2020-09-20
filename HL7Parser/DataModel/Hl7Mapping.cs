@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace HL7Viewer.DataModel
 {
-    public class Hl7Mapping
+    public class Hl7Mapping : IComparable
     {
         public string Name { get; set; }
         public string VersionInfo { get; set; }
@@ -114,8 +114,8 @@ namespace HL7Viewer.DataModel
                                 segment.CollapsedDefault = true;
                             }
 
-                           
-                           // segment.SegmentName = fields[INDEX_NAME];
+
+                            // segment.SegmentName = fields[INDEX_NAME];
                             if (fields[INDEX_NAME].Contains(COMMENT_CHAR))
                             {
                                 string strTmp = fields[INDEX_NAME];
@@ -234,7 +234,13 @@ namespace HL7Viewer.DataModel
         }
         public string ToReport()
         {
-            return this.Name +"\r\n" + this.Hl7MappingSections.ToString();
+            return this.Name + "\r\n" + this.Hl7MappingSections.ToString();
+        }
+
+        public int CompareTo(object obj)
+        {
+            Hl7Mapping compareTo = (Hl7Mapping)obj;
+            return this.DisplayName.CompareTo(compareTo.DisplayName);
         }
     }
 }

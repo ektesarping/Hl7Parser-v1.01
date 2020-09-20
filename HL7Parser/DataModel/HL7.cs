@@ -31,8 +31,7 @@ namespace HL7Viewer.DataModel
         {
             get
             {
-                //string strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
-
+                //string strMappingSelected = Properties.Settings.Default.LastMappingSelected;
                 //this.mappingSelected = this.HL7Mappings.Get(strMappingSelected);
                 return this.mappingSelected;
             }
@@ -41,9 +40,9 @@ namespace HL7Viewer.DataModel
                 this.mappingSelected = value;
                 if (this.mappingSelected != null)
                 {
-                    if (this.MappingSelected.FileInfo != null)
+                    if (this.mappingSelected.FileInfo != null)
                     {
-                        Properties.Settings.Default.LastMappingSelected2 = this.MappingSelected.FileInfo.FullName;
+                        Properties.Settings.Default.LastMappingSelected = this.mappingSelected.FileInfo.FullName;
                         Properties.Settings.Default.Save();
                     } 
                 }
@@ -51,16 +50,16 @@ namespace HL7Viewer.DataModel
         }
 
         /// <summary>
-        /// HEnter siste valgte mapping fra default properties (under User Properties).
+        /// Henter siste valgte mapping fra default properties (under User Properties).
         /// </summary>
         private void SetSelectedMappingFromDefaultProperties()
         {
             // -- Hent navnet på selected mapping fra Properties.Settings --
-            string strMappingSelected = Properties.Settings.Default.LastMappingSelected2;
+            string strMappingSelected = Properties.Settings.Default.LastMappingSelected;
             this.MappingSelected = this.HL7Mappings.Get(strMappingSelected); // Kan være 'null' hvis mappingen ikke finnes.
 
             // -- Hvis det finnes kun en mapping, sett denne som selected. --
-            if ((this.mappingSelected == null) && (this.HL7Mappings.Count == 1))
+            if ((this.MappingSelected == null) && (this.HL7Mappings.Count == 1))
             {
                 this.MappingSelected = this.HL7Mappings[0];
             }
@@ -111,10 +110,9 @@ namespace HL7Viewer.DataModel
 
             FileInfo fiApplication = new FileInfo(Application.ExecutablePath);
             DirectoryInfo di = new DirectoryInfo(Path.Combine(fiApplication.DirectoryName, DEFAULT_MAPPINGFOLDE_NAME));
-            this.HL7Mappings = new HL7Mappings(di, MAPPINGFILE_EXT);
+            this.HL7Mappings = new HL7Mappings(di, MAPPINGFILE_EXT);  // Leser inn mappinger som er listet i Properties.Settings.Default
 
             SetSelectedMappingFromDefaultProperties();
-
         }
 
         public void ImportHL7MsgFile()

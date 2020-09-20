@@ -74,12 +74,12 @@ namespace HL7Viewer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastMappingSelected2 {
+        public string LastMappingSelected {
             get {
-                return ((string)(this["LastMappingSelected2"]));
+                return ((string)(this["LastMappingSelected"]));
             }
             set {
-                this["LastMappingSelected2"] = value;
+                this["LastMappingSelected"] = value;
             }
         }
     }
