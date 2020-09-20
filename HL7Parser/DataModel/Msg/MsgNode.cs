@@ -121,6 +121,16 @@ namespace HL7Viewer.DataModel.Msg
             int indexsubnode = 0;
             foreach (string strNode in strNodesLevel)
             {
+                if (String.IsNullOrEmpty (strNode))
+                {
+                    continue;
+                }
+
+                if (String. IsNullOrWhiteSpace(strNode))
+                {
+                    continue;
+                }
+
                 Console.WriteLine(strNode); // fjernes
                 MsgNode msgsubnode = new MsgNode();
                 msgsubnode.Level = 0;

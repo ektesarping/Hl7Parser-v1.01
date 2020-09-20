@@ -39,10 +39,10 @@
             this.ucHL7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucHL7.Location = new System.Drawing.Point(0, 0);
             this.ucHL7.Name = "ucHL7";
-            this.ucHL7.Normalvisning = false;
+            //this.ucHL7.Normalvisning = false;
             this.ucHL7.RootnodeText = null;
             this.ucHL7.Size = new System.Drawing.Size(494, 321);
-            this.ucHL7.SkjulTomme = false;
+            //this.ucHL7.SkjulTomme = false;
             this.ucHL7.TabIndex = 0;
             // 
             // FormHL7Viewer

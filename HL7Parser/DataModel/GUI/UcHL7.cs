@@ -22,10 +22,10 @@ namespace HL7Viewer.DataModel.GUI
 
         public string RootnodeText { get; set; }
 
+        private bool IsInitializingCheckboxes { get; set; } = false;
 
 
-
-        public bool SkjulTomme
+        private bool SkjulTomme
         {
             get
             {
@@ -46,7 +46,7 @@ namespace HL7Viewer.DataModel.GUI
         /// <summary>
         /// Normalvisning. Collapser noder som er merket i mppingfilen.
         /// </summary>
-        public bool Normalvisning
+        private bool Normalvisning
         {
             get
             {
@@ -64,12 +64,18 @@ namespace HL7Viewer.DataModel.GUI
         }
 
 
-        
+
         public UcHL7()
         {
             InitializeComponent();
-            SkjulTomme = false; // initiell verdi
-            
+            //SkjulTomme = false; // initiell verdi
+
+
+            // -- Initialiserer status for checkboxer --
+            IsInitializingCheckboxes = true;
+            this.chkSkjulTomme.Checked = Properties.Settings.Default.SkjulTommeNoder;
+            this.chkNormalVisning.Checked = Properties.Settings.Default.Normalvisning;
+            IsInitializingCheckboxes = false;
             //PopulateCboMappings();
         }
 
@@ -104,7 +110,51 @@ namespace HL7Viewer.DataModel.GUI
         {
             if (this.cboMappingFiles.SelectedItem.ToString() == (string)TEXT_ADD_MAPPING)
             {
-                // Legg til mapping her
+                // -- Legger til mapping --
+                DialogResult res = new DialogResult();
+                OpenFileDialog dlg = new OpenFileDialog();
+
+                // Prøver å finne directory for selected mapping.
+                string dir = String.Empty;
+                if (_HL7.MappingSelected != null)
+                {
+                    if (_HL7.MappingSelected.MappingFileFullPath != null)
+                    {
+                        FileInfo fi = new FileInfo(_HL7.MappingSelected.MappingFileFullPath);
+                        dir = fi.DirectoryName;
+                    }
+                }
+                if (!String.IsNullOrEmpty(dir))
+                {
+                    dlg.InitialDirectory = dir;
+                }
+                dlg.Filter = "Mapping filer (*.csv)|*.csv*|Alle filer (*.*)|*.*";
+
+                res = dlg.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    FileInfo fi = new FileInfo(dlg.FileName);
+                    if (fi.Exists)
+                    {
+                        // -- Import mapping --
+                        Hl7Mapping newMapping = new Hl7Mapping(fi);
+                        newMapping.ImportMapping();
+
+                        this._HL7.HL7Mappings.Add(newMapping);
+                        // -- Setter den innleste mappingen som selected --
+                        this._HL7.MappingSelected = newMapping;
+                        this._HL7.ImportHL7MsgFile();
+
+                        this.PopulateCboMappings();
+                        // --> Lagre fileinfi.Fullname i PRoperties.Settings.Default
+                        this.Repopulate();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kunne ikke lese inn mappingen fra filen " + dlg.FileName, "Importere mapping", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
             }
             else
             {
@@ -255,6 +305,11 @@ namespace HL7Viewer.DataModel.GUI
             this.Populate(this._HL7._HL7SegmentCategories);
         }
 
+        public void ReloadMsgFile()
+        {
+            _HL7.ImportHL7MsgFile();
+        }
+
         /// <summary>
         /// Open message file with dialog.
         /// </summary>
@@ -312,7 +367,7 @@ namespace HL7Viewer.DataModel.GUI
         private void limInnHL7FilFraClipboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string str = Clipboard.GetText();
-            _HL7.ImportHL7MsgFile2(str);
+            _HL7.ImportHL7MsgFile(str);
             Populate(this._HL7._HL7SegmentCategories);
         }
 
@@ -420,37 +475,23 @@ namespace HL7Viewer.DataModel.GUI
             }
         }
 
-        //private void rbSkjulTommeNode_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    _Visningsmodus = Visningsmodus.SkjulTomme;
-        //    VisningsModusPropertyWrite();
-        //    Repopulate();
-        //}
-
-        //private void rbNormalvisning_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    _Visningsmodus = Visningsmodus.Normalvisning;
-        //    VisningsModusPropertyWrite();
-        //    Repopulate();
-        //}
-
-        //private void rbVisAlle_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    _Visningsmodus = Visningsmodus.VisAlle;
-        //    VisningsModusPropertyWrite();
-        //    Repopulate();
-        //}
 
         private void chkSkjulTomme_CheckedChanged(object sender, EventArgs e)
         {
             this.SkjulTomme = chkSkjulTomme.Checked;
-            Repopulate();
+            if (!IsInitializingCheckboxes)
+            {
+                Repopulate();
+            }
         }
 
         private void chkNormalVisning_CheckedChanged(object sender, EventArgs e)
         {
             this.Normalvisning = chkNormalVisning.Checked;
-            Repopulate();
+            if (!IsInitializingCheckboxes)
+            {
+                Repopulate();
+            }
         }
 
         private void kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click(object sender, EventArgs e)

@@ -39,11 +39,11 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierSegmenterTilClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.tvHL7.AllowDrop = true;
             this.tvHL7.ContextMenuStrip = this.contextMenuStripTreeview;
             this.tvHL7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvHL7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tvHL7.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
             this.tvHL7.Size = new System.Drawing.Size(563, 390);
@@ -134,6 +134,21 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem.Text = "Lim inn HL7 fil fra clipboard";
             this.limInnHL7FilFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnHL7FilFraClipboardToolStripMenuItem_Click);
             // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem});
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // kopierMappingsegmenterTilUtklippstavleToolStripMenuItem
+            // 
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Name = "kopierMappingsegmenterTilUtklippstavleToolStripMenuItem";
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Text = "Kopier Mappingsegmenter til utklippstavle";
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Click += new System.EventHandler(this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click);
+            // 
             // chkSkjulTomme
             // 
             this.chkSkjulTomme.AutoSize = true;
@@ -166,21 +181,6 @@
             this.cboMappingFiles.Size = new System.Drawing.Size(232, 21);
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem});
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.debugToolStripMenuItem.Text = "Debug";
-            // 
-            // kopierMappingsegmenterTilUtklippstavleToolStripMenuItem
-            // 
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Name = "kopierMappingsegmenterTilUtklippstavleToolStripMenuItem";
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Text = "Kopier Mappingsegmenter til utklippstavle";
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Click += new System.EventHandler(this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click);
             // 
             // UcHL7
             // 

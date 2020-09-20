@@ -61,6 +61,10 @@ namespace HL7Viewer.DataModel
         }
         #endregion  -- Constructor --
 
+        public void ImportMapping()
+        {
+            this.ImportMapping(this.FileInfo);
+        }
 
         public void ImportMapping(FileInfo fi)
         {

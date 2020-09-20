@@ -83,7 +83,7 @@ namespace HL7Viewer.DataModel
 
         public FileInfo MsgFile { get; set; }
 
-        public FileInfo Fi { get; set; }
+
 
         public string Content { get; set; }
 
@@ -117,6 +117,11 @@ namespace HL7Viewer.DataModel
 
         }
 
+        public void ImportHL7MsgFile()
+        {
+            ImportHL7MsgFile(this.MsgFile);
+        }
+
 
         /// <summary>
         /// Importerer og parser
@@ -125,23 +130,22 @@ namespace HL7Viewer.DataModel
         public void ImportHL7MsgFile(FileInfo fi)
         {
             StreamReader sr = new StreamReader(fi.FullName, Encoding.GetEncoding(1252));
-
+            this.MsgFile = fi;
             string str = sr.ReadToEnd();
             sr.Close();
-            ImportHL7MsgFile2(str);
+            ImportHL7MsgFile(str);
         }
 
 
-        public void ImportHL7MsgFile2(string strFileContent)
+        public void ImportHL7MsgFile(string strFileContent)
         {
             _HL7SegmentCategories = new HL7SegmentCategories();
 
-            #region -- Import mapping --
+            #region -- Find executable path--
             FileInfo executableFi = new FileInfo(Application.ExecutablePath); // Hent mappingfilen fra programfolderen.
                                                                               //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
                                                                               //MappingSelected.ImportMapping(MappingFileFi);
-            #endregion -- Import mapping --
-
+            #endregion -- Find executable path --
 
             this.msgRootnode = new MsgNode("Root", strFileContent, 0, 0);
 
@@ -185,6 +189,8 @@ namespace HL7Viewer.DataModel
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }
+
+
 
 
         private void MatchMsgNodeToMappingRecursive(MsgNode node)
