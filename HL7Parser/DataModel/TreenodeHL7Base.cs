@@ -14,16 +14,20 @@ namespace HL7Viewer.DataModel
     {
         public HL7MappingSegment _HL7Segment { get; set; }
 
+        public MsgNode MsgNode { get; set; }
+
+
         public bool NodeIsHidden { get; set; }
 
         public TreenodeHL7Base(bool isRoot)
         {}
 
-        public TreenodeHL7Base(MsgNode node)
+        public TreenodeHL7Base(MsgNode msgNode)
         {
-            this._HL7Segment = node.MappingSegment;
-            this.Text = node.Value;
-            node.Treenode = this;
+            this._HL7Segment = msgNode.MappingSegment;
+            this.Text = msgNode.Value;
+            this.MsgNode = msgNode;
+            msgNode.Treenode = this;
         }
 
         public TreenodeHL7Base(MsgNode msgNode, bool skjulTomme, bool normalvisning) : this(msgNode)

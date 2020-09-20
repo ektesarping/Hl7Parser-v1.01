@@ -162,6 +162,8 @@ namespace HL7Viewer.DataModel.GUI
                 if (mappingTmp != null)
                 {
                     this._HL7.MappingSelected = mappingTmp;
+                    this._HL7.ImportHL7MsgFile();
+                    this.Repopulate();
                 }
             }
         }
@@ -221,11 +223,10 @@ namespace HL7Viewer.DataModel.GUI
             Repopulate();
         }
 
-        private TreenodeHL7Base Selectednode { get; set; }
+        private TreenodeHL7Base SelectedTreenode { get; set; }
 
         private void Repopulate()
         {
-
             this.tvHL7.Nodes.Clear();
             TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
             _HL7.msgRootnode.Treenode = rootNode;
@@ -245,13 +246,66 @@ namespace HL7Viewer.DataModel.GUI
                 PopulateRecursively(msgChildNode);
             }
 
-
             // Ekspanderer root node og kjører gjennom for de som skal være 
             rootNode.Expand();
             ManageExpandChildTreenode(rootNode);
 
 
+            // -- Setter tilbake fokus på den selectede noden --
+            if (SelectedTreenode != null)
+            {
+                TreenodeHL7Base nodeTmp = GetTreenode(SelectedTreenode.MsgNode);
+                if (nodeTmp != null)
+                {
+                    tvHL7.SelectedNode = nodeTmp;
+                }
+                else
+                {
+                    // Fant ingen selectednode. 
+                    if (tvHL7.Nodes.Count >= 1)
+                    {
+                        tvHL7.SelectedNode = tvHL7.Nodes[0];
+                    }
+                }
+            }
+            else
+            {
+                if (tvHL7.Nodes.Count >= 1)
+                {
+                    tvHL7.SelectedNode = tvHL7.Nodes[0];
+                }
+            }
         }
+
+
+
+        /// <summary>
+        /// Finner treenode som med samme MsgNode som argumentet node.
+        /// Etter repopulate blir alle treenodes opprettet på nytt. for å 
+        /// selecte fokus på den samme noden etter repoulate må det søkes gjennom alle treenodes.
+        /// </summary>
+        /// <param name="msgNode"></param>
+        /// <returns></returns>
+        private TreenodeHL7Base GetTreenode(MsgNode msgNode)
+        {
+            foreach (TreenodeHL7Base treenode in tvHL7.Nodes)
+            {
+                if (treenode._HL7Segment == null)
+                {
+                    continue;
+                }
+
+                if (treenode._HL7Segment.Level == msgNode.Level
+                    && treenode._HL7Segment.Index_L1 == msgNode.Index_L1
+                    && treenode._HL7Segment.Index_L2 == msgNode.Index_L2
+                    )
+                {
+                    return treenode;
+                }
+            }
+            return null;
+        }
+
 
         private void PopulateRecursively(MsgNode node)
         {
@@ -502,6 +556,11 @@ namespace HL7Viewer.DataModel.GUI
             string str = String.Empty;
             str = _HL7.MappingSelected.ToReport();
             Clipboard.SetText(str);
+        }
+
+        private void tvHL7_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            SelectedTreenode = (TreenodeHL7Base)tvHL7.SelectedNode;
         }
     }
 }

@@ -58,6 +58,7 @@
             this.tvHL7.Name = "tvHL7";
             this.tvHL7.Size = new System.Drawing.Size(563, 390);
             this.tvHL7.TabIndex = 0;
+            this.tvHL7.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvHL7_AfterSelect);
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
             // 
