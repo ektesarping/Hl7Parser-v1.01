@@ -38,6 +38,7 @@ namespace HL7Viewer.DataModel.GUI
                 if (chkSkjulTomme.Checked != value)
                 {
                     chkSkjulTomme.Checked = value;
+                    this.Repopulate();
                 }
             }
         }
@@ -59,17 +60,39 @@ namespace HL7Viewer.DataModel.GUI
                 if (chkNormalVisning.Checked != value)
                 {
                     chkNormalVisning.Checked = value;
+                    this.Repopulate();
                 }
+                
             }
+            
         }
-
 
 
         public UcHL7()
         {
             InitializeComponent();
+            //PostInitialize();
+        }
 
+        public void PostInitialize()
+        { 
             this._HL7 = new HL7();
+            _HL7.PostInitialize();
+
+
+            // -- Åpne sist brukte HL7 fil --
+            try
+            {
+                FileInfo fi = new FileInfo(Properties.Settings.Default.MsgFilename);
+                if (fi.Exists)
+                {
+                    this.OpenMessageFile(fi);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunne ikke åpne forrige meldingsfil.\r\n\nException\r\n" + ex.Message + "\r\n\nStacktrace\r\n" + ex.StackTrace , "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             this.PopulateCboMappings();
 

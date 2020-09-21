@@ -27,20 +27,23 @@ namespace HL7Viewer
             string version = fvi.FileVersion;
             this.Text += " - V" + version;
 
-            // -- Åpne sist brukte HL7 fil --
-            try
-            {
+            ucHL7.PostInitialize();
+
+
+            //// -- Åpne sist brukte HL7 fil --
+            //try
+            //{
                 
-                FileInfo fi = new FileInfo(Properties.Settings.Default.MsgFilename);
-                if (fi.Exists)
-                {
-                    this.ucHL7.OpenMessageFile(fi);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Kunne ikke åpne forrige meldingsfil.", "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //    FileInfo fi = new FileInfo(Properties.Settings.Default.MsgFilename);
+            //    if (fi.Exists)
+            //    {
+            //        this.ucHL7.OpenMessageFile(fi);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Kunne ikke åpne forrige meldingsfil.", "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
         }
     }
 }

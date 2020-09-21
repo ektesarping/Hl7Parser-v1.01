@@ -44,7 +44,7 @@ namespace HL7Viewer.DataModel
                     {
                         Properties.Settings.Default.LastMappingSelected = this.mappingSelected.FileInfo.FullName;
                         Properties.Settings.Default.Save();
-                    } 
+                    }
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Henter siste valgte mapping fra default properties (under User Properties).
         /// </summary>
-        private void SetSelectedMappingFromDefaultProperties()
+        private void SetSelectedMappingFromSettingsProperties()
         {
             // -- Hent navnet på selected mapping fra Properties.Settings --
             string strMappingSelected = Properties.Settings.Default.LastMappingSelected;
@@ -105,6 +105,9 @@ namespace HL7Viewer.DataModel
 
 
         public HL7()
+        { }
+
+        public void PostInitialize()
         {
             this.msgRootnode.Name = "RootNode";
 
@@ -112,11 +115,9 @@ namespace HL7Viewer.DataModel
             DirectoryInfo di = new DirectoryInfo(Path.Combine(fiApplication.DirectoryName, DEFAULT_MAPPINGFOLDE_NAME));
             this.HL7Mappings = new HL7Mappings(di, MAPPINGFILE_EXT);  // Leser inn mappinger som er listet i Properties.Settings.Default
 
-
-
-
-            SetSelectedMappingFromDefaultProperties();
+            SetSelectedMappingFromSettingsProperties();
         }
+
 
         public void ImportHL7MsgFile()
         {
