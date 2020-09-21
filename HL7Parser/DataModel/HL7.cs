@@ -112,6 +112,9 @@ namespace HL7Viewer.DataModel
             DirectoryInfo di = new DirectoryInfo(Path.Combine(fiApplication.DirectoryName, DEFAULT_MAPPINGFOLDE_NAME));
             this.HL7Mappings = new HL7Mappings(di, MAPPINGFILE_EXT);  // Leser inn mappinger som er listet i Properties.Settings.Default
 
+
+
+
             SetSelectedMappingFromDefaultProperties();
         }
 

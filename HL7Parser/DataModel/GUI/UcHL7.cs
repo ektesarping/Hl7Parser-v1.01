@@ -68,7 +68,10 @@ namespace HL7Viewer.DataModel.GUI
         public UcHL7()
         {
             InitializeComponent();
-            //SkjulTomme = false; // initiell verdi
+
+            this._HL7 = new HL7();
+
+            this.PopulateCboMappings();
 
 
             // -- Initialiserer status for checkboxer --

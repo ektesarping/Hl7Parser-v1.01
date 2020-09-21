@@ -19,8 +19,8 @@ namespace HL7Viewer
         public FormHL7Viewer()
         {
             InitializeComponent();
-            ucHL7._HL7 = new HL7();
-            ucHL7.PopulateCboMappings();
+            //ucHL7._HL7 = new HL7();
+            //ucHL7.PopulateCboMappings();
 
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
