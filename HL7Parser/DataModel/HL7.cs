@@ -14,7 +14,7 @@ namespace HL7Viewer.DataModel
     public class HL7
     {
         // **************************************
-        public static bool DEBUG_GLOBAL = true;
+        public static bool DEBUG_GLOBAL = false;
         // **************************************
 
 
@@ -81,8 +81,6 @@ namespace HL7Viewer.DataModel
         public HL7SegmentCategories _HL7SegmentCategories { get; set; } = new HL7SegmentCategories();
 
         public FileInfo MsgFile { get; set; }
-
-
 
         public string Content { get; set; }
 

@@ -361,7 +361,7 @@ namespace HL7Viewer.DataModel.GUI
             {
                 if (childnode._HL7Segment != null)
                 {
-                    if (childnode._HL7Segment.CollapsedDefault)
+                    if (childnode._HL7Segment.CollapsedDefault && chkNormalVisning.Checked)
                     { childnode.Collapse(); }
                     else
                     { childnode.Expand(); }
@@ -579,8 +579,8 @@ namespace HL7Viewer.DataModel.GUI
 
         private void kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string str = String.Empty;
-            str = _HL7.MappingSelected.ToReport();
+            string str = _HL7.MappingSelected.ToReportHeading();
+            str += _HL7.MappingSelected.ToReport();
             Clipboard.SetText(str);
         }
 

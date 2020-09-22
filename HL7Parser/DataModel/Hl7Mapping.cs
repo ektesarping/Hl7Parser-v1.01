@@ -232,9 +232,15 @@ namespace HL7Viewer.DataModel
         {
             return this.DisplayName;
         }
+
+        public string ToReportHeading()
+        {
+            return "SectionName" + "\t" + "Level 1" + "\t" + "Level 2" + "\t" + "CollapseDefault" + "\t" + "Fieldname";
+        }
+
         public string ToReport()
         {
-            return this.Name + "\r\n" + this.Hl7MappingSections.ToString();
+            return this.Name + "\r\n" + this.Hl7MappingSections.ToReport();
         }
 
         public int CompareTo(object obj)

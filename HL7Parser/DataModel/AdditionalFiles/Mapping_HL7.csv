@@ -3,7 +3,7 @@
 
 // -- Display name vises i boksen som velger meldingstype --
 DisplayName	Røntgensvar
-MSH	0	0	Y	-- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
+MSH	0	0		-- Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
 MSH	1	0	Y	Field Separator					
 MSH	2	0	Y	Encoding Characters					
 MSH	3	0	Y	Sending Application					

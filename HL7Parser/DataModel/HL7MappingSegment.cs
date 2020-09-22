@@ -99,7 +99,13 @@ namespace HL7Viewer.DataModel
 
         public string ToReport()
         {
-            string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L1.ToString() + "\t" + this.SegmentName + "\t" + SegmentName;
+            string str = this.SectionName + "\t" + this.Index_L1.ToString() + "\t" + this.Index_L2.ToString() + "\t";
+            if (this.CollapsedDefault)
+            {
+                str += "CollapseDefault";
+            }
+
+            str += "\t" + this.CollapsedDefault.ToString() + "\t" + SegmentName;
             foreach (HL7MappingSegment child in this.SubSegments)
             {
                 str += "\r\n" + child.ToReport();

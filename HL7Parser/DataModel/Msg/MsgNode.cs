@@ -112,8 +112,6 @@ namespace HL7Viewer.DataModel.Msg
         /// Oppretter subnode nivå 1. Setter ParentNode og legger til i Parentnode.Children.
         /// </summary>
         /// <param name="separator"></param>
-        /// <param name="useFirstFieldAsName"></param>
-        /// <param name="trimLastCharacter">Fjerner linefeed char i slutten av stringen.</param>
         /// <returns></returns>
         public void CreateChildNodes_L1(char[] separator/*, bool useFirstFieldAsName*/) //, bool trimLastCharacter = false)
         {
@@ -137,7 +135,7 @@ namespace HL7Viewer.DataModel.Msg
 
                 if (strNode.Length > 0)
                 {
-                    /// -- Fjerner siste char hvis den er \r ( halvparten av CR / linjeskift ) --
+                    /// -- Fjerner siste char hvis den er \r (halvparten av CR / linjeskift ) --
                     string tmpForDebuggingSlettes = (strNode.Substring(strNode.Length - 1, 1));
                     //string strNodeTrimmed = strNode;
                     if (strNode.Substring(strNode.Length - 1, 1) == "\r")
