@@ -193,55 +193,7 @@ namespace HL7Viewer.DataModel.GUI
                 }
             }
         }
-
-        #region -- Manage radiobuttons for visning av tomme noder --
-        //public enum Visningsmodus
-        //{
-        //    VisAlle = 0,
-        //    Normalvisning = 1,
-        //    SkjulTomme = 2
-        //}
-
-
-        //public Visningsmodus _Visningsmodus { get; set; }
-
-
-        //private void VisningsModusPropertyRead()
-        //{
-        //    if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.Normalvisning)
-        //    {
-        //        _Visningsmodus = Visningsmodus.Normalvisning;
-        //        if (!rbNormalvisning.Checked)
-        //        {
-        //            rbNormalvisning.Checked = true;
-        //        }
-        //    }
-        //    else if (Properties.Settings.Default.Visningsmodus == (int)Visningsmodus.SkjulTomme)
-        //    {
-        //        _Visningsmodus = Visningsmodus.SkjulTomme;
-        //        if (!rbSkjulTommeNoder.Checked)
-        //        {
-        //            rbSkjulTommeNoder.Checked = true;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        _Visningsmodus = Visningsmodus.VisAlle;
-        //        if (!rbVisAlle.Checked)
-        //        {
-        //            rbVisAlle.Checked = true;
-        //        }
-        //    }
-        //}
-
-        //private void VisningsModusPropertyWrite()
-        //{
-        //    Properties.Settings.Default.Visningsmodus = (int)_Visningsmodus;
-        //}
-
-
-        #endregion -- Manage radiobuttons for visning av tomme noder --
-
+           
 
         #region -- Populate --
         public void Populate(HL7SegmentCategories _hL7SegmentCategories)
