@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHL7Viewer));
             this.ucHL7 = new HL7Viewer.DataModel.GUI.UcHL7();
             this.SuspendLayout();
             // 
@@ -39,10 +40,8 @@
             this.ucHL7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucHL7.Location = new System.Drawing.Point(0, 0);
             this.ucHL7.Name = "ucHL7";
-            //this.ucHL7.Normalvisning = false;
             this.ucHL7.RootnodeText = null;
             this.ucHL7.Size = new System.Drawing.Size(494, 321);
-            //this.ucHL7.SkjulTomme = false;
             this.ucHL7.TabIndex = 0;
             // 
             // FormHL7Viewer
@@ -50,6 +49,7 @@
             this.AllowDrop = true;
             this.ClientSize = new System.Drawing.Size(494, 321);
             this.Controls.Add(this.ucHL7);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormHL7Viewer";
             this.Text = "Hemit HL7 viewer";
             this.ResumeLayout(false);
