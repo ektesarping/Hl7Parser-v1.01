@@ -33,6 +33,9 @@
             this.contextMenuStripTreeview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyNavnOgVerdiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemExpandSubnodes = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCollapseSubnodes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripHL7 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.åpneHL7FilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,23 +69,45 @@
             // 
             this.contextMenuStripTreeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem,
-            this.copyNavnOgVerdiToolStripMenuItem});
+            this.copyNavnOgVerdiToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemExpandSubnodes,
+            this.toolStripMenuItemCollapseSubnodes});
             this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
-            this.contextMenuStripTreeview.Size = new System.Drawing.Size(186, 48);
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 120);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
             this.copyToolStripMenuItem.Text = "Kopier Verdi";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // copyNavnOgVerdiToolStripMenuItem
             // 
             this.copyNavnOgVerdiToolStripMenuItem.Name = "copyNavnOgVerdiToolStripMenuItem";
-            this.copyNavnOgVerdiToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.copyNavnOgVerdiToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
             this.copyNavnOgVerdiToolStripMenuItem.Text = "Kopier Navn og Verdi";
             this.copyNavnOgVerdiToolStripMenuItem.Click += new System.EventHandler(this.copyNavnOgVerdiToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(268, 6);
+            // 
+            // toolStripMenuItemExpandSubnodes
+            // 
+            this.toolStripMenuItemExpandSubnodes.Name = "toolStripMenuItemExpandSubnodes";
+            this.toolStripMenuItemExpandSubnodes.Size = new System.Drawing.Size(271, 22);
+            this.toolStripMenuItemExpandSubnodes.Text = "Ekspander noder under valgte node";
+            this.toolStripMenuItemExpandSubnodes.Click += new System.EventHandler(this.toolStripMenuItemExpandSubnodes_Click);
+            // 
+            // toolStripMenuItemCollapseSubnodes
+            // 
+            this.toolStripMenuItemCollapseSubnodes.Name = "toolStripMenuItemCollapseSubnodes";
+            this.toolStripMenuItemCollapseSubnodes.Size = new System.Drawing.Size(271, 22);
+            this.toolStripMenuItemCollapseSubnodes.Text = "Slå sammen noder under valgte node";
+            this.toolStripMenuItemCollapseSubnodes.Click += new System.EventHandler(this.toolStripMenuItemCollapseSubnodes_Click);
             // 
             // menuStripHL7
             // 
@@ -221,5 +246,8 @@
         private System.Windows.Forms.ComboBox cboMappingFiles;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kopierMappingsegmenterTilUtklippstavleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExpandSubnodes;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCollapseSubnodes;
     }
 }

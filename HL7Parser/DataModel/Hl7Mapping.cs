@@ -68,6 +68,12 @@ namespace HL7Viewer.DataModel
 
         public void ImportMapping(FileInfo fi)
         {
+            if (!fi.Exists)
+            {
+                MessageBox.Show("Mappingfilen (oversikt over feltnavn):\r\n" + fi.FullName + "\r\nikke funnet. Ignorer mappingen", "Innlesing av mapping fil feilet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             string str = String.Empty;
             try
             {

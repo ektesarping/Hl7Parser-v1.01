@@ -540,5 +540,17 @@ namespace HL7Viewer.DataModel.GUI
         {
             SelectedTreenode = (TreenodeHL7Base)tvHL7.SelectedNode;
         }
+
+        private void toolStripMenuItemExpandSubnodes_Click(object sender, EventArgs e)
+        {
+            TreeNode nodeTmp = tvHL7.SelectedNode;
+            nodeTmp.ExpandAll();
+        }
+
+        private void toolStripMenuItemCollapseSubnodes_Click(object sender, EventArgs e)
+        {
+            TreeNode nodeTmp = tvHL7.SelectedNode;
+            nodeTmp.Collapse(false);
+        }
     }
 }
