@@ -47,6 +47,7 @@
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
+            this.fjernMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +75,7 @@
             this.toolStripMenuItemExpandSubnodes,
             this.toolStripMenuItemCollapseSubnodes});
             this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
-            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 120);
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 98);
             // 
             // copyToolStripMenuItem
             // 
@@ -163,7 +164,8 @@
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem});
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem,
+            this.fjernMappingToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
@@ -208,6 +210,13 @@
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // fjernMappingToolStripMenuItem
+            // 
+            this.fjernMappingToolStripMenuItem.Name = "fjernMappingToolStripMenuItem";
+            this.fjernMappingToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
+            this.fjernMappingToolStripMenuItem.Text = "Fjern mapping";
+            this.fjernMappingToolStripMenuItem.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem_Click);
+            // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,5 +258,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExpandSubnodes;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCollapseSubnodes;
+        private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem;
     }
 }

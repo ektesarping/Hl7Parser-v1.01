@@ -59,6 +59,12 @@
     <Compile Include="DataModel\GUI\UcHL7.Designer.cs">
       <DependentUpon>UcHL7.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\GUI\UcMappingList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataModel\GUI\UcMappingList.Designer.cs">
+      <DependentUpon>UcMappingList.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\HL7.cs" />
     <Compile Include="DataModel\HL7Mappings.cs" />
     <Compile Include="DataModel\Hl7MappingSection.cs" />
@@ -85,6 +91,9 @@
     <EmbeddedResource Include="DataModel\GUI\UcHL7.resx">
       <DependentUpon>UcHL7.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataModel\GUI\UcMappingList.resx">
+      <DependentUpon>UcMappingList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormHL7Viewer.resx">
       <DependentUpon>FormHL7Viewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +110,7 @@
     <None Include="DataModel\AdditionalFiles\Eksempel.HL7" />
     <None Include="DataModel\AdditionalFiles\HL7 Parameterlist 200225.xlsx" />
     <None Include="DataModel\AdditionalFiles\Mapping_HL7.csv" />
+    <None Include="Properties\DataSources\HL7Viewer.DataModel.HL7Mappings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -552,5 +552,14 @@ namespace HL7Viewer.DataModel.GUI
             TreeNode nodeTmp = tvHL7.SelectedNode;
             nodeTmp.Collapse(false);
         }
+
+        UcMappingList ucMappingList = new UcMappingList();
+        private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Controls.Add(ucMappingList);
+            ucMappingList.Location = new Point(40, 40);
+            ucMappingList.Show();
+            ucMappingList.BringToFront();
+        }
     }
 }
