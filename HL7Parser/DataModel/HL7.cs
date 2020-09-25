@@ -94,7 +94,7 @@ namespace HL7Viewer.DataModel
         private const string MAPPINGFILE_EXT = ".csv";
         #endregion -- Default settings --
 
-        private char[] SEPARATOR_LEVEL_0 = new char[] { '\n' };
+        private char[] SEPARATOR_LEVEL_0 = new char[] { '\n', '\r' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
         private char[] SEPARATOR_LEVEL_2 = new char[] { '^' }; //, '~' };
         private char[] SEPARATOR_LEVEL_3_REPEATING_FIELD = new char[] { '~' };
