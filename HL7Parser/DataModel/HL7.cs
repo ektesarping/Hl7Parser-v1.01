@@ -125,7 +125,7 @@ namespace HL7Viewer.DataModel
             }
             else
             {
-                MessageBox.Show("Sist åpnede meldingsfil ikke funnet.\r\n" + Properties.Settings.Default.MsgFilename, "Åpne HL7 meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              //MessageBox.Show("Sist åpnede meldingsfil ikke funnet.\r\n" + Properties.Settings.Default.MsgFilename, "Åpne HL7 meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

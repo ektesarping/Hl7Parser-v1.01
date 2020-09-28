@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.dgvMappings = new System.Windows.Forms.DataGridView();
             this.ColBtnRemove = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.fjernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.fjernMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.versionInfoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileInfoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,7 +41,7 @@
             this.hL7MappingsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.hL7MappingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMappings)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hL7MappingsBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hL7MappingsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +59,7 @@
             this.displayNameDataGridViewTextBoxColumn,
             this.mappingFileFullPathDataGridViewTextBoxColumn,
             this.ColBtnRemove});
-            this.dgvMappings.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgvMappings.ContextMenuStrip = this.contextMenuStrip2;
             this.dgvMappings.DataSource = this.hL7MappingsBindingSource1;
             this.dgvMappings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMappings.Location = new System.Drawing.Point(0, 0);
@@ -69,6 +69,7 @@
             this.dgvMappings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMappings.Size = new System.Drawing.Size(636, 173);
             this.dgvMappings.TabIndex = 1;
+            this.dgvMappings.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMappings_DataError);
             // 
             // ColBtnRemove
             // 
@@ -79,19 +80,19 @@
             this.ColBtnRemove.Text = "Fjern";
             this.ColBtnRemove.Width = 79;
             // 
-            // contextMenuStrip1
+            // contextMenuStrip2
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fjernToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 26);
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fjernMappingToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(152, 26);
             // 
-            // fjernToolStripMenuItem
+            // fjernMappingToolStripMenuItem
             // 
-            this.fjernToolStripMenuItem.Name = "fjernToolStripMenuItem";
-            this.fjernToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.fjernToolStripMenuItem.Text = "Fjern";
-            this.fjernToolStripMenuItem.Click += new System.EventHandler(this.fjernToolStripMenuItem_Click);
+            this.fjernMappingToolStripMenuItem.Name = "fjernMappingToolStripMenuItem";
+            this.fjernMappingToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.fjernMappingToolStripMenuItem.Text = "Fjern mapping";
+            this.fjernMappingToolStripMenuItem.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem_Click);
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -150,7 +151,7 @@
             this.Name = "FormRemoveMapping";
             this.Text = "FormRemoveMapping";
             ((System.ComponentModel.ISupportInitialize)(this.dgvMappings)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hL7MappingsBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hL7MappingsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -168,7 +169,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColBtnRemove;
         private System.Windows.Forms.BindingSource hL7MappingsBindingSource1;
         private System.Windows.Forms.BindingSource hL7MappingsBindingSource;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fjernToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem;
     }
 }

@@ -14,7 +14,7 @@ namespace HL7Viewer.DataModel.GUI
     {
         public HL7Mappings _Hl7Mappings
         {
-            get 
+            get
             {
                 return (HL7Mappings)this.dgvMappings.DataSource;
             }
@@ -31,14 +31,76 @@ namespace HL7Viewer.DataModel.GUI
             dgvMappings.Refresh();
         }
 
-        private void fjernToolStripMenuItem_Click(object sender, EventArgs e)
+        private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            List<DataGridViewRow> rowsToRemove = new List<DataGridViewRow>();
             foreach (DataGridViewRow row in dgvMappings.SelectedRows)
             {
-                string filename = row.Cells[2].FormattedValue.ToString();
-                Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
-                _Hl7Mappings.Remove(mappingToRemove);
+                rowsToRemove.Add(row);
             }
+
+            
+
+            try
+            {
+                foreach (DataGridViewRow row in rowsToRemove)  // dgvMappings.SelectedRows)
+                {
+                    string filename = row.Cells[2].FormattedValue.ToString();
+                    Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
+                    _Hl7Mappings.Remove(mappingToRemove);
+                    //dgvMappings.Rows.Remove(row);
+                }
+                dgvMappings.DataSource = null;
+                dgvMappings.DataSource = _Hl7Mappings;
+            }
+            catch (Exception ex)
+            {
+                int y = 0;
+            }
+
+            this.InitializeComponent();
+            dgvMappings.Refresh();
+
+            //dgvMappings.DataSource = null;
+            //foreach (DataGridViewRow row in rowsToRemove)
+            //{
+            //    string filename = row.Cells[2].FormattedValue.ToString();
+            //    Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
+            //    _Hl7Mappings.Remove(mappingToRemove);
+            //}
+
+            //try
+            //{
+            //    for (int i = dgvMappings.SelectedRows.Count - 1; i >= 0; i--)
+            //    {
+            //        string filename = dgvMappings.SelectedRows[i].Cells[2].FormattedValue.ToString();
+            //        Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
+            //        _Hl7Mappings.Remove(mappingToRemove);
+            //        dgvMappings.SelectedRows.
+            //    }
+            //}
+            //catch (DataException ex)
+            //{
+
+            //}
+
+            //foreach (DataGridViewRow row in dgvMappings.SelectedRows)
+            //{
+            //    string filename = row.Cells[2].FormattedValue.ToString();
+            //    Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
+            //    _Hl7Mappings.Remove(mappingToRemove);
+            //}
+        }
+
+
+        private void dgvMappings_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            //dgvMappings.Refresh(); // Make sure this comes first
+            //dgvMappings.Parent.Refresh(); // Make sure this comes second
+            dgvMappings.DataSource = this.hL7MappingsBindingSource1;
+            //dgvMappings.DataBind();
+            dgvMappings.Refresh();
         }
     }
 }
