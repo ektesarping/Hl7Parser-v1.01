@@ -450,7 +450,7 @@ namespace HL7Viewer.DataModel.GUI
             }
         }
 
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copyValueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -461,7 +461,8 @@ namespace HL7Viewer.DataModel.GUI
                     HL7MappingSegment mappingSegment = selectedNode._HL7Segment;
                     if (mappingSegment != null)
                     {
-                        string value = mappingSegment.SegmentName;
+                        //string value = mappingSegment.SegmentName;
+                        string value = selectedNode.MsgNode.Value;
                         if (value != null)
                         {
                             Clipboard.SetText(value);
@@ -553,13 +554,22 @@ namespace HL7Viewer.DataModel.GUI
             nodeTmp.Collapse(false);
         }
 
-        UcMappingList ucMappingList = new UcMappingList();
+      //  UcMappingList ucMappingList = new UcMappingList();
+      
         private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Controls.Add(ucMappingList);
-            ucMappingList.Location = new Point(40, 40);
-            ucMappingList.Show();
-            ucMappingList.BringToFront();
+            //if (!this.Controls.Contains(ucMappingList))
+            //{
+            //    this.Controls.Add(ucMappingList);
+            //}
+            //ucMappingList._HltMappings = _HL7.HL7Mappings;
+            //ucMappingList.Location = new Point(40, 40);
+            //ucMappingList.Show();
+            //ucMappingList.BringToFront();
+
+            FormRemoveMapping formRemoveMapping = new FormRemoveMapping(_HL7.HL7Mappings);
+            formRemoveMapping.Show();
+
         }
     }
 }

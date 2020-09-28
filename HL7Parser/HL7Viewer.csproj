@@ -53,6 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\GUI\FormRemoveMapping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataModel\GUI\FormRemoveMapping.Designer.cs">
+      <DependentUpon>FormRemoveMapping.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\GUI\UcHL7.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DataModel\GUI\FormRemoveMapping.resx">
+      <DependentUpon>FormRemoveMapping.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataModel\GUI\UcHL7.resx">
       <DependentUpon>UcHL7.cs</DependentUpon>
     </EmbeddedResource>

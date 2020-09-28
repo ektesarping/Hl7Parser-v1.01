@@ -119,7 +119,14 @@ namespace HL7Viewer.DataModel
 
         public void ImportHL7MsgFile()
         {
-            ImportHL7MsgFile(this.MsgFile);
+            if (this.MsgFile != null)
+            {
+                ImportHL7MsgFile(this.MsgFile);
+            }
+            else
+            {
+                MessageBox.Show("Sist åpnede meldingsfil ikke funnet.\r\n" + Properties.Settings.Default.MsgFilename, "Åpne HL7 meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
 

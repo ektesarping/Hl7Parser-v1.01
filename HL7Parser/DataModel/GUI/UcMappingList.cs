@@ -12,10 +12,23 @@ namespace HL7Viewer.DataModel.GUI
 {
     public partial class UcMappingList : UserControl
     {
+
+
+
         public UcMappingList()
         {
             InitializeComponent();
+           // this.dgvMappings.DataSource = mappings;
         }
+
+
+
+        private void Populate()
+        {
+            //this.dgvMappings.DataSource = mappings; // Ikke nødv. Satt i property.
+
+        }
+            
 
         private void btnClose_Click(object sender, EventArgs e)
         {

@@ -44,10 +44,10 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fjernMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
-            this.fjernMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +58,7 @@
             this.tvHL7.ContextMenuStrip = this.contextMenuStripTreeview;
             this.tvHL7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvHL7.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tvHL7.HotTracking = true;
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
             this.tvHL7.Size = new System.Drawing.Size(563, 390);
@@ -82,7 +83,7 @@
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
             this.copyToolStripMenuItem.Text = "Kopier Verdi";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyValueToolStripMenuItem_Click);
             // 
             // copyNavnOgVerdiToolStripMenuItem
             // 
@@ -177,6 +178,13 @@
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Text = "Kopier Mappingsegmenter til utklippstavle";
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Click += new System.EventHandler(this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click);
             // 
+            // fjernMappingToolStripMenuItem
+            // 
+            this.fjernMappingToolStripMenuItem.Name = "fjernMappingToolStripMenuItem";
+            this.fjernMappingToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
+            this.fjernMappingToolStripMenuItem.Text = "Fjern mapping";
+            this.fjernMappingToolStripMenuItem.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem_Click);
+            // 
             // chkSkjulTomme
             // 
             this.chkSkjulTomme.AutoSize = true;
@@ -209,13 +217,6 @@
             this.cboMappingFiles.Size = new System.Drawing.Size(232, 21);
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // fjernMappingToolStripMenuItem
-            // 
-            this.fjernMappingToolStripMenuItem.Name = "fjernMappingToolStripMenuItem";
-            this.fjernMappingToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
-            this.fjernMappingToolStripMenuItem.Text = "Fjern mapping";
-            this.fjernMappingToolStripMenuItem.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem_Click);
             // 
             // UcHL7
             // 

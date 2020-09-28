@@ -167,5 +167,14 @@ namespace HL7Viewer.DataModel
             }
             return null;
         }
+
+        public void Remove(string fullPath)
+        {
+            Hl7Mapping mappingTmp =  this.Get(fullPath);
+            if (mappingTmp != null)
+            {
+                this.Remove(mappingTmp);
+            }
+        }
     }
 }
