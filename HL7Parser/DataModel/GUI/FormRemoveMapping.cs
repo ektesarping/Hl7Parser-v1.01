@@ -28,39 +28,87 @@ namespace HL7Viewer.DataModel.GUI
         {
             InitializeComponent();
             this._Hl7Mappings = hl7Mappings;
-            dgvMappings.Refresh();
+            //dgvMappings.Refresh();
+            Populate();
         }
+
+
+        private const int COL_DISPLAYNAME = 0;
+        private const int COL_FILENAME = 1;
+        private const int COL_CHKBOX = 2;
+
+
+        public void Populate()
+        {
+
+            dgvMappings.Rows.Clear();
+            foreach (Hl7Mapping mapping in this._Hl7Mappings)
+            {
+                DataGridViewRow row = new DataGridViewRow();
+                row.Tag = mapping;
+                row.Cells[COL_DISPLAYNAME].Value = mapping.DisplayName;
+                row.Cells[COL_FILENAME].Value = mapping.MappingFileFullPath;
+                dgvMappings.Rows.Add(row);
+            }
+            dgvMappings.RefreshEdit ();
+        }
+
 
         private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            List<DataGridViewRow> rowsToRemove = new List<DataGridViewRow>();
-            foreach (DataGridViewRow row in dgvMappings.SelectedRows)
+            for (int i = dgvMappings.Rows.Count - 1; i >= 0; i--)
             {
-                rowsToRemove.Add(row);
-            }
+                DataGridViewRow row = dgvMappings.Rows[i];
 
-            
-
-            try
-            {
-                foreach (DataGridViewRow row in rowsToRemove)  // dgvMappings.SelectedRows)
+                bool tmpChk = (bool)row.Cells[COL_CHKBOX].Value;
+                if ((bool) row.Cells[COL_CHKBOX].Value == true)
                 {
-                    string filename = row.Cells[2].FormattedValue.ToString();
-                    Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
-                    _Hl7Mappings.Remove(mappingToRemove);
-                    //dgvMappings.Rows.Remove(row);
+                    Hl7Mapping mappingToRemove = (Hl7Mapping)row.Tag;
+                    dgvMappings.Rows.Remove(row);
                 }
-                dgvMappings.DataSource = null;
-                dgvMappings.DataSource = _Hl7Mappings;
-            }
-            catch (Exception ex)
-            {
-                int y = 0;
             }
 
-            this.InitializeComponent();
             dgvMappings.Refresh();
+
+            #region -- fjernet --
+            //    string filename = dgvMappings.SelectedRows[i].Cells[2].FormattedValue.ToString();
+            //Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
+            //_Hl7Mappings.Remove(mappingToRemove);
+            //dgvMappings.SelectedRows.
+            //}
+
+
+
+
+            //List<DataGridViewRow> rowsToRemove = new List<DataGridViewRow>();
+            //foreach (DataGridViewRow row in dgvMappings.SelectedRows)
+            //{
+            //    rowsToRemove.Add(row);
+            //}
+
+            //try
+            //{
+            //    foreach (DataGridViewRow row in rowsToRemove)  // dgvMappings.SelectedRows)
+            //    {
+            //        if (row.Cells.[COL_CHKBOX].Value == true)
+            //        { 
+
+
+            //        string filename = row.Cells[2].FormattedValue.ToString();
+            //        Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
+            //        _Hl7Mappings.Remove(mappingToRemove);
+            //        //dgvMappings.Rows.Remove(row);
+            //    }
+            //    dgvMappings.DataSource = null;
+            //    dgvMappings.DataSource = _Hl7Mappings;
+            //}
+            //catch (Exception ex)
+            //{
+            //    int y = 0;
+            //}
+
+            //this.InitializeComponent();
+
 
             //dgvMappings.DataSource = null;
             //foreach (DataGridViewRow row in rowsToRemove)
@@ -91,6 +139,7 @@ namespace HL7Viewer.DataModel.GUI
             //    Hl7Mapping mappingToRemove = this._Hl7Mappings.Get(filename);
             //    _Hl7Mappings.Remove(mappingToRemove);
             //}
+            #endregion -- fjernet --
         }
 
 

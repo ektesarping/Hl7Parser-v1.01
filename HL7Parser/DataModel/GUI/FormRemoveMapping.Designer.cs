@@ -30,16 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvMappings = new System.Windows.Forms.DataGridView();
-            this.ColBtnRemove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fjernMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.versionInfoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileInfoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.displayNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mappingFileFullPathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hL7MappingsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.hL7MappingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFileFullPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColChkSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMappings)).BeginInit();
             this.contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hL7MappingsBindingSource1)).BeginInit();
@@ -49,18 +46,13 @@
             // dgvMappings
             // 
             this.dgvMappings.AllowUserToAddRows = false;
-            this.dgvMappings.AutoGenerateColumns = false;
             this.dgvMappings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvMappings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMappings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
-            this.versionInfoDataGridViewTextBoxColumn,
-            this.fileInfoDataGridViewTextBoxColumn,
-            this.displayNameDataGridViewTextBoxColumn,
-            this.mappingFileFullPathDataGridViewTextBoxColumn,
-            this.ColBtnRemove});
+            this.colName,
+            this.colFileFullPath,
+            this.ColChkSelect});
             this.dgvMappings.ContextMenuStrip = this.contextMenuStrip2;
-            this.dgvMappings.DataSource = this.hL7MappingsBindingSource1;
             this.dgvMappings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMappings.Location = new System.Drawing.Point(0, 0);
             this.dgvMappings.Name = "dgvMappings";
@@ -70,15 +62,6 @@
             this.dgvMappings.Size = new System.Drawing.Size(636, 173);
             this.dgvMappings.TabIndex = 1;
             this.dgvMappings.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMappings_DataError);
-            // 
-            // ColBtnRemove
-            // 
-            this.ColBtnRemove.DataPropertyName = "Name";
-            this.ColBtnRemove.HeaderText = "Fjern mapping";
-            this.ColBtnRemove.Name = "ColBtnRemove";
-            this.ColBtnRemove.ReadOnly = true;
-            this.ColBtnRemove.Text = "Fjern";
-            this.ColBtnRemove.Width = 79;
             // 
             // contextMenuStrip2
             // 
@@ -94,46 +77,6 @@
             this.fjernMappingToolStripMenuItem.Text = "Fjern mapping";
             this.fjernMappingToolStripMenuItem.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem_Click);
             // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // versionInfoDataGridViewTextBoxColumn
-            // 
-            this.versionInfoDataGridViewTextBoxColumn.DataPropertyName = "VersionInfo";
-            this.versionInfoDataGridViewTextBoxColumn.HeaderText = "VersionInfo";
-            this.versionInfoDataGridViewTextBoxColumn.Name = "versionInfoDataGridViewTextBoxColumn";
-            this.versionInfoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.versionInfoDataGridViewTextBoxColumn.Width = 85;
-            // 
-            // fileInfoDataGridViewTextBoxColumn
-            // 
-            this.fileInfoDataGridViewTextBoxColumn.DataPropertyName = "FileInfo";
-            this.fileInfoDataGridViewTextBoxColumn.HeaderText = "FileInfo";
-            this.fileInfoDataGridViewTextBoxColumn.Name = "fileInfoDataGridViewTextBoxColumn";
-            this.fileInfoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.fileInfoDataGridViewTextBoxColumn.Width = 66;
-            // 
-            // displayNameDataGridViewTextBoxColumn
-            // 
-            this.displayNameDataGridViewTextBoxColumn.DataPropertyName = "DisplayName";
-            this.displayNameDataGridViewTextBoxColumn.HeaderText = "DisplayName";
-            this.displayNameDataGridViewTextBoxColumn.Name = "displayNameDataGridViewTextBoxColumn";
-            this.displayNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.displayNameDataGridViewTextBoxColumn.Width = 94;
-            // 
-            // mappingFileFullPathDataGridViewTextBoxColumn
-            // 
-            this.mappingFileFullPathDataGridViewTextBoxColumn.DataPropertyName = "MappingFileFullPath";
-            this.mappingFileFullPathDataGridViewTextBoxColumn.HeaderText = "MappingFileFullPath";
-            this.mappingFileFullPathDataGridViewTextBoxColumn.Name = "mappingFileFullPathDataGridViewTextBoxColumn";
-            this.mappingFileFullPathDataGridViewTextBoxColumn.ReadOnly = true;
-            this.mappingFileFullPathDataGridViewTextBoxColumn.Width = 127;
-            // 
             // hL7MappingsBindingSource1
             // 
             this.hL7MappingsBindingSource1.DataSource = typeof(HL7Viewer.DataModel.HL7Mappings);
@@ -141,6 +84,29 @@
             // hL7MappingsBindingSource
             // 
             this.hL7MappingsBindingSource.DataSource = typeof(HL7Viewer.DataModel.HL7Mappings);
+            // 
+            // colName
+            // 
+            this.colName.HeaderText = "Navn";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            this.colName.Width = 58;
+            // 
+            // colFileFullPath
+            // 
+            this.colFileFullPath.HeaderText = "Filnavn";
+            this.colFileFullPath.Name = "colFileFullPath";
+            this.colFileFullPath.ReadOnly = true;
+            this.colFileFullPath.Width = 66;
+            // 
+            // ColChkSelect
+            // 
+            this.ColChkSelect.DataPropertyName = "Name";
+            this.ColChkSelect.HeaderText = "Valg";
+            this.ColChkSelect.Name = "ColChkSelect";
+            this.ColChkSelect.ReadOnly = true;
+            this.ColChkSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColChkSelect.Width = 34;
             // 
             // FormRemoveMapping
             // 
@@ -161,15 +127,12 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvMappings;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn versionInfoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fileInfoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn displayNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mappingFileFullPathDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn ColBtnRemove;
         private System.Windows.Forms.BindingSource hL7MappingsBindingSource1;
         private System.Windows.Forms.BindingSource hL7MappingsBindingSource;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFileFullPath;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColChkSelect;
     }
 }
