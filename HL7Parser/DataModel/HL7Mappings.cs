@@ -44,25 +44,37 @@ namespace HL7Viewer.DataModel
         #endregion  -- Constructor --
 
 
+        public Hl7Mapping ImportMapping(FileInfo fi)
+        {
+            Hl7Mapping newMapping = new Hl7Mapping(fi);
+            //newMapping.ImportMapping(fi);
+            this.Add(newMapping);
+            return newMapping;
+        }
+
         public HL7Mappings ImportMappings()
         {
             // -- Importer mapping files ih fullpah for filene i Properties.Settings--
             string[] mappingfiles = Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
 
-            foreach (string fi in mappingfiles)
+            foreach (string strFi in mappingfiles)
             {
-                if (String.IsNullOrEmpty(fi))
+                if (String.IsNullOrEmpty(strFi))
                 {
                     continue;
                 }
-
-                Hl7Mapping hl7Mapping = new Hl7Mapping();
-                hl7Mapping.FileInfo = new System.IO.FileInfo(fi);
-                hl7Mapping.ImportMapping(hl7Mapping.FileInfo);
+                
+                FileInfo fi = new System.IO.FileInfo(strFi);
+                Hl7Mapping hl7Mapping = new Hl7Mapping(fi);
+                //hl7Mapping.ImportMapping(hl7Mapping.FileInfo);
 
                 if (hl7Mapping.FileInfo.Exists)
                 {
                     this.Add(hl7Mapping);
+                }
+                else
+                {
+                    MessageBox.Show("Mappingfilen ikke funnet\r\n" + fi.FullName, "Importer mapping", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -78,7 +90,7 @@ namespace HL7Viewer.DataModel
                         if (!this.Contains(fi))
                         {
                             Hl7Mapping mapping = new Hl7Mapping(fi);
-                            mapping.ImportMapping(fi);
+                            //mapping.ImportMapping(fi);
                             if (!this.Contains(fi))
                             {
                                 this.Add(mapping);

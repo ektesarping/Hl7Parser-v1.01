@@ -62,9 +62,9 @@ namespace HL7Viewer.DataModel.GUI
                     chkNormalVisning.Checked = value;
                     this.Repopulate();
                 }
-                
+
             }
-            
+
         }
 
 
@@ -75,7 +75,7 @@ namespace HL7Viewer.DataModel.GUI
         }
 
         public void PostInitialize()
-        { 
+        {
             this._HL7 = new HL7();
             _HL7.PostInitialize();
 
@@ -91,7 +91,7 @@ namespace HL7Viewer.DataModel.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kunne ikke åpne forrige meldingsfil.\r\n\nException\r\n" + ex.Message + "\r\n\nStacktrace\r\n" + ex.StackTrace , "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Kunne ikke åpne forrige meldingsfil.\r\n\nException\r\n" + ex.Message + "\r\n\nStacktrace\r\n" + ex.StackTrace, "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             this.PopulateCboMappings();
@@ -164,7 +164,7 @@ namespace HL7Viewer.DataModel.GUI
                     {
                         // -- Import mapping --
                         Hl7Mapping newMapping = new Hl7Mapping(fi);
-                        newMapping.ImportMapping();
+                        //newMapping.ImportMapping();
 
                         this._HL7.HL7Mappings.Add(newMapping);
                         // -- Setter den innleste mappingen som selected --
@@ -193,7 +193,7 @@ namespace HL7Viewer.DataModel.GUI
                 }
             }
         }
-           
+
 
         #region -- Populate --
         public void Populate(HL7SegmentCategories _hL7SegmentCategories)
@@ -442,7 +442,17 @@ namespace HL7Viewer.DataModel.GUI
                 string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
                 fileName = droppedFiles[0];
                 FileInfo fi = new FileInfo(fileName);
-                OpenMessageFile(fi);
+
+                if (fi.Extension.ToLower() == ".csv")
+                {
+                    Hl7Mapping newMapping = this._HL7.HL7Mappings.ImportMapping(fi);
+                    this._HL7.MappingSelected = newMapping;
+                    PopulateCboMappings();
+                }
+                else
+                {
+                    OpenMessageFile(fi);
+                }
             }
             catch (Exception ex)
             {
@@ -554,8 +564,8 @@ namespace HL7Viewer.DataModel.GUI
             nodeTmp.Collapse(false);
         }
 
-      //  UcMappingList ucMappingList = new UcMappingList();
-      
+        //  UcMappingList ucMappingList = new UcMappingList();
+
         private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //if (!this.Controls.Contains(ucMappingList))

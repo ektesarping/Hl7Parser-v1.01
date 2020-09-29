@@ -58,13 +58,14 @@ namespace HL7Viewer.DataModel
         public Hl7Mapping(FileInfo fi) : this()
         {
             this.FileInfo = fi;
+            this.ImportMapping(fi);
         }
         #endregion  -- Constructor --
 
-        public void ImportMapping()
-        {
-            this.ImportMapping(this.FileInfo);
-        }
+        //public void ImportMapping()
+        //{
+        //    this.ImportMapping(this.FileInfo);
+        //}
 
         public void ImportMapping(FileInfo fi)
         {
@@ -81,6 +82,7 @@ namespace HL7Viewer.DataModel
                 {
                     HL7MappingSegment parentSegment = null;
                     _HL7Segments = new HL7MappingSegments();
+                    this.FileInfo = fi;
                     this.MappingFileFullPath = fi.FullName;
 
                     while (!sr.EndOfStream)
