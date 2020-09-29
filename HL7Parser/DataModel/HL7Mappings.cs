@@ -46,7 +46,6 @@ namespace HL7Viewer.DataModel
 
         public HL7Mappings ImportMappings()
         {
-
             // -- Importer mapping files ih fullpah for filene i Properties.Settings--
             string[] mappingfiles = Properties.Settings.Default.Mappingfiler.Split(MAPPING_FILE_SEPARATOR);
 
@@ -92,6 +91,15 @@ namespace HL7Viewer.DataModel
             //MappingFileFi = new FileInfo(Path.Combine(executableFi.DirectoryName, "Datamodel", MappingFileName));
             //MappingSelected.ImportMapping(MappingFileFi);
             return this;
+        }
+
+        public new void Remove(Hl7Mapping mapping)
+        {
+            if (this.Contains(mapping.FileInfo))
+            {
+                base.Remove(mapping);
+                SaveMappingsPropertyString();
+            }
         }
 
         public new void Add(Hl7Mapping mapping)
@@ -170,7 +178,7 @@ namespace HL7Viewer.DataModel
 
         public void Remove(string fullPath)
         {
-            Hl7Mapping mappingTmp =  this.Get(fullPath);
+            Hl7Mapping mappingTmp = this.Get(fullPath);
             if (mappingTmp != null)
             {
                 this.Remove(mappingTmp);
