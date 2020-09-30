@@ -581,5 +581,103 @@ namespace HL7Viewer.DataModel.GUI
             formRemoveMapping.Show();
 
         }
+
+        private void tvHL7_MouseMove(object sender, MouseEventArgs e)
+        {
+            //TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
+
+            //if (test == null)
+            //{
+            //    // MessageBox.Show("No tree node");
+            //    Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
+            //}
+            //else
+            //{
+            //    tvHL7.SelectedNode = test;
+            //    Console.WriteLine("Selected node: " + test.ToString());
+            //    tvHL7.Refresh();
+            //}
+        }
+
+        private void tvHL7_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    tvHL7.Focus();
+            //    TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
+
+            //    if (test == null)
+            //    {
+            //        // MessageBox.Show("No tree node");
+            //        Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
+            //    }
+            //    else
+            //    {
+            //        tvHL7.SelectedNode = test;
+            //        SelectedTreenode = (TreenodeHL7Base) test;
+            //        tvHL7.Refresh();
+            //        Console.WriteLine("Selected node: " + test.ToString());
+            //    }
+            //}
+        }
+
+        private void tvHL7_MouseClick(object sender, MouseEventArgs e)
+        {
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    tvHL7.Focus();
+            //    TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
+
+            //    if (test == null)
+            //    {
+            //        // MessageBox.Show("No tree node");
+            //        Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
+            //    }
+            //    else
+            //    {
+            //        tvHL7.SelectedNode = test;
+            //        SelectedTreenode = (TreenodeHL7Base)test;
+            //        tvHL7.Refresh();
+            //        Console.WriteLine("Selected node: " + test.ToString());
+            //    }
+            //}
+        }
+
+        private void tvHL7_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                tvHL7.Focus();
+                TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
+
+                if (test == null)
+                {
+                    // MessageBox.Show("No tree node");
+                    Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
+                }
+                else
+                {
+                    tvHL7.SelectedNode = test;
+                    SelectedTreenode = (TreenodeHL7Base)test;
+                    tvHL7.Refresh();
+                    Console.WriteLine("Selected node: " + test.ToString());
+                }
+            }
+        }
+
+        //private void tvHL7_MouseHover(object sender, EventArgs e)
+        //{
+        //    TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
+
+        //    if (test == null)
+        //    {
+        //        MessageBox.Show("No tree node");
+        //    }
+        //    else
+        //    {
+        //        tvHL7.SelectedNode = test;
+        //        tvHL7.Refresh();
+        //    }
+        //}
     }
 }

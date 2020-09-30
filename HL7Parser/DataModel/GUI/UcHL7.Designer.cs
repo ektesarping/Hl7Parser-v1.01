@@ -58,14 +58,18 @@
             this.tvHL7.ContextMenuStrip = this.contextMenuStripTreeview;
             this.tvHL7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvHL7.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tvHL7.HotTracking = true;
+            this.tvHL7.HideSelection = false;
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
             this.tvHL7.Size = new System.Drawing.Size(563, 390);
             this.tvHL7.TabIndex = 0;
             this.tvHL7.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvHL7_AfterSelect);
+            this.tvHL7.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvHL7_NodeMouseClick);
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
+            this.tvHL7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseClick);
+            this.tvHL7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseDown);
+            this.tvHL7.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseMove);
             // 
             // contextMenuStripTreeview
             // 
