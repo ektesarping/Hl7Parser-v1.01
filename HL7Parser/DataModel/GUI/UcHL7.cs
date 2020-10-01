@@ -105,7 +105,7 @@ namespace HL7Viewer.DataModel.GUI
             aTimer = new System.Timers.Timer(Properties.Settings.Default.SplashScreenDelay);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
 
             SplashScreenShow();
@@ -114,6 +114,7 @@ namespace HL7Viewer.DataModel.GUI
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             SplashScreenHide();
+            aTimer.Enabled = false;
             aTimer.Stop();
         }
 

@@ -96,7 +96,7 @@ namespace HL7Viewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
         public int SplashScreenDelay {
             get {
                 return ((int)(this["SplashScreenDelay"]));
