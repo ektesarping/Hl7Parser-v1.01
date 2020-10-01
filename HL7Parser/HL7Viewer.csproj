@@ -71,6 +71,12 @@
     <Compile Include="DataModel\GUI\UcMappingList.Designer.cs">
       <DependentUpon>UcMappingList.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\GUI\UcSplashScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataModel\GUI\UcSplashScreen.Designer.cs">
+      <DependentUpon>UcSplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\HL7.cs" />
     <Compile Include="DataModel\HL7Mappings.cs" />
     <Compile Include="DataModel\Hl7MappingSection.cs" />
@@ -102,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataModel\GUI\UcMappingList.resx">
       <DependentUpon>UcMappingList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataModel\GUI\UcSplashScreen.resx">
+      <DependentUpon>UcSplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormHL7Viewer.resx">
       <DependentUpon>FormHL7Viewer.cs</DependentUpon>

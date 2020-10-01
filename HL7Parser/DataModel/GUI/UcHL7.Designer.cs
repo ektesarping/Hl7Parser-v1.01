@@ -45,9 +45,11 @@
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetSplashscreenTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
+            this.visSplashScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -137,14 +139,14 @@
             // åpneHL7FilToolStripMenuItem
             // 
             this.åpneHL7FilToolStripMenuItem.Name = "åpneHL7FilToolStripMenuItem";
-            this.åpneHL7FilToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.åpneHL7FilToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.åpneHL7FilToolStripMenuItem.Text = "Åpne HL7 fil";
             this.åpneHL7FilToolStripMenuItem.Click += new System.EventHandler(this.åpneHL7FilToolStripMenuItem_Click);
             // 
             // fjernMappingToolStripMenuItem1
             // 
             this.fjernMappingToolStripMenuItem1.Name = "fjernMappingToolStripMenuItem1";
-            this.fjernMappingToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.fjernMappingToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             this.fjernMappingToolStripMenuItem1.Text = "Fjern mapping...";
             this.fjernMappingToolStripMenuItem1.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem1_Click);
             // 
@@ -174,7 +176,9 @@
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem});
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem,
+            this.resetSplashscreenTimerToolStripMenuItem,
+            this.visSplashScreenToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
@@ -185,6 +189,13 @@
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Text = "Kopier Mappingsegmenter til utklippstavle";
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Click += new System.EventHandler(this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click);
+            // 
+            // resetSplashscreenTimerToolStripMenuItem
+            // 
+            this.resetSplashscreenTimerToolStripMenuItem.Name = "resetSplashscreenTimerToolStripMenuItem";
+            this.resetSplashscreenTimerToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
+            this.resetSplashscreenTimerToolStripMenuItem.Text = "Reset Splashscreen timer";
+            this.resetSplashscreenTimerToolStripMenuItem.Click += new System.EventHandler(this.resetSplashscreenTimerToolStripMenuItem_Click);
             // 
             // chkSkjulTomme
             // 
@@ -218,6 +229,13 @@
             this.cboMappingFiles.Size = new System.Drawing.Size(232, 21);
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // visSplashScreenToolStripMenuItem
+            // 
+            this.visSplashScreenToolStripMenuItem.Name = "visSplashScreenToolStripMenuItem";
+            this.visSplashScreenToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
+            this.visSplashScreenToolStripMenuItem.Text = "Vis SplashScreen";
+            this.visSplashScreenToolStripMenuItem.Click += new System.EventHandler(this.visSplashScreenToolStripMenuItem_Click);
             // 
             // UcHL7
             // 
@@ -262,5 +280,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExpandSubnodes;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCollapseSubnodes;
         private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem resetSplashscreenTimerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem visSplashScreenToolStripMenuItem;
     }
 }

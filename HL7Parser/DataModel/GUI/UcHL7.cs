@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using HL7Viewer.DataModel.Msg;
+using System.Timers;
 
 namespace HL7Viewer.DataModel.GUI
 {
@@ -82,7 +83,95 @@ namespace HL7Viewer.DataModel.GUI
         {
             InitializeComponent();
             this.DebugMode = false;
+
+            if (!((Properties.Settings.Default.SplashScreenDisplayedDate.Year == DateTime.Now.Year) &&
+                (Properties.Settings.Default.SplashScreenDisplayedDate.Month == DateTime.Now.Month) &&
+                (Properties.Settings.Default.SplashScreenDisplayedDate.Day == DateTime.Now.Day)))
+            {
+                // -- Vis splash screen --
+                SetTimerSplashScreen();
+                Properties.Settings.Default.SplashScreenDisplayedDate = DateTime.Now;
+                Properties.Settings.Default.Save();
+            }
         }
+
+        #region --  Timer splash screen -- 
+        private System.Timers.Timer aTimer;
+        private UcSplashScreen ucSplashScreen;
+
+        private void SetTimerSplashScreen()
+        {
+            // Create a timer with a two second interval.
+            aTimer = new System.Timers.Timer(Properties.Settings.Default.SplashScreenDelay);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+
+            SplashScreenShow();
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            SplashScreenHide();
+            aTimer.Stop();
+        }
+
+        private void resetSplashscreenTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DateTime newDate = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0));
+            Properties.Settings.Default.SplashScreenDisplayedDate = newDate;
+            Properties.Settings.Default.Save();
+        }
+
+        private void visSplashScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTimerSplashScreen();
+        }
+
+        public void SplashScreenShow()
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(SplashScreenShow));
+                return;
+            }
+            else
+            {
+                ucSplashScreen = new UcSplashScreen();
+                this.Controls.Add(ucSplashScreen);
+                ucSplashScreen.Location = new Point(60, 60);
+                ucSplashScreen.Show();
+                ucSplashScreen.BringToFront();
+                ucSplashScreen.Refresh();
+                this.Refresh();
+            }
+        }
+
+
+        public void SplashScreenHide()
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(SplashScreenHide));
+                return;
+            }
+            else
+            {
+                ucSplashScreen.Hide();
+                if (this.Controls.Contains(ucSplashScreen))
+                {
+                    this.Controls.Remove(ucSplashScreen);
+                }
+            }
+        }
+
+
+        #endregion --  Timer splash screen -- 
+
+
+
+
 
         public void PostInitialize()
         {
@@ -594,5 +683,7 @@ namespace HL7Viewer.DataModel.GUI
                 this.DebugMode = !this.DebugMode;
             }
         }
+
+
     }
 }
