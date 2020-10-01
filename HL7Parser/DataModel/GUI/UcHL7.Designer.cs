@@ -64,13 +64,9 @@
             this.tvHL7.Size = new System.Drawing.Size(563, 390);
             this.tvHL7.TabIndex = 0;
             this.tvHL7.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvHL7_AfterSelect);
-            this.tvHL7.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvHL7_NodeMouseClick);
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
             this.tvHL7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvHL7_KeyDown);
-            this.tvHL7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseClick);
-            this.tvHL7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseDown);
-            this.tvHL7.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseMove);
             // 
             // contextMenuStripTreeview
             // 

@@ -74,9 +74,7 @@ namespace HL7Viewer.DataModel.GUI
                     chkNormalVisning.Checked = value;
                     this.Repopulate();
                 }
-
             }
-
         }
 
 
@@ -84,14 +82,12 @@ namespace HL7Viewer.DataModel.GUI
         {
             InitializeComponent();
             this.DebugMode = false;
-            //PostInitialize();
         }
 
         public void PostInitialize()
         {
             this._HL7 = new HL7();
             _HL7.PostInitialize();
-
 
             // -- Åpne sist brukte HL7 fil --
             try
@@ -574,16 +570,6 @@ namespace HL7Viewer.DataModel.GUI
             TreeNode nodeTmp = tvHL7.SelectedNode;
             nodeTmp.Collapse(false);
         }
-
-        //  UcMappingList ucMappingList = new UcMappingList();
-
-        //private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    FormRemoveMapping formRemoveMapping = new FormRemoveMapping(_HL7.HL7Mappings);
-        //    formRemoveMapping.Show();
-        //}
-
-    
 
         private void fjernMappingToolStripMenuItem1_Click(object sender, EventArgs e)
         {
