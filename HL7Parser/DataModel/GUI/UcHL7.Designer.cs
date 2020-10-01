@@ -63,7 +63,7 @@
             this.tvHL7.HideSelection = false;
             this.tvHL7.Location = new System.Drawing.Point(0, 24);
             this.tvHL7.Name = "tvHL7";
-            this.tvHL7.Size = new System.Drawing.Size(563, 390);
+            this.tvHL7.Size = new System.Drawing.Size(550, 390);
             this.tvHL7.TabIndex = 0;
             this.tvHL7.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvHL7_AfterSelect);
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
@@ -123,7 +123,7 @@
             this.debugToolStripMenuItem});
             this.menuStripHL7.Location = new System.Drawing.Point(0, 0);
             this.menuStripHL7.Name = "menuStripHL7";
-            this.menuStripHL7.Size = new System.Drawing.Size(563, 24);
+            this.menuStripHL7.Size = new System.Drawing.Size(550, 24);
             this.menuStripHL7.TabIndex = 2;
             this.menuStripHL7.Text = "menuStrip1";
             // 
@@ -133,21 +133,21 @@
             this.åpneHL7FilToolStripMenuItem,
             this.fjernMappingToolStripMenuItem1});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(31, 20);
+            this.fileToolStripMenuItem.Text = "Fil";
             // 
             // åpneHL7FilToolStripMenuItem
             // 
             this.åpneHL7FilToolStripMenuItem.Name = "åpneHL7FilToolStripMenuItem";
-            this.åpneHL7FilToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.åpneHL7FilToolStripMenuItem.Text = "Åpne HL7 fil";
+            this.åpneHL7FilToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.åpneHL7FilToolStripMenuItem.Text = "Åpne HL7 fil ...";
             this.åpneHL7FilToolStripMenuItem.Click += new System.EventHandler(this.åpneHL7FilToolStripMenuItem_Click);
             // 
             // fjernMappingToolStripMenuItem1
             // 
             this.fjernMappingToolStripMenuItem1.Name = "fjernMappingToolStripMenuItem1";
-            this.fjernMappingToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
-            this.fjernMappingToolStripMenuItem1.Text = "Fjern mapping...";
+            this.fjernMappingToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.fjernMappingToolStripMenuItem1.Text = "Fjern mapping ...";
             this.fjernMappingToolStripMenuItem1.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem1_Click);
             // 
             // editToolStripMenuItem
@@ -156,8 +156,8 @@
             this.kopierSegmenterTilClipboardToolStripMenuItem,
             this.limInnHL7FilFraClipboardToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.editToolStripMenuItem.Text = "Rediger";
             // 
             // kopierSegmenterTilClipboardToolStripMenuItem
             // 
@@ -200,7 +200,7 @@
             // chkSkjulTomme
             // 
             this.chkSkjulTomme.AutoSize = true;
-            this.chkSkjulTomme.Location = new System.Drawing.Point(138, 4);
+            this.chkSkjulTomme.Location = new System.Drawing.Point(149, 4);
             this.chkSkjulTomme.Name = "chkSkjulTomme";
             this.chkSkjulTomme.Size = new System.Drawing.Size(83, 17);
             this.chkSkjulTomme.TabIndex = 3;
@@ -211,7 +211,7 @@
             // chkNormalVisning
             // 
             this.chkNormalVisning.AutoSize = true;
-            this.chkNormalVisning.Location = new System.Drawing.Point(221, 4);
+            this.chkNormalVisning.Location = new System.Drawing.Point(232, 4);
             this.chkNormalVisning.Name = "chkNormalVisning";
             this.chkNormalVisning.Size = new System.Drawing.Size(92, 17);
             this.chkNormalVisning.TabIndex = 4;
@@ -224,9 +224,9 @@
             this.cboMappingFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboMappingFiles.FormattingEnabled = true;
-            this.cboMappingFiles.Location = new System.Drawing.Point(320, 2);
+            this.cboMappingFiles.Location = new System.Drawing.Point(330, 2);
             this.cboMappingFiles.Name = "cboMappingFiles";
-            this.cboMappingFiles.Size = new System.Drawing.Size(232, 21);
+            this.cboMappingFiles.Size = new System.Drawing.Size(209, 21);
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -248,7 +248,7 @@
             this.Controls.Add(this.tvHL7);
             this.Controls.Add(this.menuStripHL7);
             this.Name = "UcHL7";
-            this.Size = new System.Drawing.Size(563, 414);
+            this.Size = new System.Drawing.Size(550, 414);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UcHL7_KeyDown);
             this.contextMenuStripTreeview.ResumeLayout(false);

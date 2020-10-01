@@ -172,8 +172,6 @@ namespace HL7Viewer.DataModel.GUI
 
 
 
-
-
         public void PostInitialize()
         {
             this._HL7 = new HL7();
@@ -551,6 +549,8 @@ namespace HL7Viewer.DataModel.GUI
                 else
                 {
                     OpenMessageFile(fi);
+                    Properties.Settings.Default.MsgFilename = _HL7.MsgFile.FullName;
+                    Properties.Settings.Default.Save();
                 }
             }
             catch (Exception ex)
