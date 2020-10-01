@@ -94,6 +94,7 @@ namespace HL7Viewer.DataModel
         private const string MAPPINGFILE_EXT = ".csv";
         #endregion -- Default settings --
 
+        public static string LINEFEED = @"\r\n";
         private char[] SEPARATOR_LEVEL_0 = new char[] { '\n', '\r' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
         private char[] SEPARATOR_LEVEL_2 = new char[] { '^' }; //, '~' };

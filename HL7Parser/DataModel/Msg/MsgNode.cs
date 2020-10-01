@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -115,16 +116,28 @@ namespace HL7Viewer.DataModel.Msg
         /// <returns></returns>
         public void CreateChildNodes_L1(char[] separator/*, bool useFirstFieldAsName*/) //, bool trimLastCharacter = false)
         {
-            string[] strNodesLevel = this.SourceString.Split(separator);
+            string[] strNodesLevel = this.SourceString.TrimEnd().Split(separator);
             int indexsubnode = 0;
+
+            #region -- Mangler linefeeds. Legger inn linefeeds for å parse (forhåpentligvis) korrekt --
+            // Hvis det skal legges inn linefeed må det legges inn liste med lovlige section names, og søke etter [space]+[sectionname]+|
+            //if (strNodesLevel.Length == 1)
+            //{
+            //   string strTmp = SourceString.TrimEnd();
+            //    strTmp = strTmp.TrimStart();
+            //    strTmp = InsertLineFeed_L1(SourceString, separator.ToString());
+            //    strNodesLevel = strTmp.Split(separator);
+            //}
+            #endregion -- Mangler linefeeds
+
             foreach (string strNode in strNodesLevel)
             {
-                if (String.IsNullOrEmpty (strNode))
+                if (String.IsNullOrEmpty(strNode))
                 {
                     continue;
                 }
 
-                if (String. IsNullOrWhiteSpace(strNode))
+                if (String.IsNullOrWhiteSpace(strNode))
                 {
                     continue;
                 }
@@ -157,6 +170,51 @@ namespace HL7Viewer.DataModel.Msg
                 this.Children.Add(msgsubnode);
                 indexsubnode++;
             }
+        }
+
+
+        /// <summary>
+        /// Splitter opp string med [space]+[3 char section name]+separator
+        /// </summary>
+        /// <param name="strOriginal"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        private string InsertLineFeed_L1(string strOriginal, string separator)
+        {
+            string pattern = @"\s[A-Z]{3}[|]";
+            RegexOptions options = RegexOptions.Multiline;
+
+            bool finished = false;
+            int pos = 0;
+            string strRes = string.Empty;
+
+            while (!finished)
+            {
+                Match match = Regex.Match(strOriginal, pattern, options);
+
+                if (match.Index >= 0)
+                {
+                    strRes = ReplaceCharAtPos(strOriginal, match.Index, HL7.LINEFEED);
+                }
+                else
+                {
+                    finished = true;
+                }
+            }
+            return strRes;
+        }
+
+        private string ReplaceCharAtPos(string strOriginal, int pos, string replacementChar)
+        {
+            if ((pos <= 0) || (pos > strOriginal.Length + 1))
+            {
+                return strOriginal;
+            }
+
+            string str1 = strOriginal.Substring(0, pos);
+            string str2 = strOriginal.Substring(pos + 1);
+            string strRes = str1 + replacementChar + str2;
+            return strRes;
         }
 
 

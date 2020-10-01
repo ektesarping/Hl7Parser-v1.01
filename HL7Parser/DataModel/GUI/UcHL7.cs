@@ -43,6 +43,18 @@ namespace HL7Viewer.DataModel.GUI
             }
         }
 
+        private bool _debug;
+        public bool DebugMode
+        {
+            get { return _debug; }
+            set
+            {
+                _debug = value;
+                debugToolStripMenuItem.Visible = _debug;
+                this.Refresh();
+            }
+        }
+
 
         /// <summary>
         /// Normalvisning. Collapser noder som er merket i mppingfilen.
@@ -71,6 +83,7 @@ namespace HL7Viewer.DataModel.GUI
         public UcHL7()
         {
             InitializeComponent();
+            this.DebugMode = false;
             //PostInitialize();
         }
 
@@ -488,8 +501,6 @@ namespace HL7Viewer.DataModel.GUI
             {
                 MessageBox.Show("En feil oppstod. Prøv igjen.", "Kopiere Verdi til utklippstavlen", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-
         }
 
         private void copyNavnOgVerdiToolStripMenuItem_Click(object sender, EventArgs e)
@@ -566,118 +577,36 @@ namespace HL7Viewer.DataModel.GUI
 
         //  UcMappingList ucMappingList = new UcMappingList();
 
-        private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //if (!this.Controls.Contains(ucMappingList))
-            //{
-            //    this.Controls.Add(ucMappingList);
-            //}
-            //ucMappingList._HltMappings = _HL7.HL7Mappings;
-            //ucMappingList.Location = new Point(40, 40);
-            //ucMappingList.Show();
-            //ucMappingList.BringToFront();
+        //private void fjernMappingToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    FormRemoveMapping formRemoveMapping = new FormRemoveMapping(_HL7.HL7Mappings);
+        //    formRemoveMapping.Show();
+        //}
 
+    
+
+        private void fjernMappingToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
             FormRemoveMapping formRemoveMapping = new FormRemoveMapping(_HL7.HL7Mappings);
             formRemoveMapping.Show();
-
         }
 
-        private void tvHL7_MouseMove(object sender, MouseEventArgs e)
+        private void tvHL7_KeyDown(object sender, KeyEventArgs e)
         {
-            //TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
-
-            //if (test == null)
-            //{
-            //    // MessageBox.Show("No tree node");
-            //    Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
-            //}
-            //else
-            //{
-            //    tvHL7.SelectedNode = test;
-            //    Console.WriteLine("Selected node: " + test.ToString());
-            //    tvHL7.Refresh();
-            //}
+            ManageKeyEvents(sender, e);
         }
 
-        private void tvHL7_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void UcHL7_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.Button == MouseButtons.Right)
-            //{
-            //    tvHL7.Focus();
-            //    TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
-
-            //    if (test == null)
-            //    {
-            //        // MessageBox.Show("No tree node");
-            //        Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
-            //    }
-            //    else
-            //    {
-            //        tvHL7.SelectedNode = test;
-            //        SelectedTreenode = (TreenodeHL7Base) test;
-            //        tvHL7.Refresh();
-            //        Console.WriteLine("Selected node: " + test.ToString());
-            //    }
-            //}
+            ManageKeyEvents(sender, e);
         }
 
-        private void tvHL7_MouseClick(object sender, MouseEventArgs e)
+        private void ManageKeyEvents(object sender, KeyEventArgs e)
         {
-            //if (e.Button == MouseButtons.Right)
-            //{
-            //    tvHL7.Focus();
-            //    TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
-
-            //    if (test == null)
-            //    {
-            //        // MessageBox.Show("No tree node");
-            //        Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
-            //    }
-            //    else
-            //    {
-            //        tvHL7.SelectedNode = test;
-            //        SelectedTreenode = (TreenodeHL7Base)test;
-            //        tvHL7.Refresh();
-            //        Console.WriteLine("Selected node: " + test.ToString());
-            //    }
-            //}
-        }
-
-        private void tvHL7_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
+            if (e.Control && e.Shift && e.Alt && e.KeyCode == Keys.D)
             {
-                tvHL7.Focus();
-                TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
-
-                if (test == null)
-                {
-                    // MessageBox.Show("No tree node");
-                    Console.WriteLine("X/Y: " + Cursor.Position.X + "/" + Cursor.Position.Y);
-                }
-                else
-                {
-                    tvHL7.SelectedNode = test;
-                    SelectedTreenode = (TreenodeHL7Base)test;
-                    tvHL7.Refresh();
-                    Console.WriteLine("Selected node: " + test.ToString());
-                }
+                this.DebugMode = !this.DebugMode;
             }
         }
-
-        //private void tvHL7_MouseHover(object sender, EventArgs e)
-        //{
-        //    TreeNode test = tvHL7.GetNodeAt(Cursor.Position.X, Cursor.Position.Y);
-
-        //    if (test == null)
-        //    {
-        //        MessageBox.Show("No tree node");
-        //    }
-        //    else
-        //    {
-        //        tvHL7.SelectedNode = test;
-        //        tvHL7.Refresh();
-        //    }
-        //}
     }
 }

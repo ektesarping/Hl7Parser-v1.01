@@ -39,12 +39,12 @@
             this.menuStripHL7 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.åpneHL7FilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fjernMappingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierSegmenterTilClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.limInnHL7FilFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fjernMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
@@ -67,6 +67,7 @@
             this.tvHL7.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvHL7_NodeMouseClick);
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
+            this.tvHL7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvHL7_KeyDown);
             this.tvHL7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseClick);
             this.tvHL7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseDown);
             this.tvHL7.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tvHL7_MouseMove);
@@ -131,7 +132,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.åpneHL7FilToolStripMenuItem});
+            this.åpneHL7FilToolStripMenuItem,
+            this.fjernMappingToolStripMenuItem1});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -139,9 +141,16 @@
             // åpneHL7FilToolStripMenuItem
             // 
             this.åpneHL7FilToolStripMenuItem.Name = "åpneHL7FilToolStripMenuItem";
-            this.åpneHL7FilToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.åpneHL7FilToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.åpneHL7FilToolStripMenuItem.Text = "Åpne HL7 fil";
             this.åpneHL7FilToolStripMenuItem.Click += new System.EventHandler(this.åpneHL7FilToolStripMenuItem_Click);
+            // 
+            // fjernMappingToolStripMenuItem1
+            // 
+            this.fjernMappingToolStripMenuItem1.Name = "fjernMappingToolStripMenuItem1";
+            this.fjernMappingToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.fjernMappingToolStripMenuItem1.Text = "Fjern mapping...";
+            this.fjernMappingToolStripMenuItem1.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem1_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -169,8 +178,7 @@
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem,
-            this.fjernMappingToolStripMenuItem});
+            this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
@@ -181,13 +189,6 @@
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Text = "Kopier Mappingsegmenter til utklippstavle";
             this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem.Click += new System.EventHandler(this.kopierMappingsegmenterTilUtklippstavleToolStripMenuItem_Click);
-            // 
-            // fjernMappingToolStripMenuItem
-            // 
-            this.fjernMappingToolStripMenuItem.Name = "fjernMappingToolStripMenuItem";
-            this.fjernMappingToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
-            this.fjernMappingToolStripMenuItem.Text = "Fjern mapping";
-            this.fjernMappingToolStripMenuItem.Click += new System.EventHandler(this.fjernMappingToolStripMenuItem_Click);
             // 
             // chkSkjulTomme
             // 
@@ -235,6 +236,7 @@
             this.Name = "UcHL7";
             this.Size = new System.Drawing.Size(563, 414);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.UcHL7_DragDrop);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UcHL7_KeyDown);
             this.contextMenuStripTreeview.ResumeLayout(false);
             this.menuStripHL7.ResumeLayout(false);
             this.menuStripHL7.PerformLayout();
@@ -263,6 +265,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExpandSubnodes;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCollapseSubnodes;
-        private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem1;
     }
 }
