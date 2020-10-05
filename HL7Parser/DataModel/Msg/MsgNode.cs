@@ -507,11 +507,17 @@ namespace HL7Viewer.DataModel.Msg
         public string ToReport()
         {
             string str = String.Empty;
-            str = this.MappingSectionName + sep + this.Level.ToString() + sep + this.Index_L1.ToString() + sep + this.Index_L2.ToString() + sep + this.MappingSegment; // + sep + this.Value; // + sep + this.SourceString;
-            if (this.Children.Count == 0)
-            { str += sep + this.Value; }
-            else
-            { str += "*"; }
+
+
+            str = this.MappingSectionName + sep + this.Level.ToString() + sep + this.Index_L1.ToString() + sep + this.Index_L2.ToString() + sep; // + this.MappingSegment.SegmentName; // + sep + this.Value; // + sep + this.SourceString;
+            if (this.MappingSegment != null)
+            {
+                if (this.MappingSegment.SegmentName != null)
+                {
+                    str += this.MappingSegment.SegmentName;
+                }
+            }
+            str += sep + this.Value;
 
             return str;
         }

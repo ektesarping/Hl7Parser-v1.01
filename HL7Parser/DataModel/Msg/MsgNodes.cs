@@ -8,11 +8,6 @@ namespace HL7Viewer.DataModel.Msg
 {
     public class MsgNodes : List<MsgNode>
     {
-        [Obsolete]
-        public static int loop_L1 = 0;
-        [Obsolete]
-        public static int loop_L2 = 0;
-
         private string reportContent;
         public string ToReport()
         {
@@ -21,42 +16,67 @@ namespace HL7Viewer.DataModel.Msg
             reportContent = MsgNode.ToReportHeader();
             foreach (MsgNode msgChildNode in this)
             {
-                if (!String.IsNullOrEmpty(reportContent))
-                {
-                    reportContent += HL7.LINEFEED;
-                }
+                reportContent = AddLineFeed(reportContent);
                 reportContent += msgChildNode.ToReport();
-                ToReportRecursively(msgChildNode);
 
-                // --debug--
-                loop_L1++;
+                reportContent = AddLineFeed(reportContent);
+                reportContent += ToReportRecursively(msgChildNode);
             }
             return reportContent;
         }
 
-        public void ToReportRecursively(MsgNode msgNode)
+        public string ToReportRecursively(MsgNode msgNode)
         {
-            string str2 = String.Empty;
+            string str = String.Empty;
             foreach (MsgNode msgChildNode in msgNode.Children)
             {
-                // --debug--
-                loop_L2++;
-                //Console.WriteLine("L2: " + loop_L2.ToString() + "\tLengde: " + str2.Length.ToString() + "\t" + msgChildNode.ToString());
-                //Console.WriteLine("2:" + msgChildNode.ToReport());
 
+                str = AddLineFeed(str);
+                string tmpSlettes = msgChildNode.ToReport();
 
-                if (!String.IsNullOrEmpty(reportContent))
-                {
-                    reportContent += HL7.LINEFEED;
-                }
-                string tmp = msgChildNode.ToReport();
+                str += msgChildNode.ToReport();
 
-
-                reportContent += msgChildNode.ToReport();
-                // str2 += strNode;
-                //str2 += ToReportRecursively(msgChildNode);
+                str = AddLineFeed(str);
+                str += ToReportRecursively(msgChildNode);
             }
-            // return str2;
+            return str;
         }
+
+        /// <summary>
+        /// Legger til linefeed til en streng hvis den ikke allerede ender med linefeed.
+        /// Ignorerer tomme linjer.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private string AddLineFeed(string str)
+        {
+            bool doAdd = false;
+            if (String.IsNullOrEmpty(str))
+            {
+                doAdd = false;
+            }
+            else
+            {
+                if (str.Length < 2)
+                {
+                    doAdd = true;
+                }
+                else
+                {
+                    string strTmp = str.Substring(str.Length - 2, 2);
+                    if (strTmp != HL7.LINEFEED)
+                    {
+                        doAdd = true;
+                    }
+                }
+            }
+
+            if (doAdd)
+            {
+                str += HL7.LINEFEED;
+            }
+            return str;
+        }
+
     }
 }
