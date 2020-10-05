@@ -75,7 +75,7 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Root node i meldingsstrukturen.
         /// </summary>
-        public HL7Viewer.DataModel.Msg.MsgNode msgRootnode { get; set; } = new MsgNode(0);
+        public HL7Viewer.DataModel.Msg.MsgNode MsgRootnode { get; set; } = new MsgNode(0);
 
 
         public HL7SegmentCategories _HL7SegmentCategories { get; set; } = new HL7SegmentCategories();
@@ -94,7 +94,7 @@ namespace HL7Viewer.DataModel
         private const string MAPPINGFILE_EXT = ".csv";
         #endregion -- Default settings --
 
-        public static string LINEFEED = @"\r\n";
+        public static string LINEFEED = "\r\n";
         private char[] SEPARATOR_LEVEL_0 = new char[] { '\n', '\r' };
         private char[] SEPARATOR_LEVEL_1 = new char[] { '|' };
         private char[] SEPARATOR_LEVEL_2 = new char[] { '^' }; //, '~' };
@@ -108,7 +108,7 @@ namespace HL7Viewer.DataModel
 
         public void PostInitialize()
         {
-            this.msgRootnode.Name = "RootNode";
+            this.MsgRootnode.Name = "RootNode";
 
             FileInfo fiApplication = new FileInfo(Application.ExecutablePath);
             DirectoryInfo di = new DirectoryInfo(Path.Combine(fiApplication.DirectoryName, DEFAULT_MAPPINGFOLDE_NAME));
@@ -126,7 +126,7 @@ namespace HL7Viewer.DataModel
             }
             else
             {
-              //MessageBox.Show("Sist åpnede meldingsfil ikke funnet.\r\n" + Properties.Settings.Default.MsgFilename, "Åpne HL7 meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Sist åpnede meldingsfil ikke funnet.\r\n" + Properties.Settings.Default.MsgFilename, "Åpne HL7 meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -147,7 +147,7 @@ namespace HL7Viewer.DataModel
 
         public void ImportHL7MsgFile(string strFileContent)
         {
-            _HL7SegmentCategories = new HL7SegmentCategories();
+            // _HL7SegmentCategories = new HL7SegmentCategories();
 
             #region -- Find executable path--
             FileInfo executableFi = new FileInfo(Application.ExecutablePath); // Hent mappingfilen fra programfolderen.
@@ -155,17 +155,17 @@ namespace HL7Viewer.DataModel
                                                                               //MappingSelected.ImportMapping(MappingFileFi);
             #endregion -- Find executable path --
 
-            this.msgRootnode = new MsgNode("Root", strFileContent, 0, 0);
+            this.MsgRootnode = new MsgNode("Root", strFileContent, 0, 0);
 
-            msgRootnode.CreateChildNodes_L1(SEPARATOR_LEVEL_0); //, false);
+            MsgRootnode.CreateChildNodes_L1(SEPARATOR_LEVEL_0); //, false);
 
             // Setter Name og ekstraherer SourceString for nodene i nivå 0
-            foreach (MsgNode childnode in msgRootnode.Children)
+            foreach (MsgNode childnode in MsgRootnode.Children)
             {
                 childnode.ExtractNameAndSourceStringFirstLevel(SEPARATOR_LEVEL_1);
             }
 
-            foreach (MsgNode subNode_L0 in msgRootnode.Children)
+            foreach (MsgNode subNode_L0 in MsgRootnode.Children)
             {
                 // -- Parse subnodes level 1 --
                 subNode_L0.CreateChildNodes_L2(SEPARATOR_LEVEL_1); //, true); //, false);
@@ -191,7 +191,7 @@ namespace HL7Viewer.DataModel
 
 
             // -- Matcher mot mapping --
-            foreach (MsgNode childnode in this.msgRootnode.Children)
+            foreach (MsgNode childnode in this.MsgRootnode.Children)
             {
                 childnode.MappingSegment = MappingSelected.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
@@ -229,6 +229,24 @@ namespace HL7Viewer.DataModel
             }
             return subsegments;
         }
+
+        public static string AddLinefeed(string str)
+        {
+            str += Environment.NewLine;
+            return str;
+        }
+
+        public string ToReport()
+        {
+            string str = String.Empty;
+            if (this.MsgRootnode != null)
+            {
+                str = this.MsgRootnode.Children.ToReport();
+            }
+            return str;
+        }
+
+
 
 
         /// <summary>

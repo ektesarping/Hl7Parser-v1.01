@@ -173,49 +173,50 @@ namespace HL7Viewer.DataModel.Msg
         }
 
 
-        /// <summary>
-        /// Splitter opp string med [space]+[3 char section name]+separator
-        /// </summary>
-        /// <param name="strOriginal"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
-        private string InsertLineFeed_L1(string strOriginal, string separator)
-        {
-            string pattern = @"\s[A-Z]{3}[|]";
-            RegexOptions options = RegexOptions.Multiline;
+        ///// <summary>
+        ///// Splitter opp string med [space]+[3 char section name]+separator
+        ///// </summary>
+        ///// <param name="strOriginal"></param>
+        ///// <param name="separator"></param>
+        ///// <returns></returns>
+        //private string InsertLineFeed_L1(string strOriginal, string separator)
+        //{
+        //    string pattern = @"\s[A-Z]{3}[|]";
+        //    RegexOptions options = RegexOptions.Multiline;
 
-            bool finished = false;
-            int pos = 0;
-            string strRes = string.Empty;
+        //    bool finished = false;
+        //    int pos = 0;
+        //    string strRes = string.Empty;
 
-            while (!finished)
-            {
-                Match match = Regex.Match(strOriginal, pattern, options);
+        //    while (!finished)
+        //    {
+        //        Match match = Regex.Match(strOriginal, pattern, options);
 
-                if (match.Index >= 0)
-                {
-                    strRes = ReplaceCharAtPos(strOriginal, match.Index, HL7.LINEFEED);
-                }
-                else
-                {
-                    finished = true;
-                }
-            }
-            return strRes;
-        }
+        //        if (match.Index >= 0)
+        //        {
+        //            strRes = ReplaceCharAtPos(strOriginal, match.Index, HL7.LINEFEED);
+        //        }
+        //        else
+        //        {
+        //            finished = true;
+        //        }
+        //    }
+        //    return strRes;
+        //}
 
-        private string ReplaceCharAtPos(string strOriginal, int pos, string replacementChar)
-        {
-            if ((pos <= 0) || (pos > strOriginal.Length + 1))
-            {
-                return strOriginal;
-            }
 
-            string str1 = strOriginal.Substring(0, pos);
-            string str2 = strOriginal.Substring(pos + 1);
-            string strRes = str1 + replacementChar + str2;
-            return strRes;
-        }
+        //private string ReplaceCharAtPos(string strOriginal, int pos, string replacementChar)
+        //{
+        //    if ((pos <= 0) || (pos > strOriginal.Length + 1))
+        //    {
+        //        return strOriginal;
+        //    }
+
+        //    string str1 = strOriginal.Substring(0, pos);
+        //    string str2 = strOriginal.Substring(pos + 1);
+        //    string strRes = str1 + replacementChar + str2;
+        //    return strRes;
+        //}
 
 
         /// <summary>
@@ -489,6 +490,30 @@ namespace HL7Viewer.DataModel.Msg
         {
             string sep = " ";
             return this.Name + sep + " L:" + this.Level.ToString() + "/I:" + this.Index_L2.ToString() + sep + " Src: " + this.SourceString;
+        }
+
+
+        private const string sep = "\t";
+        public static string ToReportHeader()
+        {
+            return "MappingSectionName" + sep + "Level" + sep + "Index_L1" + sep + "Index_L2" + sep + "MappingSegment" + sep + "Value" + sep + "this.SourceString";
+        }
+
+
+        /// <summary>
+        /// Viser kun verdi for noder som ikke har children.
+        /// </summary>
+        /// <returns></returns>
+        public string ToReport()
+        {
+            string str = String.Empty;
+            str = this.MappingSectionName + sep + this.Level.ToString() + sep + this.Index_L1.ToString() + sep + this.Index_L2.ToString() + sep + this.MappingSegment; // + sep + this.Value; // + sep + this.SourceString;
+            if (this.Children.Count == 0)
+            { str += sep + this.Value; }
+            else
+            { str += "*"; }
+
+            return str;
         }
     }
 }

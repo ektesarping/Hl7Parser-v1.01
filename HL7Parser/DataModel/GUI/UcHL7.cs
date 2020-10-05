@@ -304,12 +304,12 @@ namespace HL7Viewer.DataModel.GUI
         {
             this.tvHL7.Nodes.Clear();
             TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
-            _HL7.msgRootnode.Treenode = rootNode;
+            _HL7.MsgRootnode.Treenode = rootNode;
 
             rootNode.Text = RootnodeText;
             this.tvHL7.Nodes.Add(rootNode);
 
-            foreach (MsgNode msgChildNode in _HL7.msgRootnode.Children)
+            foreach (MsgNode msgChildNode in _HL7.MsgRootnode.Children)
             {
                 TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning);
 
@@ -493,7 +493,8 @@ namespace HL7Viewer.DataModel.GUI
 
         private void kopierSegmenterTilClipboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(this._HL7._HL7SegmentCategories.ToReport());
+            string str = this._HL7.ToReport();
+            Clipboard.SetText(str);
         }
 
         private void limInnHL7FilFraClipboardToolStripMenuItem_Click(object sender, EventArgs e)
