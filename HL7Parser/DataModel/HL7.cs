@@ -192,7 +192,6 @@ namespace HL7Viewer.DataModel
                 }
             }
 
-
             // -- Matcher mot mapping --
             foreach (MsgNode childnode in this.MsgRootnode.Children)
             {

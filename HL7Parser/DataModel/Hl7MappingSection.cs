@@ -8,28 +8,31 @@ namespace HL7Viewer.DataModel
 {
     public class Hl7MappingSection
     {
-        public HL7MappingSegment Segment { get; set; } = new HL7MappingSegment();
+        // public HL7MappingSegment Segment { get; set; } = new HL7MappingSegment();
+
+        public string  Name { get; set; }
 
         public HL7MappingSegments Segments { get; set; } = new HL7MappingSegments();
 
-        public string SegmentName
-        {
-            get
-            {
-                if (Segment != null)
-                {
-                    return Segment.SegmentName;
-                }
-                else
-                {
-                    return "";
-                }
-            }
-        }
+
+        //public string SectionName
+        //{
+        //    get
+        //    {
+        //        if (Segment != null)
+        //        {
+        //            return Segment.SegmentName;
+        //        }
+        //        else
+        //        {
+        //            return "";
+        //        }
+        //    }
+        //}
 
         public Hl7MappingSection(string name)
         {
-            this.Segment.SegmentName = name;
+            this.Name = name;
         }
 
         public string ToReport()

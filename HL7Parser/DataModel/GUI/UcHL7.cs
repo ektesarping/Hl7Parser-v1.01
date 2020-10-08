@@ -180,7 +180,7 @@ namespace HL7Viewer.DataModel.GUI
         {
             _HL7 = new HL7();
             _HL7.PostInitialize();
-            AttachFileWatchForMappingFiles();
+            AttachFileWatchForMappingFiles(); // TODO: 201008 Fjernes hvis FileSystemWatcher ikke skal brukes.
 
             _HL7._UcHl7 = this; // Hack for å få tilgang til metoder i denne usercontrollen etter at mappingfil/meldingsfil er endret. (Automatisk reloading)
 
@@ -376,8 +376,8 @@ namespace HL7Viewer.DataModel.GUI
 
 
         /// <summary>
-        /// Finner treenode som med samme MsgNode som argumentet node.
-        /// Etter repopulate blir alle treenodes opprettet på nytt. for å 
+        /// Finner treenode med samme MsgNode som argumentet node.
+        /// Etter repopulate blir alle treenodes opprettet på nytt. For å 
         /// selecte fokus på den samme noden etter repoulate må det søkes gjennom alle treenodes.
         /// </summary>
         /// <param name="msgNode"></param>
@@ -796,8 +796,14 @@ namespace HL7Viewer.DataModel.GUI
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // -- Les inn mappingen fra fil på nytt --
-            _HL7.MappingSelected.ImportMapping();
-            
+            _HL7.MappingSelected = _HL7.MappingSelected.ImportMapping();
+
+            // Leser inn meldingsfilen på nytt for å oppdatere mot oppdatert mapping.
+            _HL7.ImportHL7MsgFile();
+
+            // Oppdater combobox i tilfelle DisplayName er oppdatert.
+            _HL7._UcHl7.PopulateCboMappings();
+
             // -- Repoulate msg fil --
             _HL7._UcHl7.Repopulate();  // HACK: Gå veien om _HL7 klassen som er static for å referere UcHL7. UCHl7 er referert i property i Hl7 klassen som er static.
         }

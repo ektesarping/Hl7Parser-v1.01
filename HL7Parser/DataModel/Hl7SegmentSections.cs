@@ -12,7 +12,7 @@ namespace HL7Viewer.DataModel
         {
             foreach (Hl7MappingSection section in this)
             {
-                if (section.SegmentName == name)
+                if (section.Name == name)
                 {
                     return section;
                 }
@@ -36,7 +36,7 @@ namespace HL7Viewer.DataModel
 
         public new void Add(Hl7MappingSection section)
         {
-            if (!this.Contains(section.SegmentName))
+            if (!this.Contains(section.Name))
             {
                 base.Add(section);
             }

@@ -67,12 +67,12 @@ namespace HL7Viewer.DataModel
         //    this.ImportMapping(this.FileInfo);
         //}
 
-        public void ImportMapping(FileInfo fi)
+        public Hl7Mapping ImportMapping(FileInfo fi)
         {
             if (!fi.Exists)
             {
                 MessageBox.Show("Mappingfilen (oversikt over feltnavn):\r\n" + fi.FullName + "\r\nikke funnet. Ignorer mappingen", "Innlesing av mapping fil feilet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return this;
             }
 
             string str = String.Empty;
@@ -142,28 +142,10 @@ namespace HL7Viewer.DataModel
                                 segment.CollapsedDefault = true;
                             }
 
-
-                            //// segment.SegmentName = fields[INDEX_NAME];
-                            //if (fields[INDEX_NAME].Contains(COMMENT_CHAR))
-                            //{
-                            //    string strTmp = fields[INDEX_NAME];
-                            //    if (strTmp.IndexOf(COMMENT_CHAR) > 0)
-                            //    {
-                            //        segment.SegmentName = strTmp.Substring(0, strTmp.IndexOf(COMMENT_CHAR) - 1);
-                            //    }
-                            //    else
-                            //    {
-                            //        segment.SegmentName = "";
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    segment.SegmentName = fields[INDEX_NAME];
-                            //}
-
+                                                     
                             string strName = GetFieldAsString(fields, INDEX_NAME);
                             strName = HL7.TrimComment(strName, COMMENT_CHAR);
-
+                            segment.SegmentName = strName;
 
 
 
@@ -216,17 +198,19 @@ namespace HL7Viewer.DataModel
                     }
                     sr.Close();
                     // PopulateListOfSections();
+                    return this;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Feil under innlesing av mappingfilen (oversikt over feltnavn)\r\n" + str + "\r\n\n" + ex.Message + "\r\n\n" + ex.StackTrace, "Innlesing av mapping", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
         }
 
-        public void ImportMapping()
+        public Hl7Mapping ImportMapping()
         {
-            ImportMapping(this.FileInfo);
+            return ImportMapping(this.FileInfo);
         }
 
 
@@ -302,17 +286,19 @@ namespace HL7Viewer.DataModel
 
         public HL7MappingSegment GetSegmentFromSection(string name, int index_L1, int index_L2)
         {
-            Hl7MappingSection sectionTmp = this.Hl7MappingSections.Get(name);
+            //Hl7MappingSection sectionTmp = this.Hl7MappingSections.Get(name);
 
-            if (sectionTmp == null)
-            {
-                return null;
-            }
-            else
-            {
-                HL7MappingSegment segmentTmp = sectionTmp.Segments.GetSegment(name, index_L1, index_L2);
-                return segmentTmp;
-            }
+            //if (sectionTmp == null)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    HL7MappingSegment segmentTmp = sectionTmp.Segments.GetSegment(name, index_L1, index_L2);
+            //    return segmentTmp;
+            //}
+
+            return this._HL7Segments.GetSegment(name, index_L1, index_L2); 
         }
 
 
