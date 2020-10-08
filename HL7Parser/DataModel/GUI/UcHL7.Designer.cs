@@ -50,6 +50,7 @@
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
             this.visSplashScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -131,7 +132,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.åpneHL7FilToolStripMenuItem,
-            this.fjernMappingToolStripMenuItem1});
+            this.fjernMappingToolStripMenuItem1,
+            this.refreshToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(31, 20);
             this.fileToolStripMenuItem.Text = "Fil";
@@ -237,6 +239,13 @@
             this.visSplashScreenToolStripMenuItem.Text = "Vis SplashScreen";
             this.visSplashScreenToolStripMenuItem.Click += new System.EventHandler(this.visSplashScreenToolStripMenuItem_Click);
             // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,5 +291,6 @@
         private System.Windows.Forms.ToolStripMenuItem fjernMappingToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem resetSplashscreenTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem visSplashScreenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
     }
 }

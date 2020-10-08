@@ -24,7 +24,7 @@ namespace HL7Viewer.DataModel
 
         public HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
-        private const string COMMENT_CHAR = "//";
+        public static string COMMENT_CHAR = "//";
 
         /// <summary>
         /// Viser navnet på mappingen, f.eks Røntgensvar, Labsvar etc.
@@ -88,58 +88,84 @@ namespace HL7Viewer.DataModel
                     while (!sr.EndOfStream)
                     {
                         str = sr.ReadLine();
+
+                        // -- Fjern kommentar --
+                        str = HL7.TrimComment(str, COMMENT_CHAR);
+
                         string[] fields = str.Split(new char[] { '\t' });
                         //for (int i = 0; i < fields.Length; i++)
                         {
-                            if (String.IsNullOrEmpty(fields[INDEX_SECTION]))
+
+                            //if (String.IsNullOrEmpty(fields[INDEX_SECTION]))
+                            string strTmp = GetFieldAsString(fields, INDEX_SECTION);
+                            if (String.IsNullOrEmpty(strTmp))
                             {
                                 continue; // Do not save segments with empty names
                             }
 
-                            if (fields[INDEX_SECTION].Contains(COMMENT_CHAR))
+
+                            if (String.IsNullOrWhiteSpace(GetFieldAsString(fields, INDEX_SECTION)))
                             {
-                                continue;
+                                continue; // Do not save segments with empty names
                             }
 
-                            if (fields[INDEX_SECTION].ToUpper().Contains(DISPLAY_NAME))
+                            //if (fields[INDEX_SECTION].Contains(COMMENT_CHAR)) -- Trimmet bort kommentar ovenfor.
+                            //{
+                            //    continue;
+                            //}
+
+                            //if (fields[INDEX_SECTION].ToUpper().Contains(DISPLAY_NAME))
+                            if (GetFieldAsString(fields, INDEX_SECTION).ToUpper().Contains(DISPLAY_NAME))
                             {
-                                DisplayName = fields[1];
+                                DisplayName = GetFieldAsString(fields, 1);
                                 continue;
                             }
 
                             // -- Parse feltene i segmentet --
                             HL7MappingSegment segment = new HL7MappingSegment();
-                            segment.SectionName = fields[INDEX_SECTION];
+                            //segment.SectionName = fields[INDEX_SECTION];
+                            segment.SectionName = GetFieldAsString(fields, INDEX_SECTION);
 
-                            int.TryParse(fields[INDEX_INDEX_L1], out int index_LTmp);
-                            segment.Index_L1 = index_LTmp;
+                            //int.TryParse(fields[INDEX_INDEX_L1], out int index_LTmp);
+                            //segment.Index_L1 = index_LTmp;
 
-                            int.TryParse(fields[INDEX_INDEX_L2], out int index_L2Tmp);
-                            segment.Index_L2 = index_L2Tmp;
+                            segment.Index_L1 = GetFieldAsint(fields, INDEX_INDEX_L1);
 
-                            if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
+                            //int.TryParse(fields[INDEX_INDEX_L2], out int index_L2Tmp);
+                            //segment.Index_L2 = index_L2Tmp;
+                            segment.Index_L2 = GetFieldAsint(fields, INDEX_INDEX_L2);
+
+
+                            // if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
+                            if (GetFieldAsString(fields, INDEX_COLLAPSED_DEFAULT).ToUpper() == DISPLAY_NAME)
                             {
                                 segment.CollapsedDefault = true;
                             }
 
 
-                            // segment.SegmentName = fields[INDEX_NAME];
-                            if (fields[INDEX_NAME].Contains(COMMENT_CHAR))
-                            {
-                                string strTmp = fields[INDEX_NAME];
-                                if (strTmp.IndexOf(COMMENT_CHAR) > 0)
-                                {
-                                    segment.SegmentName = strTmp.Substring(0, strTmp.IndexOf(COMMENT_CHAR) - 1);
-                                }
-                                else
-                                {
-                                    segment.SegmentName = "";
-                                }
-                            }
-                            else
-                            {
-                                segment.SegmentName = fields[INDEX_NAME];
-                            }
+                            //// segment.SegmentName = fields[INDEX_NAME];
+                            //if (fields[INDEX_NAME].Contains(COMMENT_CHAR))
+                            //{
+                            //    string strTmp = fields[INDEX_NAME];
+                            //    if (strTmp.IndexOf(COMMENT_CHAR) > 0)
+                            //    {
+                            //        segment.SegmentName = strTmp.Substring(0, strTmp.IndexOf(COMMENT_CHAR) - 1);
+                            //    }
+                            //    else
+                            //    {
+                            //        segment.SegmentName = "";
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    segment.SegmentName = fields[INDEX_NAME];
+                            //}
+
+                            string strName = GetFieldAsString(fields, INDEX_NAME);
+                            strName = HL7.TrimComment(strName, COMMENT_CHAR);
+
+
+
 
                             // -- Legger til section hvis den ikke allerede finnes --
                             // Oppretter section hvis en ikke finnes
@@ -198,6 +224,82 @@ namespace HL7Viewer.DataModel
             }
         }
 
+        public void ImportMapping()
+        {
+            ImportMapping(this.FileInfo);
+        }
+
+
+        /// <summary>
+        /// Returnerer felt som string i string array.
+        /// </summary>
+        /// <param name="fields"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private string GetFieldAsString(string[] fields, int index)
+        {
+            if (index + 1 <= fields.Length)
+            {
+                string strTmp = fields[index];
+                return strTmp;
+            }
+            else
+            {
+                MessageBox.Show("Feil under innlesing av mapping.\r\n" + arrayToString(fields), "Innlesing av mapping", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return String.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Parser int fra string-array.
+        /// </summary>
+        /// <param name="fields"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private int GetFieldAsint(string[] fields, int index)
+        {
+            string strTmp = GetFieldAsString(fields, index);
+            if (!String.IsNullOrEmpty(strTmp))
+            {
+                int result = -1;
+                if (int.TryParse(strTmp, out result))
+                {
+                    return result;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("Feil under innlesing av mapping.\r\n" + arrayToString(fields), "Innlesing av mapping", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return -1;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Konverte string-array til tab-separert string.
+        /// </summary>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        private string arrayToString(string[] fields)
+        {
+            string str = String.Empty;
+            for (int i = 0; i < fields.Length; i++)
+            {
+                if (string.IsNullOrEmpty(str))
+                {
+                    str += "\t";
+                }
+                str += fields[i];
+            }
+            return str;
+        }
+
+
         public HL7MappingSegment GetSegmentFromSection(string name, int index_L1, int index_L2)
         {
             Hl7MappingSection sectionTmp = this.Hl7MappingSections.Get(name);
@@ -212,7 +314,6 @@ namespace HL7Viewer.DataModel
                 return segmentTmp;
             }
         }
-
 
 
 

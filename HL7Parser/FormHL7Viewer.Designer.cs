@@ -34,7 +34,7 @@
             // 
             // ucHL7
             // 
-            this.ucHL7._HL7 = null;
+            //this.ucHL7._HL7 = null;
             this.ucHL7._HL7SegmentCategories = null;
             this.ucHL7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucHL7.Dock = System.Windows.Forms.DockStyle.Fill;

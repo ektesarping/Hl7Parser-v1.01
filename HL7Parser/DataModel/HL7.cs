@@ -89,6 +89,9 @@ namespace HL7Viewer.DataModel
         public FileInfo MappingFileFi { get; set; }
         //        private const string MappingFileName = "Mapping_HL7.csv";
 
+
+        public HL7Viewer.DataModel.GUI.UcHL7 _UcHl7 { get; set; } // TODO: 201008 Fjernes hvis eventhandler fra FileUpdated ikke skal brukes
+
         #region -- Default settings --
         private const string DEFAULT_MAPPINGFOLDE_NAME = "Datamodel";
         private const string MAPPINGFILE_EXT = ".csv";
@@ -199,8 +202,6 @@ namespace HL7Viewer.DataModel
         }
 
 
-
-
         private void MatchMsgNodeToMappingRecursive(MsgNode node)
         {
             foreach (MsgNode childnode in node.Children)
@@ -233,6 +234,21 @@ namespace HL7Viewer.DataModel
         public static string AddLinefeed(string str)
         {
             str += Environment.NewLine;
+            return str;
+        }
+
+        /// <summary>
+        /// Fjerner kommentar fra en streng. 
+        /// </summary>
+        /// <param name="str"></param>
+        public static string TrimComment(string str, string commentKey)
+        {
+            if (str.Contains(commentKey))
+            {
+                int pos = str.IndexOf(commentKey);
+                int length = str.Length - pos;
+                str = str.Substring(0, pos);
+            }
             return str;
         }
 

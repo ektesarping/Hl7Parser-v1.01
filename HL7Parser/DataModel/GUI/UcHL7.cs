@@ -10,12 +10,13 @@ using System.Windows.Forms;
 using System.IO;
 using HL7Viewer.DataModel.Msg;
 using System.Timers;
+using System.Security.Permissions;
 
 namespace HL7Viewer.DataModel.GUI
 {
     public partial class UcHL7 : UserControl
     {
-        public HL7 _HL7 { get; set; } //= new HL7();
+        public static HL7 _HL7 { get; set; } //= new HL7();  // TODO: 201008 Fjern static hvis eventhandler fra FileUpdated ikke skal brukes
 
 
         //public HL7Segments _HL7Segments { get; set; }
@@ -84,6 +85,8 @@ namespace HL7Viewer.DataModel.GUI
             InitializeComponent();
             this.DebugMode = false;
 
+            #region  -- Splash screen --
+            // --  Sjekk om splash screen skal vises (Vises kun første gang på den aktuelle dagen)  --
             if (!((Properties.Settings.Default.SplashScreenDisplayedDate.Year == DateTime.Now.Year) &&
                 (Properties.Settings.Default.SplashScreenDisplayedDate.Month == DateTime.Now.Month) &&
                 (Properties.Settings.Default.SplashScreenDisplayedDate.Day == DateTime.Now.Day)))
@@ -93,6 +96,7 @@ namespace HL7Viewer.DataModel.GUI
                 Properties.Settings.Default.SplashScreenDisplayedDate = DateTime.Now;
                 Properties.Settings.Default.Save();
             }
+            #endregion  -- Splash screen --
         }
 
         #region --  Timer splash screen -- 
@@ -174,8 +178,13 @@ namespace HL7Viewer.DataModel.GUI
 
         public void PostInitialize()
         {
-            this._HL7 = new HL7();
+            _HL7 = new HL7();
             _HL7.PostInitialize();
+            AttachFileWatchForMappingFiles();
+
+            _HL7._UcHl7 = this; // Hack for å få tilgang til metoder i denne usercontrollen etter at mappingfil/meldingsfil er endret. (Automatisk reloading)
+
+            this.PopulateCboMappings();
 
             // -- Åpne sist brukte HL7 fil --
             try
@@ -191,7 +200,7 @@ namespace HL7Viewer.DataModel.GUI
                 MessageBox.Show("Kunne ikke åpne forrige meldingsfil.\r\n\nException\r\n" + ex.Message + "\r\n\nStacktrace\r\n" + ex.StackTrace, "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            this.PopulateCboMappings();
+
 
 
             // -- Initialiserer status for checkboxer --
@@ -200,7 +209,11 @@ namespace HL7Viewer.DataModel.GUI
             this.chkNormalVisning.Checked = Properties.Settings.Default.Normalvisning;
             IsInitializingCheckboxes = false;
             //PopulateCboMappings();
+
         }
+
+
+
 
         private const string TEXT_ADD_MAPPING = "Legg til mapping...";
 
@@ -209,22 +222,30 @@ namespace HL7Viewer.DataModel.GUI
             // -- Fylle cbobox med mappinger --
             {
                 cboMappingFiles.Items.Clear();
-                foreach (Hl7Mapping mapping in this._HL7.HL7Mappings)
+                foreach (Hl7Mapping mapping in _HL7.HL7Mappings)
                 {
                     cboMappingFiles.Items.Add((object)mapping);
                 }
 
                 // -- Setter selected mapping --
-                if (this._HL7.MappingSelected != null)
+                if (_HL7.MappingSelected != null)
                 {
-                    cboMappingFiles.SelectedItem = (object)this._HL7.MappingSelected;
-                    cboMappingFiles.Text = this._HL7.MappingSelected.DisplayName;
+                    cboMappingFiles.SelectedItem = (object)_HL7.MappingSelected;
+                }
+                else
+                {
+                    // --  Hvis det kun er én mapping, sett denne som selected --
+                    if (_HL7.HL7Mappings.Count > 0)
+                    {
+                        _HL7.MappingSelected = _HL7.HL7Mappings[0];
+                        MessageBox.Show("Ingen mapping var valgt. Antar mapping " + _HL7.MappingSelected.Name, "Lese inn mapping fil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
 
-                // --  Hvis det kun er én mapping, sett denne som selected --
+                // -- Sette inn navnt på valgte mapping i ocmponboxen --
+                cboMappingFiles.Text = _HL7.MappingSelected.DisplayName;
 
-
-                // -- Legge til 'Add mapping file'
+                // -- Legge til 'Add mapping file' i bunnen av 
                 cboMappingFiles.Items.Add(((object)TEXT_ADD_MAPPING));
             }
         }
@@ -263,10 +284,10 @@ namespace HL7Viewer.DataModel.GUI
                         Hl7Mapping newMapping = new Hl7Mapping(fi);
                         //newMapping.ImportMapping();
 
-                        this._HL7.HL7Mappings.Add(newMapping);
+                        _HL7.HL7Mappings.Add(newMapping);
                         // -- Setter den innleste mappingen som selected --
-                        this._HL7.MappingSelected = newMapping;
-                        this._HL7.ImportHL7MsgFile();
+                        _HL7.MappingSelected = newMapping;
+                        _HL7.ImportHL7MsgFile();
 
                         this.PopulateCboMappings();
                         // --> Lagre fileinfi.Fullname i PRoperties.Settings.Default
@@ -284,8 +305,8 @@ namespace HL7Viewer.DataModel.GUI
                 Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
                 if (mappingTmp != null)
                 {
-                    this._HL7.MappingSelected = mappingTmp;
-                    this._HL7.ImportHL7MsgFile();
+                    _HL7.MappingSelected = mappingTmp;
+                    _HL7.ImportHL7MsgFile();
                     this.Repopulate();
                 }
             }
@@ -433,8 +454,8 @@ namespace HL7Viewer.DataModel.GUI
 
             _HL7.MsgFile = fi;
             _HL7.ImportHL7MsgFile(_HL7.MsgFile);
-            //this._HL7SegmentCategories = this._HL7._HL7SegmentCategories;
-            this.Populate(this._HL7._HL7SegmentCategories);
+            //_HL7SegmentCategories = _HL7._HL7SegmentCategories;
+            this.Populate(_HL7._HL7SegmentCategories);
         }
 
         public void ReloadMsgFile()
@@ -493,7 +514,7 @@ namespace HL7Viewer.DataModel.GUI
 
         private void kopierSegmenterTilClipboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string str = this._HL7.ToReport();
+            string str = _HL7.ToReport();
             Clipboard.SetText(str);
         }
 
@@ -501,7 +522,7 @@ namespace HL7Viewer.DataModel.GUI
         {
             string str = Clipboard.GetText();
             _HL7.ImportHL7MsgFile(str);
-            Populate(this._HL7._HL7SegmentCategories);
+            Populate(_HL7._HL7SegmentCategories);
         }
 
         private void chkShowEmptyFields_CheckedChanged(object sender, EventArgs e)
@@ -543,8 +564,8 @@ namespace HL7Viewer.DataModel.GUI
 
                 if (fi.Extension.ToLower() == ".csv")
                 {
-                    Hl7Mapping newMapping = this._HL7.HL7Mappings.ImportMapping(fi);
-                    this._HL7.MappingSelected = newMapping;
+                    Hl7Mapping newMapping = _HL7.HL7Mappings.ImportMapping(fi);
+                    _HL7.MappingSelected = newMapping;
                     PopulateCboMappings();
                 }
                 else
@@ -686,6 +707,99 @@ namespace HL7Viewer.DataModel.GUI
             }
         }
 
+        #region  -- Filesystem watcher --
+        /// <summary>
+        /// Setter opp abonnement på fileWatcher event for mappingfiler.
+        /// </summary>
+        private void AttachFileWatchForMappingFiles()
+        {
+            foreach (Hl7Mapping mapping in _HL7.HL7Mappings)
+            {
+                AddWatchOnDirectory(mapping.FileInfo.DirectoryName, ".csv");
+            }
+        }
 
+
+        /// <summary>
+        /// Setter opp abonnement på fileWatcher event ved oppdatering av gjeldende msgfile.
+        /// </summary>
+        /// <param name="fi"></param>
+        private void AttachWatchForMsgFile(FileInfo fi)
+        {
+            AddWatchOnDirectory(fi.DirectoryName, fi.Extension);
+        }
+
+
+
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        private static void AddWatchOnDirectory(string path, string fileFilter)
+        {
+            // https://docs.microsoft.com/en-us/dotnet/api/system.io.filesystemwatcher?view=netcore-3.1
+
+            // Create a new FileSystemWatcher and set its properties.
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = path;
+            /* Watch for changes in LastAccess and LastWrite times, and 
+               the renaming of files or directories. */
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+               | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            // Only watch text files.
+            watcher.Filter = fileFilter;
+
+            // Add event handlers.
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.Created += new FileSystemEventHandler(OnChanged); // Kommenteres ut
+            watcher.Deleted += new FileSystemEventHandler(OnChanged); // Kommenteres ut
+            watcher.Renamed += new RenamedEventHandler(OnChanged);    // Kommenteres ut
+
+            // Begin watching.
+            watcher.EnableRaisingEvents = true;
+
+        }
+
+        private static void OnChanged(object source, FileSystemEventArgs e)
+        {
+            string path = e.FullPath;
+            try
+            {
+                FileInfo fi = new FileInfo(e.FullPath);
+
+                // -- Les inn mapping på nytt --
+                if (fi.Extension.ToLower() == ".csv")
+                {
+                    if (_HL7.MappingSelected.FileInfo.FullName.ToLower() == fi.FullName.ToLower())
+                    {
+                        Hl7Mapping newMapping = _HL7.HL7Mappings.ImportMapping(fi);
+                        _HL7.MappingSelected = newMapping;
+                        //_HL7.PopulateCboMappings();
+
+                        // -- Repoulate msg fil --
+                        _HL7._UcHl7.Repopulate();  // HACK: Gå veien om _HL7 klassen som er static for å referere UcHL7. UCHl7 er referert i property i Hl7 klassen som er static.
+                    }
+                }
+                else if (fi.Extension.ToLower() == ".hl7")
+                {
+                    _HL7._UcHl7.OpenMessageFile(fi); ;  // HACK: Gå veien om _HL7 klassen som er static for å referere UcHL7. UCHl7 er referert i property i Hl7 klassen som er static.
+                    //Properties.Settings.Default.MsgFilename = _HL7.MsgFile.FullName;
+                    //Properties.Settings.Default.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kontroller at mapping og meldingsfil er korrekt valgt (Kode 201006-1)", "Intern feilmelding", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        #endregion  -- Filesystem watcher --
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // -- Les inn mappingen fra fil på nytt --
+            _HL7.MappingSelected.ImportMapping();
+            
+            // -- Repoulate msg fil --
+            _HL7._UcHl7.Repopulate();  // HACK: Gå veien om _HL7 klassen som er static for å referere UcHL7. UCHl7 er referert i property i Hl7 klassen som er static.
+        }
     }
 }
