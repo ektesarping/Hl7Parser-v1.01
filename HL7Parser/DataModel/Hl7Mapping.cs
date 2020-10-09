@@ -50,6 +50,7 @@ namespace HL7Viewer.DataModel
         private const int INDEX_NAME = 4;
 
         private const string DISPLAY_NAME = "DISPLAYNAME";
+        private const string STR_COLLAPSE_DEFAULT = "Y";
 
         #region -- Constructor --
         public Hl7Mapping()
@@ -137,7 +138,7 @@ namespace HL7Viewer.DataModel
 
 
                             // if (fields[INDEX_COLLAPSED_DEFAULT].ToUpper() == "Y")
-                            if (GetFieldAsString(fields, INDEX_COLLAPSED_DEFAULT).ToUpper() == DISPLAY_NAME)
+                            if (GetFieldAsString(fields, INDEX_COLLAPSED_DEFAULT).ToUpper() == STR_COLLAPSE_DEFAULT)
                             {
                                 segment.CollapsedDefault = true;
                             }

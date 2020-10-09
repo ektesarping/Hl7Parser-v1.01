@@ -33,10 +33,10 @@ namespace HL7Viewer.DataModel.Msg
         public bool ExtraLevelforRepeatingNodes { get; set; } = false;
 
         /// <summary>
-        /// Index for oppslag mot mapping. Ulik this.Index ved repeterende sekvenser av felter.
-        /// F.eks OBR28 Kopimottakere som har 15 repeterende felter for hver av mottakerne.
+        /// Index for den enkelte section. Brukes til å skille sections fra hverandre.
+        /// F.eks når det er flere OBX sections i samme meldingsfil.
         /// </summary>
-        public int MappingIndex { get; set; }
+        public int SectionIndex { get; set; }
 
         public MsgNode Parent { get; set; }
 
@@ -243,6 +243,7 @@ namespace HL7Viewer.DataModel.Msg
                 msgsubnode.SourceString = strNode;
 
                 msgsubnode.Level = 1;
+                msgsubnode.SectionIndex = this.SectionIndex;
                 msgsubnode.Index_L1 = indexsubnode;
                 msgsubnode.Index_L2 = 0;
 
@@ -289,6 +290,7 @@ namespace HL7Viewer.DataModel.Msg
                 msgsubnode.level = 2;
                 msgsubnode.Index_L1 = this.Index_L1;
                 msgsubnode.Index_L2 = indexsubnode;
+                msgsubnode.SectionIndex = this.SectionIndex;
 
                 // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                 //if (useFirstFieldAsName)
@@ -331,7 +333,7 @@ namespace HL7Viewer.DataModel.Msg
                 nodeRepeat.Parent = this;
                 //nodeRepeat.Level = nodeRepeat.Parent.Level + 1;
                 this.Children.Add(nodeRepeat);
-
+                nodeRepeat.SectionIndex = this.SectionIndex;
 
                 string[] strNodesLevel3 = str.Split(separator_L2);
                 int indexsubnode = 1;
@@ -354,6 +356,7 @@ namespace HL7Viewer.DataModel.Msg
                     msgsubnode.level = 2;
                     msgsubnode.Index_L1 = this.Index_L1;
                     msgsubnode.Index_L2 = indexsubnode;
+                    msgsubnode.SectionIndex = this.SectionIndex;
 
                     // -- I nivå 1 ligger navnet til parent noden i første felt. Ignoreres for andre nivå enn nivå 0. --
                     //if (useFirstFieldAsName)
@@ -413,7 +416,7 @@ namespace HL7Viewer.DataModel.Msg
                         }
                         else
                         {
-                            str += "[" + this.MappingSectionName + " " ; //+ Index_L1.ToString() + ": ";
+                            str += "[" + this.MappingSectionName + " "; //+ Index_L1.ToString() + ": ";
                             str += mappingSegmentNameTmp;
                             str += "]"; // = " + this.Value;
                         }
@@ -499,7 +502,7 @@ namespace HL7Viewer.DataModel.Msg
         private const string sep = "\t";
         public static string ToReportHeader()
         {
-            return "MappingSectionName" + sep + "Level" + sep + "Index_L1" + sep + "Index_L2" + sep + "MappingSegment" + sep + "Value" + sep + "this.SourceString";
+            return "MappingSectionName" + sep + "SectionIndex" + sep + "Level" + sep + "Index_L1" + sep + "Index_L2" + sep + "MappingSegment" + sep + "Value" + sep + "this.SourceString";
         }
 
 
@@ -512,7 +515,7 @@ namespace HL7Viewer.DataModel.Msg
             string str = String.Empty;
 
 
-            str = this.MappingSectionName + sep + this.Level.ToString() + sep + this.Index_L1.ToString() + sep + this.Index_L2.ToString() + sep; // + this.MappingSegment.SegmentName; // + sep + this.Value; // + sep + this.SourceString;
+            str = this.MappingSectionName + sep + this.SectionIndex.ToString() + sep + this.Level.ToString() + sep + this.Index_L1.ToString() + sep + this.Index_L2.ToString() + sep; // + this.MappingSegment.SegmentName; // + sep + this.Value; // + sep + this.SourceString;
             if (this.MappingSegment != null)
             {
                 if (this.MappingSegment.SegmentName != null)

@@ -59,7 +59,7 @@ namespace HL7Viewer.DataModel.GUI
 
 
         /// <summary>
-        /// Normalvisning. Collapser noder som er merket i mppingfilen.
+        /// Normalvisning som settes i GUI av brukeren. Collapser noder som er merket i mppingfilen som CollapseDefault.
         /// </summary>
         private bool Normalvisning
         {
@@ -323,6 +323,7 @@ namespace HL7Viewer.DataModel.GUI
 
         private void Repopulate()
         {
+            tvHL7.SuspendLayout();
             this.tvHL7.Nodes.Clear();
             TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
             _HL7.MsgRootnode.Treenode = rootNode;
@@ -371,6 +372,7 @@ namespace HL7Viewer.DataModel.GUI
                     tvHL7.SelectedNode = tvHL7.Nodes[0];
                 }
             }
+            tvHL7.ResumeLayout();
         }
 
 
@@ -431,7 +433,7 @@ namespace HL7Viewer.DataModel.GUI
             {
                 if (childnode._HL7Segment != null)
                 {
-                    if (childnode._HL7Segment.CollapsedDefault && chkNormalVisning.Checked)
+                    if (childnode._HL7Segment.CollapsedDefault && Normalvisning == true) // CollapseDefault er satt i mappingen, Normalvisning valgt av brukeren i checkbox.
                     { childnode.Collapse(); }
                     else
                     { childnode.Expand(); }
@@ -796,8 +798,8 @@ namespace HL7Viewer.DataModel.GUI
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tvHL7.SuspendLayout();
-//             // -- Alt 1: Les inn MappingSelected fra fil på nytt --
-//             _HL7.MappingSelected = _HL7.MappingSelected.ImportMapping();
+            //             // -- Alt 1: Les inn MappingSelected fra fil på nytt --
+            //             _HL7.MappingSelected = _HL7.MappingSelected.ImportMapping();
 
             // -- Alt 2: Les inn alle mappinger på nytt --
             foreach (Hl7Mapping mapping in _HL7.HL7Mappings)

@@ -168,11 +168,21 @@ namespace HL7Viewer.DataModel
                 childnode.ExtractNameAndSourceStringFirstLevel(SEPARATOR_LEVEL_1);
             }
 
+            // -- Populerer SectionIndex for hver msgNode --
+            int sectionIndesTmp = 0;
+            foreach (MsgNode childnode in MsgRootnode.Children)
+            {
+                childnode.SectionIndex = sectionIndesTmp;
+                sectionIndesTmp++;
+            }
+
+
             foreach (MsgNode subNode_L0 in MsgRootnode.Children)
             {
                 // -- Parse subnodes level 1 --
                 subNode_L0.CreateChildNodes_L2(SEPARATOR_LEVEL_1); //, true); //, false);
                                                                    //subNode_L0.Level = 2;
+
                 foreach (MsgNode subNode_L1 in subNode_L0.Children)
                 {
                     if (
