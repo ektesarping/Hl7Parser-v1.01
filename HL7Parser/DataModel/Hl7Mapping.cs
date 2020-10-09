@@ -20,7 +20,7 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public List<string> SectionNames { get; set; } = new List<string>();
 
-        public Hl7MappingSections Hl7MappingSections { get; set; } = new Hl7MappingSections();
+// 201009-01        public Hl7MappingSections Hl7MappingSections { get; set; } = new Hl7MappingSections();
 
         public HL7MappingSegments _HL7Segments { get; set; } = new HL7MappingSegments();
 
@@ -147,17 +147,17 @@ namespace HL7Viewer.DataModel
                             segment.SegmentName = strName;
 
 
-                            // -- Legger til section hvis den ikke allerede finnes --
-                            // Oppretter section hvis en ikke finnes
-                            Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
-                            if (mappingSectionTmp == null)
-                            {
-                                this.Hl7MappingSections.Add(segment.SectionName);
-                                mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
-                            }
-                            // Legger til som subsegment i mappingsection --
-                            segment.MappingSection = mappingSectionTmp;
-                            segment.MappingSection.Segments.Add(segment);
+// 201009-01                            // -- Legger til section hvis den ikke allerede finnes --
+// 201009-01                            // Oppretter section hvis en ikke finnes
+// 201009-01                            Hl7MappingSection mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
+// 201009-01                            if (mappingSectionTmp == null)
+// 201009-01                            {
+// 201009-01                                this.Hl7MappingSections.Add(segment.SectionName);
+// 201009-01                                mappingSectionTmp = this.Hl7MappingSections.Get(segment.SectionName);
+// 201009-01                            }
+// 201009-01                            // Legger til som subsegment i mappingsection --
+// 201009-01                            segment.MappingSection = mappingSectionTmp;
+// 201009-01                            segment.MappingSection.Segments.Add(segment);
 
                             // -- Håndtering av segment --
                             if (segment.Index_L2 <= 0)
@@ -180,7 +180,7 @@ namespace HL7Viewer.DataModel
                                 segment.Level = 2;
 
                                 // Legger til parent segment.
-                                HL7MappingSegment parentSegmentTmp = segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
+                                HL7MappingSegment parentSegmentTmp = this._HL7Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);  // segment.MappingSection.Segments.GetSegment(segment.SectionName, segment.Index_L1, 0);
                                 segment.ParentSegment = parentSegmentTmp;
                                 //if (segment.ParentSegment.SubSegments == null)
                                 //{
@@ -301,25 +301,25 @@ namespace HL7Viewer.DataModel
 
 
 
-        /// <summary>
-        /// Scan gjennom alle segmentnavn i den innleste mappingen og ta vare på unike verdiee.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete]
-        public List<string> PopulateListOfSections()
-        {
-            //List<string> sectionNames = new List<string>(); -> Endret til public property
-
-            foreach (HL7MappingSegment segment in this._HL7Segments)
-            {
-                if ((!SectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
-                {
-                    SectionNames.Add(segment.SectionName);
-                    this.Hl7MappingSections.Add(segment.SectionName);
-                }
-            }
-            return SectionNames;
-        }
+// 201009-01        /// <summary>
+// 201009-01        /// Scan gjennom alle segmentnavn i den innleste mappingen og ta vare på unike verdiee.
+// 201009-01        /// </summary>
+// 201009-01        /// <returns></returns>
+// 201009-01        [Obsolete]
+// 201009-01        public List<string> PopulateListOfSections()
+// 201009-01        {
+// 201009-01            //List<string> sectionNames = new List<string>(); -> Endret til public property
+// 201009-01
+// 201009-01            foreach (HL7MappingSegment segment in this._HL7Segments)
+// 201009-01            {
+// 201009-01                if ((!SectionNames.Contains(segment.SectionName)) && (!String.IsNullOrEmpty(segment.SectionName)))
+// 201009-01                {
+// 201009-01                    SectionNames.Add(segment.SectionName);
+// 201009-01                    this.Hl7MappingSections.Add(segment.SectionName);
+// 201009-01                }
+// 201009-01            }
+// 201009-01            return SectionNames;
+// 201009-01        }
 
         public override string ToString()
         {
@@ -333,7 +333,8 @@ namespace HL7Viewer.DataModel
 
         public string ToReport()
         {
-            return this.Name + "\r\n" + this.Hl7MappingSections.ToReport();
+// 201009-01 return this.Name + "\r\n" + this.Hl7MappingSections.ToReport();
+            return this.Name;
         }
 
         public int CompareTo(object obj)

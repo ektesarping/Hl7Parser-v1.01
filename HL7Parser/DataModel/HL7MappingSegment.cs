@@ -33,7 +33,7 @@ namespace HL7Viewer.DataModel
 
         public string SectionName { get; set; }
 
-        public Hl7MappingSection MappingSection { get; set; }
+        // 201009-01        public Hl7MappingSection MappingSection { get; set; }
 
         public string IndexComplete
         {

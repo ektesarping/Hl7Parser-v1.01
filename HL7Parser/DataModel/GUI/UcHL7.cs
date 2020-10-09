@@ -795,8 +795,16 @@ namespace HL7Viewer.DataModel.GUI
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // -- Les inn mappingen fra fil på nytt --
-            _HL7.MappingSelected = _HL7.MappingSelected.ImportMapping();
+//             // -- Alt 1: Les inn MappingSelected fra fil på nytt --
+//             _HL7.MappingSelected = _HL7.MappingSelected.ImportMapping();
+
+            // -- Alt 2: Les inn alle mappinger på nytt --
+            foreach (Hl7Mapping mapping in _HL7.HL7Mappings)
+            {
+                mapping.ImportMapping();
+            }
+
+
 
             // Leser inn meldingsfilen på nytt for å oppdatere mot oppdatert mapping.
             _HL7.ImportHL7MsgFile();
