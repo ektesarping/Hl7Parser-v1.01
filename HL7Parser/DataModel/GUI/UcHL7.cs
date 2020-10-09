@@ -795,6 +795,7 @@ namespace HL7Viewer.DataModel.GUI
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            tvHL7.SuspendLayout();
 //             // -- Alt 1: Les inn MappingSelected fra fil på nytt --
 //             _HL7.MappingSelected = _HL7.MappingSelected.ImportMapping();
 
@@ -804,8 +805,6 @@ namespace HL7Viewer.DataModel.GUI
                 mapping.ImportMapping();
             }
 
-
-
             // Leser inn meldingsfilen på nytt for å oppdatere mot oppdatert mapping.
             _HL7.ImportHL7MsgFile();
 
@@ -814,6 +813,8 @@ namespace HL7Viewer.DataModel.GUI
 
             // -- Repoulate msg fil --
             _HL7._UcHl7.Repopulate();  // HACK: Gå veien om _HL7 klassen som er static for å referere UcHL7. UCHl7 er referert i property i Hl7 klassen som er static.
+
+            tvHL7.ResumeLayout();
         }
     }
 }

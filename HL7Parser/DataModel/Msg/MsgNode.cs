@@ -377,7 +377,9 @@ namespace HL7Viewer.DataModel.Msg
             }
         }
 
-
+        /// <summary>
+        ///  Setter tekst som vises i treeview.
+        /// </summary>
         public string TreeNodeText
         {
             get
@@ -405,12 +407,13 @@ namespace HL7Viewer.DataModel.Msg
                         {
                             // -- Spesialhåndtering av parentnode for repeterende noder. F.eks varierende antall kopimottakere. --
                             //str += "[" /*+ this.MappingSectionName + " " + Index_L1.ToString() + ": "*/;
-                            str += mappingSegmentNameTmp;
+                            // str += mappingSegmentNameTmp;
+                            str += this.Parent.MappingSegment.SegmentName;
                             //str += "]"; // = " + this.Value;
                         }
                         else
                         {
-                            str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + ": ";
+                            str += "[" + this.MappingSectionName + " " ; //+ Index_L1.ToString() + ": ";
                             str += mappingSegmentNameTmp;
                             str += "]"; // = " + this.Value;
                         }
@@ -430,7 +433,7 @@ namespace HL7Viewer.DataModel.Msg
 
                         break;
                     case 3:
-                        str += "[" + this.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " ";
+                        str += "[" + this.Parent.MappingSectionName + " " + Index_L1.ToString() + "." + Index_L2.ToString() + " ";
                         if (this.MappingSegment != null)
                             str += mappingSegmentNameTmp;
                         str += "] = " + this.Value;
