@@ -141,12 +141,10 @@ namespace HL7Viewer.DataModel
                             {
                                 segment.CollapsedDefault = true;
                             }
-
                                                      
                             string strName = GetFieldAsString(fields, INDEX_NAME);
                             strName = HL7.TrimComment(strName, COMMENT_CHAR);
                             segment.SegmentName = strName;
-
 
 
                             // -- Legger til section hvis den ikke allerede finnes --
