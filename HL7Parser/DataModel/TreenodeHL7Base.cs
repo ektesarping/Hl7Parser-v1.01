@@ -37,6 +37,7 @@ namespace HL7Viewer.DataModel
                 {
                 //TreeNode treenode = new TreeNode();
                 msgNode.Treenode = this;
+                this.MsgNode = MsgNode;
 
                 this.Text = msgNode.TreeNodeText;
 

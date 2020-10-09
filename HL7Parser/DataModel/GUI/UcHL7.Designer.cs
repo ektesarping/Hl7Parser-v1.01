@@ -51,6 +51,7 @@
             this.chkSkjulTomme = new System.Windows.Forms.CheckBox();
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
+            this.toolTipTreenode = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +67,7 @@
             this.tvHL7.Name = "tvHL7";
             this.tvHL7.Size = new System.Drawing.Size(584, 390);
             this.tvHL7.TabIndex = 0;
+            this.tvHL7.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.tvHL7_NodeMouseHover);
             this.tvHL7.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvHL7_AfterSelect);
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
@@ -292,5 +294,6 @@
         private System.Windows.Forms.ToolStripMenuItem resetSplashscreenTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem visSplashScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTipTreenode;
     }
 }

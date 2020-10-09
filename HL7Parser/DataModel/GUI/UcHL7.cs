@@ -327,6 +327,7 @@ namespace HL7Viewer.DataModel.GUI
             this.tvHL7.Nodes.Clear();
             TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
             _HL7.MsgRootnode.Treenode = rootNode;
+            rootNode.MsgNode = _HL7.MsgRootnode;
 
             rootNode.Text = RootnodeText;
             this.tvHL7.Nodes.Add(rootNode);
@@ -817,6 +818,19 @@ namespace HL7Viewer.DataModel.GUI
             _HL7._UcHl7.Repopulate();  // HACK: Gå veien om _HL7 klassen som er static for å referere UcHL7. UCHl7 er referert i property i Hl7 klassen som er static.
 
             tvHL7.ResumeLayout();
+        }
+
+        private void tvHL7_NodeMouseHover(object sender, TreeNodeMouseHoverEventArgs e)
+        {
+            try
+            {
+                TreenodeHL7Base node = (TreenodeHL7Base)e.Node;
+                toolTipTreenode.SetToolTip(tvHL7, node.MsgNode.Value); //  MsgNode.Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception (Ikke kritisk): " + ex.Message + "\r\n\n" + ex.StackTrace, "Internal warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
