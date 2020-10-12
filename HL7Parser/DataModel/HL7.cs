@@ -105,6 +105,8 @@ namespace HL7Viewer.DataModel
 
         private const string MSG_NOT_INCLUDED_IN_MAPPING = "(*)";
 
+        public const string MSG_NODE_VALUE_HIDDEN = "******";
+
 
         public HL7()
         { }
@@ -206,6 +208,16 @@ namespace HL7Viewer.DataModel
             foreach (MsgNode childnode in this.MsgRootnode.Children)
             {
                 childnode.MappingSegment = MappingSelected.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L2, childnode.Index_L2);
+
+                // -- Erstatt verdien til segmentet hvis det skal være skjult --
+                if (childnode.MappingSegment != null)
+                {
+                    if (childnode.MappingSegment.HideValue)
+                    {
+                        childnode.Value = MSG_NODE_VALUE_HIDDEN;
+                    }
+                }
+
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }
@@ -218,6 +230,16 @@ namespace HL7Viewer.DataModel
                 // -- Hvis mappingsegment == null indikeres det med annen treenode farge. --
                 childnode.MappingSegment = MappingSelected.GetSegmentFromSection(childnode.MappingSectionName, childnode.Index_L1, childnode.Index_L2);
                 MatchMsgNodeToMappingRecursive(childnode);
+
+
+                // -- Erstatt verdien til segmentet hvis det skal være skjult --
+                if (childnode.MappingSegment != null)
+                {
+                    if (childnode.MappingSegment.HideValue)
+                    {
+                        childnode.Value = MSG_NODE_VALUE_HIDDEN;
+                    }
+                }
             }
         }
 

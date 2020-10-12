@@ -29,6 +29,12 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public bool CollapsedDefault { get; set; } = false;
 
+        /// <summary>
+        /// Skjuler verdien i treet.
+        /// </summary>
+        public bool HideValue { get; set; } = false;
+
+
         public string SegmentName { get; set; }
 
         public string SectionName { get; set; }

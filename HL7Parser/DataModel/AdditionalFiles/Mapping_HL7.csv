@@ -1,212 +1,212 @@
-﻿//Section	Index_1	Index_L2	Collapse default	ELEMENT_NAME	Comment				
-// 			
-
-// -- Display name vises i boksen som velger meldingstype --
-DisplayName	Røntgensvar
-MSH	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-MSH	1	0	Y	Field Separator					
-MSH	2	0	Y	Encoding Characters					
-MSH	3	0	Y	Sending Application					
-MSH	4	0	Y	Sending Facility					
-MSH	5	0	Y	Receiving Application					
-MSH	6	0	Y	Receiving Facility					
-MSH	7	0	Y	Date/Time of Message					
-MSH	8	0	Y	Security					
-MSH	9	0	Y	Message Type					
-MSH	10	0	Y	Message Control Id					
-MSH	11	0	Y	Processing Id					
-MSH	12	0	Y	Version Id					
-MSH	13	0	Y	Sequence Number					
-MSH	14	0	Y	Continuation Pointer					
-MSH	15	0	Y	Accept Acknowledgement Type					
-MSH	16	0	Y	Application Acknowledgement Type					
-MSH	17	0	Y	Country Code					
-MSH	18	0	Y	Character Set					
-MSH	19	0	Y	Principal Language of Message					
-		
-PID	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-PID	1	0		Set ID – Patient ID					
-PID	2	0		Patient ID (External ID)					
-PID	3	0		Patient ID (Personnummer)					
-PID	4	0		Alternate Patient ID – PID					
-PID	5	0	Y	Patient Name					
-PID	5	1		Etternavn					
-PID	5	2		Mellomnavn					
-PID	5	3		Fornavn					
-PID	6	0		Mother’s Maiden Name					
-PID	7	0		Date/Time of Birth					
-PID	8	0		Sex					
-PID	9	0		Patient Alias					
-PID	10	0		Race					
-PID	11	0		Patient Address					
-PID	11	1		Adresse
-PID	11	3		Poststed
-PID	11	5		Postnummer
-PID	12	0		Country Code					
-PID	13	0		Phone Number – Home					
-PID	14	0		Phone Number – Business					
-PID	15	0		Primary Language					
-PID	16	0		Marital Status					
-PID	17	0		Religion					
-PID	18	0		Patient Account Number					
-PID	19	0		SSN Number – Patient					
-PID	20	0		Driver’s License Number – Patient					
-PID	21	0		Mother’s Identifier					
-PID	22	0		Ethnic Group					
-PID	23	0		Birth Place					
-PID	24	0		Multiple Birth Indicator					
-PID	25	0		Birth Order					
-PID	26	0		Citizenship					
-PID	27	0		Veterans Military Status					
-PID	28	0		Nationality					
-PID	29	0		Patient Death Date and Time					
-PID	30	0		Patient Death Indicator					
-
-//PV1	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-PV1	1	0		//Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1				
-PV1	2	0		Patient Class					
-PV1	3	0		Assigned Patient Location					
-PV1	4	0		Admission Type					
-PV1	5	0		Preadmit Number					
-PV1	6	0		Prior Patient Location					
-PV1	7	0		Attending Doctor					
-PV1	8	0		Henvisende lege					
-PV1	8	1		Henvisende lege (HER Id/HPR nr)					
-PV1	8	2		Henvisende lege - Etternavn					
-PV1	8	3		Henvisende lege - Fornavn					
-PV1	9	0		Consulting Doctor					
-PV1	10	0		Hospital Service					
-PV1	11	0		Temporary Location					
-PV1	12	0		Preadmit Test Indicator					
-PV1	13	0		Re-admission Indicator					
-PV1	14	0		Admit Source					
-PV1	15	0		Ambulatory Status					
-PV1	16	0		VIP Indicator					
-PV1	17	0		Admitting Doctor					
-PV1	18	0		Patient Type					
-PV1	19	0		Visit Number					
-PV1	20	0		Financial Class					
-PV1	21	0		Charge Price Indicator					
-PV1	22	0		Courtesy Code					
-PV1	23	0		Credit Rating					
-PV1	24	0		Contract Code					
-PV1	25	0		Contract Effective Date					
-PV1	26	0		Contract Amount					
-PV1	27	0		Contract Period					
-PV1	28	0		Interest Code					
-PV1	29	0		Transfer to Bad Debt Code					
-PV1	30	0		Transfer to Bad Debt Date					
-PV1	31	0		Bad Debt Agency Code					
-PV1	32	0		Bad Debt Transfer Amount					
-PV1	33	0		Bad Debt Recovery Amount					
-PV1	34	0		Delete Account Indicator					
-PV1	35	0		Delete Account Date					
-PV1	36	0		Discharge Disposition					
-PV1	37	0		Discharged to Location					
-PV1	38	0		Diet Type					
-PV1	39	0		Servicing Facility					
-PV1	40	0		Bed Status					
-PV1	41	0		Account Status					
-PV1	42	0		Pending Location					
-PV1	43	0		Prior Temporary Location					
-PV1	44	0		Admit Date/Time					
-PV1	45	0		Discharge Date/Time					
-PV1	46	0		Current Patient Balance					
-PV1	47	0		Total Charges					
-PV1	48	0		Total Adjustments					
-PV1	49	0		Total Payments					
-PV1	50	0		Alternate Visit ID					
-PV1	51	0		Visit Indicator					
-PV1	52	0		Other Healthcare Provider					
-								
-//OBR	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-OBR	1	0			Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – OBR				
-OBR	2	0		Placer Order Number					
-OBR	3	0		Filler Order Number					
-OBR	4	0		Universal Service ID					
-OBR	5	0		Priority					
-OBR	6	0		Requested Date/time					
-OBR	7	0		Observation Date/Time					
-OBR	8	0		Observation End Date/Time					
-OBR	9	0		Collection Volume					
-OBR	10	0		Collector Identifier					
-OBR	11	0		Specimen Action Code					
-OBR	12	0		Danger Code					
-OBR	13	0		Relevant Clinical Info.					
-OBR	14	0		Specimen Received Date/Time					
-OBR	15	0		Specimen Source					
-OBR	16	0		Ordering Provider					
-OBR	17	0		Order Callback Phone Number					
-OBR	18	0		Placer field 1					
-OBR	19	0		Placer field 2					
-OBR	20	0		Filler Field 1					
-OBR	21	0		Filler Field 2					
-OBR	22	0		Results Rpt/Status Chng – Date/Time					
-OBR	23	0		Charge to Practice
-OBR	23	1		Dollar Amount	
-OBR	23	2		Charge Code					
-OBR	24	0		Diagnostic Serv Sect ID					
-OBR	25	0		Result Status					
-OBR	26	0		Parent Result					
-OBR	27	0		Quantity/Timing					
-OBR	28	0	Y	Kopimottakere					
-OBR	28	1		Kopi1: HPR-nr					
-OBR	28	2		Kopi1: Etternavn					
-OBR	28	3		Kopi1: Fornavn					
-OBR	28	4		Kopi1: *					
-OBR	28	5		Kopi1: *					
-OBR	28	6		Kopi1: *					
-OBR	28	7		Kopi1: *					
-OBR	28	8		Kopi1: *					
-OBR	28	9		Kopi1: *					
-OBR	28	10		Kopi1: *					
-OBR	28	11		Kopi1: *					
-OBR	28	12		Kopi1: *					
-OBR	28	13		Kopi1: *					
-OBR	28	14		Kopi1: Institusjon&Kode												
-OBR	29	0		Parent					
-OBR	30	0		Transportation Mode					
-OBR	31	0		Reason for Study
-OBR	31	1		Identifier
-OBR	31	2		Text					
-OBR	32	0		Principal Result Interpreter					
-OBR	33	0		Assistant Result Interpreter					
-OBR	34	0		Technician					
-OBR	35	0		Transcriptionist					
-OBR	36	0		Scheduled Date/Time					
-OBR	37	0		Number of Sample Containers					
-OBR	38	0		Transport Logistics of Collected Sample					
-OBR	39	0		Collector’s Comment					
-OBR	40	0		Transport Arrangement Responsibility					
-OBR	41	0		Transport Arranged					
-OBR	42	0		Escort Required					
-OBR	43	0		Planned Patient Transport Comment					
-		
-//OBX	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-OBX	1	0	Y	Field 1					
-OBX	2	0	Y	Field 2					
-OBX	3	0	Y	Field 3					
-OBX	4	0	Y	Field 4					
-OBX	5	0	Y	Field 5					
-OBX	6	0	Y	Field 6					
-OBX	7	0	Y	Field 7					
-OBX	8	0	Y	Field 8					
-OBX	9	0	Y	Field 9					
-OBX	10	0	Y	Field 10					
-OBX	11	0	Y	Field 11					
-		
-//ZEI	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-ZEI	0	0	Y	Field 1					
-ZEI	1	0	Y	Field 1					
-ZEI	2	0	Y	Field 2					
-ZEI	3	0	Y	Field 3					
-ZEI	4	0	Y	Field 4					
-ZEI	5	0	Y	Field 5					
-ZEI	6	0	Y	Field 6					
-ZEI	7	0	Y	Field 7					
-	
-//ZDS	0	0		// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --
-ZDS	1	0	Y	Field 1					
-ZDS	0	0	Y	Field 0					
-									
-									
+﻿//Section	Index_1	Index_L2	Collapse default	Skjul verdi	ELEMENT_NAME	Comment											
+// 																	
+																	
+// -- Display name vises i boksen som velger meldingstype --																	
+DisplayName	Røntgensvar																
+MSH	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+MSH	1	0	Y		Field Separator												
+MSH	2	0	Y		Encoding Characters												
+MSH	3	0	Y		Sending Application												
+MSH	4	0	Y		Sending Facility												
+MSH	5	0	Y		Receiving Application												
+MSH	6	0	Y		Receiving Facility												
+MSH	7	0	Y		Date/Time of Message												
+MSH	8	0	Y		Security												
+MSH	9	0	Y		Message Type												
+MSH	10	0	Y		Message Control Id												
+MSH	11	0	Y		Processing Id												
+MSH	12	0	Y		Version Id												
+MSH	13	0	Y		Sequence Number												
+MSH	14	0	Y		Continuation Pointer												
+MSH	15	0	Y		Accept Acknowledgement Type												
+MSH	16	0	Y		Application Acknowledgement Type												
+MSH	17	0	Y		Country Code												
+MSH	18	0	Y		Character Set												
+MSH	19	0	Y		Principal Language of Message												
+																	
+PID	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+PID	1	0			Set ID – Patient ID												
+PID	2	0			Patient ID (External ID)												
+PID	3	0			Patient ID (Personnummer)												
+PID	4	0			Alternate Patient ID – PID												
+PID	5	0	Y		Patient Name												
+PID	5	1			Etternavn												
+PID	5	2			Mellomnavn												
+PID	5	3			Fornavn												
+PID	6	0			Mother’s Maiden Name												
+PID	7	0			Date/Time of Birth												
+PID	8	0			Sex												
+PID	9	0			Patient Alias												
+PID	10	0			Race												
+PID	11	0			Patient Address												
+PID	11	1			Adresse												
+PID	11	3			Poststed												
+PID	11	5			Postnummer												
+PID	12	0			Country Code												
+PID	13	0			Phone Number – Home												
+PID	14	0			Phone Number – Business												
+PID	15	0			Primary Language												
+PID	16	0			Marital Status												
+PID	17	0			Religion												
+PID	18	0			Patient Account Number												
+PID	19	0			SSN Number – Patient												
+PID	20	0			Driver’s License Number – Patient												
+PID	21	0			Mother’s Identifier												
+PID	22	0			Ethnic Group												
+PID	23	0			Birth Place												
+PID	24	0			Multiple Birth Indicator												
+PID	25	0			Birth Order												
+PID	26	0			Citizenship												
+PID	27	0			Veterans Military Status												
+PID	28	0			Nationality												
+PID	29	0			Patient Death Date and Time												
+PID	30	0			Patient Death Indicator												
+																	
+//PV1	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+PV1	1	0			//Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – PV1												
+PV1	2	0			Patient Class												
+PV1	3	0			Assigned Patient Location												
+PV1	4	0			Admission Type												
+PV1	5	0			Preadmit Number												
+PV1	6	0			Prior Patient Location												
+PV1	7	0			Attending Doctor												
+PV1	8	0			Henvisende lege												
+PV1	8	1			Henvisende lege (HER Id/HPR nr)												
+PV1	8	2			Henvisende lege - Etternavn												
+PV1	8	3			Henvisende lege - Fornavn												
+PV1	9	0			Consulting Doctor												
+PV1	10	0			Hospital Service												
+PV1	11	0			Temporary Location												
+PV1	12	0			Preadmit Test Indicator												
+PV1	13	0			Re-admission Indicator												
+PV1	14	0			Admit Source												
+PV1	15	0			Ambulatory Status												
+PV1	16	0			VIP Indicator												
+PV1	17	0			Admitting Doctor												
+PV1	18	0			Patient Type												
+PV1	19	0			Visit Number												
+PV1	20	0			Financial Class												
+PV1	21	0			Charge Price Indicator												
+PV1	22	0			Courtesy Code												
+PV1	23	0			Credit Rating												
+PV1	24	0			Contract Code												
+PV1	25	0			Contract Effective Date												
+PV1	26	0			Contract Amount												
+PV1	27	0			Contract Period												
+PV1	28	0			Interest Code												
+PV1	29	0			Transfer to Bad Debt Code												
+PV1	30	0			Transfer to Bad Debt Date												
+PV1	31	0			Bad Debt Agency Code												
+PV1	32	0			Bad Debt Transfer Amount												
+PV1	33	0			Bad Debt Recovery Amount												
+PV1	34	0			Delete Account Indicator												
+PV1	35	0			Delete Account Date												
+PV1	36	0			Discharge Disposition												
+PV1	37	0			Discharged to Location												
+PV1	38	0			Diet Type												
+PV1	39	0			Servicing Facility												
+PV1	40	0			Bed Status												
+PV1	41	0			Account Status												
+PV1	42	0			Pending Location												
+PV1	43	0			Prior Temporary Location												
+PV1	44	0			Admit Date/Time												
+PV1	45	0			Discharge Date/Time												
+PV1	46	0			Current Patient Balance												
+PV1	47	0			Total Charges												
+PV1	48	0			Total Adjustments												
+PV1	49	0			Total Payments												
+PV1	50	0			Alternate Visit ID												
+PV1	51	0			Visit Indicator												
+PV1	52	0			Other Healthcare Provider												
+																	
+//OBR	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+OBR	1	0				Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – OBR											
+OBR	2	0			Placer Order Number												
+OBR	3	0			Filler Order Number												
+OBR	4	0			Universal Service ID												
+OBR	5	0			Priority												
+OBR	6	0			Requested Date/time												
+OBR	7	0			Observation Date/Time												
+OBR	8	0			Observation End Date/Time												
+OBR	9	0			Collection Volume												
+OBR	10	0			Collector Identifier												
+OBR	11	0			Specimen Action Code												
+OBR	12	0			Danger Code												
+OBR	13	0			Relevant Clinical Info.												
+OBR	14	0			Specimen Received Date/Time												
+OBR	15	0			Specimen Source												
+OBR	16	0			Ordering Provider												
+OBR	17	0			Order Callback Phone Number												
+OBR	18	0			Placer field 1												
+OBR	19	0			Placer field 2												
+OBR	20	0			Filler Field 1												
+OBR	21	0			Filler Field 2												
+OBR	22	0			Results Rpt/Status Chng – Date/Time												
+OBR	23	0			Charge to Practice												
+OBR	23	1			Dollar Amount												
+OBR	23	2			Charge Code												
+OBR	24	0			Diagnostic Serv Sect ID												
+OBR	25	0			Result Status												
+OBR	26	0			Parent Result												
+OBR	27	0			Quantity/Timing												
+OBR	28	0	Y		Kopimottakere												
+OBR	28	1			Kopi1: HPR-nr												
+OBR	28	2			Kopi1: Etternavn												
+OBR	28	3			Kopi1: Fornavn												
+OBR	28	4			Kopi1: *												
+OBR	28	5			Kopi1: *												
+OBR	28	6			Kopi1: *												
+OBR	28	7			Kopi1: *												
+OBR	28	8			Kopi1: *												
+OBR	28	9			Kopi1: *												
+OBR	28	10			Kopi1: *												
+OBR	28	11			Kopi1: *												
+OBR	28	12			Kopi1: *												
+OBR	28	13			Kopi1: *												
+OBR	28	14			Kopi1: Institusjon&Kode												
+OBR	29	0			Parent												
+OBR	30	0			Transportation Mode												
+OBR	31	0			Reason for Study												
+OBR	31	1			Identifier												
+OBR	31	2			Text												
+OBR	32	0			Principal Result Interpreter												
+OBR	33	0			Assistant Result Interpreter												
+OBR	34	0			Technician												
+OBR	35	0			Transcriptionist												
+OBR	36	0			Scheduled Date/Time												
+OBR	37	0			Number of Sample Containers												
+OBR	38	0			Transport Logistics of Collected Sample												
+OBR	39	0			Collector’s Comment												
+OBR	40	0			Transport Arrangement Responsibility												
+OBR	41	0			Transport Arranged												
+OBR	42	0			Escort Required												
+OBR	43	0			Planned Patient Transport Comment												
+																	
+//OBX	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+OBX	1	0	Y		Field 1												
+OBX	2	0	Y		Field 2												
+OBX	3	0	Y		Field 3												
+OBX	4	0	Y		Field 4												
+OBX	5	0	Y		Field 5												
+OBX	6	0	Y		Field 6												
+OBX	7	0	Y		Field 7												
+OBX	8	0	Y		Field 8												
+OBX	9	0	Y		Field 9												
+OBX	10	0	Y		Field 10												
+OBX	11	0	Y		Field 11												
+																	
+//ZEI	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+ZEI	0	0	Y		Field 1												
+ZEI	1	0	Y		Field 1												
+ZEI	2	0	Y		Field 2												
+ZEI	3	0	Y		Field 3												
+ZEI	4	0	Y		Field 4												
+ZEI	5	0	Y		Field 5												
+ZEI	6	0	Y		Field 6												
+ZEI	7	0	Y		Field 7												
+																	
+//ZDS	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --												
+ZDS	1	0	Y		Field 1												
+ZDS	0	0	Y		Field 0												
+																	
+																	
