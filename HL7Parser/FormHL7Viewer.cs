@@ -16,7 +16,7 @@ namespace HL7Viewer
     public partial class FormHL7Viewer : Form
     {
 
-        public FormHL7Viewer()
+        public FormHL7Viewer(bool openPreviousMsgFile)
         {
             InitializeComponent();
 
@@ -25,23 +25,14 @@ namespace HL7Viewer
             string version = fvi.FileVersion;
             this.Text += " - V" + version;
 
-            ucHL7.PostInitialize();
+            ucHL7.PostInitialize(openPreviousMsgFile);
+        }
 
-
-            //// -- Åpne sist brukte HL7 fil --
-            //try
-            //{
-                
-            //    FileInfo fi = new FileInfo(Properties.Settings.Default.MsgFilename);
-            //    if (fi.Exists)
-            //    {
-            //        this.ucHL7.OpenMessageFile(fi);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Kunne ikke åpne forrige meldingsfil.", "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
+        public FormHL7Viewer(FileInfo fi) : this(false)
+        {
+            Properties.Settings.Default.MsgFilename = fi.FullName;
+            Properties.Settings.Default.Save();
+            this.ucHL7.OpenMessageFile(fi);
         }
     }
 }

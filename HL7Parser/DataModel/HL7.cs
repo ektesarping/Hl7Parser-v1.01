@@ -303,6 +303,10 @@ namespace HL7Viewer.DataModel
         /// <returns></returns>
         public static string InsertLinebreaks(string str, int maxLineLength)
         {
+            if(String.IsNullOrEmpty(str))
+            {
+                return "";
+            }
             //            str = @"Linje01-.10...:....20...:....30...:....40...: ...50...:.. .60...:....70...:..XLinje02-.10...:....20...:....30...:....40...:....50...:....60...:... 70...:..XLinje03-.10...:....20... ....30...:....40...:....50...:....60...:....70...:..X";
             string result = String.Empty;
             int pos = 0;
