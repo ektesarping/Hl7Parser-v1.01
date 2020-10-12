@@ -105,5 +105,17 @@ namespace HL7Viewer.Properties {
                 this["SplashScreenDelay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TooltipEnable {
+            get {
+                return ((bool)(this["TooltipEnable"]));
+            }
+            set {
+                this["TooltipEnable"] = value;
+            }
+        }
     }
 }

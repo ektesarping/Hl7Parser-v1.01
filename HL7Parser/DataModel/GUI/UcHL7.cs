@@ -18,6 +18,21 @@ namespace HL7Viewer.DataModel.GUI
     {
         public static HL7 _HL7 { get; set; } //= new HL7();  // TODO: 201008 Fjern static hvis eventhandler fra FileUpdated ikke skal brukes
 
+        public bool TooltipEnable
+        {
+            get
+            {
+                return Properties.Settings.Default.TooltipEnable;
+            }
+            set
+            {
+                Properties.Settings.Default.TooltipEnable = value;
+                Properties.Settings.Default.Save();
+
+                toolTipTreenode.Active = value;
+            }
+
+        }
 
         //public HL7Segments _HL7Segments { get; set; }
         public HL7SegmentCategories _HL7SegmentCategories { get; set; } // = new HL7SegmentCategories();
@@ -185,6 +200,9 @@ namespace HL7Viewer.DataModel.GUI
             _HL7._UcHl7 = this; // Hack for å få tilgang til metoder i denne usercontrollen etter at mappingfil/meldingsfil er endret. (Automatisk reloading)
 
             this.PopulateCboMappings();
+
+            // -- Henter lagret verdi for tooltip enabled --
+            toolTipToolStripMenuItem.Checked = TooltipEnable;
 
             // -- Åpne sist brukte HL7 fil --
             try
@@ -820,17 +838,45 @@ namespace HL7Viewer.DataModel.GUI
             tvHL7.ResumeLayout();
         }
 
+
+        private int TOOLTIP_LINE_LENGTH_BEFORE_LINEBREAK = 80;
+        private int MIN_LINE_LENGHT_TO_SHOW_TOOLTIP = 5; //40;
         private void tvHL7_NodeMouseHover(object sender, TreeNodeMouseHoverEventArgs e)
         {
-            try
+            if (TooltipEnable == true)
             {
-                TreenodeHL7Base node = (TreenodeHL7Base)e.Node;
-                toolTipTreenode.SetToolTip(tvHL7, node.MsgNode.Value); //  MsgNode.Value);
+                try
+                {
+                    TreenodeHL7Base node = (TreenodeHL7Base)e.Node;
+                    //activeTooltipnode = (TreenodeHL7Base)e.Node;
+
+                    string strTmp = HL7.InsertLinebreaks(node.MsgNode.Value, TOOLTIP_LINE_LENGTH_BEFORE_LINEBREAK);
+                    if (strTmp.Length > MIN_LINE_LENGHT_TO_SHOW_TOOLTIP)
+                    {
+                        toolTipTreenode.RemoveAll();
+                        toolTipTreenode.SetToolTip(tvHL7, strTmp); //  MsgNode.Value);
+                    }
+                    else
+                    {
+                        toolTipTreenode.RemoveAll();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show("Exception (Ikke kritisk): " + ex.Message + "\r\n\n" + ex.StackTrace, "Internal warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Exception (Ikke kritisk): " + ex.Message + "\r\n\n" + ex.StackTrace, "Internal warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+        }
+
+        private void tvHL7_MouseLeave(object sender, EventArgs e)
+        {
+            //toolTipTreenode.RemoveAll();
+        }
+
+        private void toolTipToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TooltipEnable = !TooltipEnable;
+            toolTipToolStripMenuItem.Checked = TooltipEnable;
         }
     }
 }

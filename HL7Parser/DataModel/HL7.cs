@@ -291,5 +291,65 @@ namespace HL7Viewer.DataModel
                 }
             }
         }
+
+        private const string SPACE = " ";
+        private const string LINEBREAK = "\r\n";
+
+        /// <summary>
+        /// Legger inn linjeskift i en streng slik at maks lnjelengde er lik argumentet lineLength.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="maxLineLength"></param>
+        /// <returns></returns>
+        public static string InsertLinebreaks(string str, int maxLineLength)
+        {
+            //            str = @"Linje01-.10...:....20...:....30...:....40...: ...50...:.. .60...:....70...:..XLinje02-.10...:....20...:....30...:....40...:....50...:....60...:... 70...:..XLinje03-.10...:....20... ....30...:....40...:....50...:....60...:....70...:..X";
+            string result = String.Empty;
+            int pos = 0;
+            int lineNo = 0;
+            int posLineBreak = 0;
+
+            if (str.Length <= maxLineLength)
+            {
+                result = str;
+                return result;
+            }
+
+            while (str.Length > 0)
+            {
+                if (str.Length > maxLineLength)
+                {
+                    // Kopier første del av strengen med lengde 'lineLength'
+                    string tmp = str.Substring(0, maxLineLength);
+
+                    // Finn siste space for å legge inn linjeskift i den posisjonen.
+                    int posLastSpace = tmp.LastIndexOf(SPACE);
+
+                    // Hent ut delen som skal skilles ut i ny linje
+                    if (posLastSpace == 0)
+                    {
+                        tmp = str.Substring(0, maxLineLength);
+                    }
+                    else if (posLastSpace > 0)
+                    {
+                        tmp = str.Substring(0, posLastSpace);
+                    }
+
+                    if (!String.IsNullOrEmpty(result))
+                    {
+                        result += LINEBREAK;
+                    }
+
+                    result += tmp;
+                    str = str.Replace(tmp, "");
+                }
+                else
+                {
+                    result += LINEBREAK + str;
+                    return result;
+                }
+            }
+            return result;
+        }
     }
 }

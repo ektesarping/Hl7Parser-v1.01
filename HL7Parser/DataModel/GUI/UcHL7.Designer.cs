@@ -36,6 +36,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExpandSubnodes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCollapseSubnodes = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolTipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripHL7 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.åpneHL7FilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +74,7 @@
             this.tvHL7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragDrop);
             this.tvHL7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvHL7_DragEnter);
             this.tvHL7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvHL7_KeyDown);
+            this.tvHL7.MouseLeave += new System.EventHandler(this.tvHL7_MouseLeave);
             // 
             // contextMenuStripTreeview
             // 
@@ -80,9 +83,11 @@
             this.copyNavnOgVerdiToolStripMenuItem,
             this.toolStripSeparator1,
             this.toolStripMenuItemExpandSubnodes,
-            this.toolStripMenuItemCollapseSubnodes});
+            this.toolStripMenuItemCollapseSubnodes,
+            this.toolStripSeparator2,
+            this.toolTipToolStripMenuItem});
             this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
-            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 98);
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 126);
             // 
             // copyToolStripMenuItem
             // 
@@ -116,6 +121,18 @@
             this.toolStripMenuItemCollapseSubnodes.Size = new System.Drawing.Size(271, 22);
             this.toolStripMenuItemCollapseSubnodes.Text = "Slå sammen noder under valgte node";
             this.toolStripMenuItemCollapseSubnodes.Click += new System.EventHandler(this.toolStripMenuItemCollapseSubnodes_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(268, 6);
+            // 
+            // toolTipToolStripMenuItem
+            // 
+            this.toolTipToolStripMenuItem.Name = "toolTipToolStripMenuItem";
+            this.toolTipToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.toolTipToolStripMenuItem.Text = "ToolTip";
+            this.toolTipToolStripMenuItem.Click += new System.EventHandler(this.toolTipToolStripMenuItem_Click);
             // 
             // menuStripHL7
             // 
@@ -248,6 +265,12 @@
             this.cboMappingFiles.TabIndex = 5;
             this.cboMappingFiles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // toolTipTreenode
+            // 
+            this.toolTipTreenode.AutoPopDelay = 5000;
+            this.toolTipTreenode.InitialDelay = 50;
+            this.toolTipTreenode.ReshowDelay = 100;
+            // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -295,5 +318,7 @@
         private System.Windows.Forms.ToolStripMenuItem visSplashScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTipTreenode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolTipToolStripMenuItem;
     }
 }
