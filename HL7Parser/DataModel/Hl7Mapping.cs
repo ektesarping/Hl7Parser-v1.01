@@ -48,7 +48,8 @@ namespace HL7Viewer.DataModel
 
         private const int INDEX_COLLAPSED_DEFAULT = 3;
         private const int INDEX_HIDE_VALUE = 4;
-        private const int INDEX_NAME = 5;
+        private const int INDEX_CONSTRAINT = 5;
+        private const int INDEX_NAME = 6;
 
         private const string DISPLAY_NAME = "DISPLAYNAME";
         private const string STR_COLLAPSE_DEFAULT = "Y";
@@ -131,6 +132,51 @@ namespace HL7Viewer.DataModel
                             if (GetFieldAsString(fields, INDEX_HIDE_VALUE).ToUpper() == STR_HIDE_VALUE)
                             {
                                 segment.HideValue = true;
+                            }
+
+                            // -- Constraints - Numerisk verdi og feltlengder --
+                            string constraintsTmp = String.Empty;
+                            char CONSTRAINTS_SEPARATOR = ';';
+                            int MAX_FIELD_LENGTH = 9999;
+                            constraintsTmp = GetFieldAsString(fields, INDEX_CONSTRAINT).ToUpper();
+
+                            if (!string.IsNullOrEmpty(constraintsTmp))
+                            {
+                                string[] fieldsConstr = constraintsTmp.Split(CONSTRAINTS_SEPARATOR);
+                                foreach (string constr in fieldsConstr)
+                                {
+                                    if (constr == "N")
+                                    {
+                                        segment.IsNumeric = true;
+                                    }
+                                    if (constr.Contains("L"))
+                                    {
+                                        string tmp = constr.Replace("L", "");
+                                        string[] fieldsLength = tmp.Split(',');
+                                        if (fieldsConstr.Length == 2)
+                                        {
+                                            int minTmp = 0;
+                                            if (int.TryParse(fieldsConstr[0], out minTmp))
+                                            {
+                                                segment.MinLenght = minTmp;
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show("Kunne ikke lese inn min lengde for segmentet " + segment.ToString());
+                                            }
+
+                                            int maxTmp = MAX_FIELD_LENGTH;
+                                            if (int.TryParse(fieldsConstr[1], out maxTmp))
+                                            {
+                                                segment.MaxLenght = maxTmp;
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show("Kunne ikke lese inn max lengde for segmentet " + segment.ToString());
+                                            }
+                                        }
+                                    }
+                                }
                             }
 
                             string strName = GetFieldAsString(fields, INDEX_NAME);

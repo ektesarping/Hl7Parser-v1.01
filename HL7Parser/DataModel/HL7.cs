@@ -217,7 +217,6 @@ namespace HL7Viewer.DataModel
                         childnode.Value = MSG_NODE_VALUE_HIDDEN;
                     }
                 }
-
                 MatchMsgNodeToMappingRecursive(childnode);
             }
         }
@@ -325,7 +324,7 @@ namespace HL7Viewer.DataModel
         /// <returns></returns>
         public static string InsertLinebreaks(string str, int maxLineLength)
         {
-            if(String.IsNullOrEmpty(str))
+            if (String.IsNullOrEmpty(str))
             {
                 return "";
             }

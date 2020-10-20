@@ -217,22 +217,23 @@ namespace HL7Viewer.DataModel.GUI
             toolTipToolStripMenuItem.Checked = TooltipEnable;
 
             // -- Åpne sist brukte HL7 fil --
-            try
+            // Sjekker først at MsgFilename ikke er tomt.
+            if (!String.IsNullOrWhiteSpace(this.MsgFileFilename) && (!String.IsNullOrEmpty(this.MsgFileFilename)))
             {
-                FileInfo fi = new FileInfo(this.MsgFileFilename);
-                Properties.Settings.Default.Save();
-                if (fi.Exists)
+                try
                 {
-                    this.OpenMessageFile(fi);
+                    FileInfo fi = new FileInfo(this.MsgFileFilename);
+                    Properties.Settings.Default.Save();
+                    if (fi.Exists)
+                    {
+                        this.OpenMessageFile(fi);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Kunne ikke åpne forrige meldingsfil.\r\n\nException\r\n" + ex.Message + "\r\n\nStacktrace\r\n" + ex.StackTrace, "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Kunne ikke åpne forrige meldingsfil.\r\n\nException\r\n" + ex.Message + "\r\n\nStacktrace\r\n" + ex.StackTrace, "Åpne forrige meldingsfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-
-
 
             // -- Initialiserer status for checkboxer --
             IsInitializingCheckboxes = true;
@@ -242,9 +243,6 @@ namespace HL7Viewer.DataModel.GUI
             //PopulateCboMappings();
 
         }
-
-
-
 
         private const string TEXT_ADD_MAPPING = "Legg til mapping...";
 
@@ -273,7 +271,7 @@ namespace HL7Viewer.DataModel.GUI
                     }
                 }
 
-                // -- Sette inn navnt på valgte mapping i ocmponboxen --
+                // -- Sette inn navnt på valgte mapping i comboboksen --
                 cboMappingFiles.Text = this._HL7.MappingSelected.DisplayName;
 
                 // -- Legge til 'Add mapping file' i bunnen av 
@@ -283,57 +281,74 @@ namespace HL7Viewer.DataModel.GUI
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.cboMappingFiles.SelectedItem.ToString() == (string)TEXT_ADD_MAPPING)
+            if (this.cboMappingFiles.SelectedItem != null)
             {
-                // -- Legger til mapping --
-                DialogResult res = new DialogResult();
-                OpenFileDialog dlg = new OpenFileDialog();
-
-                // Prøver å finne directory for selected mapping.
-                string dir = String.Empty;
-                if (_HL7.MappingSelected != null)
+                if (this.cboMappingFiles.SelectedItem.ToString() == (string)TEXT_ADD_MAPPING)
                 {
-                    if (_HL7.MappingSelected.MappingFileFullPath != null)
+                    // -- Legger til mapping --
+                    DialogResult res = new DialogResult();
+                    OpenFileDialog dlg = new OpenFileDialog();
+
+                    // Prøver å finne directory for selected mapping.
+                    string dir = String.Empty;
+                    if (_HL7.MappingSelected != null)
                     {
-                        FileInfo fi = new FileInfo(_HL7.MappingSelected.MappingFileFullPath);
-                        dir = fi.DirectoryName;
+                        if (_HL7.MappingSelected.MappingFileFullPath != null)
+                        {
+                            FileInfo fi = new FileInfo(_HL7.MappingSelected.MappingFileFullPath);
+                            dir = fi.DirectoryName;
+                        }
+                    }
+                    if (!String.IsNullOrEmpty(dir))
+                    {
+                        dlg.InitialDirectory = dir;
+                    }
+                    dlg.Filter = "Mapping filer (*.csv)|*.csv*|Alle filer (*.*)|*.*";
+
+                    res = dlg.ShowDialog();
+                    if (res == DialogResult.OK)
+                    {
+                        FileInfo fi = new FileInfo(dlg.FileName);
+                        if (fi.Exists)
+                        {
+                            // -- Import mapping --
+                            Hl7Mapping newMapping = new Hl7Mapping(fi);
+                            //newMapping.ImportMapping();
+
+                            _HL7.HL7Mappings.Add(newMapping);
+                            // -- Setter den innleste mappingen som selected --
+                            _HL7.MappingSelected = newMapping;
+                            _HL7.ImportHL7MsgFile();
+
+                            this.PopulateCboMappings();
+                            // --> Lagre fileinfi.Fullname i PRoperties.Settings.Default
+                            this.Repopulate();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Kunne ikke lese inn mappingen fra filen " + dlg.FileName, "Importere mapping (Kode 201016-0840)", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
-                if (!String.IsNullOrEmpty(dir))
+                else
                 {
-                    dlg.InitialDirectory = dir;
+                    //Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
+                    //if (mappingTmp != null)
+                    //{
+                    //    _HL7.MappingSelected = mappingTmp;
+                    //    _HL7.ImportHL7MsgFile();
+                    //    this.Repopulate();
+                    //}
                 }
-                dlg.Filter = "Mapping filer (*.csv)|*.csv*|Alle filer (*.*)|*.*";
-
-                res = dlg.ShowDialog();
-                if (res == DialogResult.OK)
-                {
-                    FileInfo fi = new FileInfo(dlg.FileName);
-                    if (fi.Exists)
-                    {
-                        // -- Import mapping --
-                        Hl7Mapping newMapping = new Hl7Mapping(fi);
-                        //newMapping.ImportMapping();
-
-                        _HL7.HL7Mappings.Add(newMapping);
-                        // -- Setter den innleste mappingen som selected --
-                        _HL7.MappingSelected = newMapping;
-                        _HL7.ImportHL7MsgFile();
-
-                        this.PopulateCboMappings();
-                        // --> Lagre fileinfi.Fullname i PRoperties.Settings.Default
-                        this.Repopulate();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Kunne ikke lese inn mappingen fra filen " + dlg.FileName, "Importere mapping", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-
             }
             else
             {
-                Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
+                MessageBox.Show("Ingen mapping valgt. (Kode 201016-0830)", "Valg av mapping", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (this.cboMappingFiles.SelectedItem == null)
+            {
+                Hl7Mapping mappingTmp = _HL7.HL7Mappings[0]; //  .GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
                 if (mappingTmp != null)
                 {
                     _HL7.MappingSelected = mappingTmp;

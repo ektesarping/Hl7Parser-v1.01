@@ -63,7 +63,7 @@ namespace HL7Viewer.DataModel
                 {
                     continue;
                 }
-                
+
                 FileInfo fi = new System.IO.FileInfo(strFi);
                 Hl7Mapping hl7Mapping = new Hl7Mapping(fi);
                 //hl7Mapping.ImportMapping(hl7Mapping.FileInfo);
@@ -119,7 +119,14 @@ namespace HL7Viewer.DataModel
             if (!this.Contains(mapping.FileInfo))
             {
                 base.Add(mapping);
-                this.Sort();
+                try
+                {
+                    this.Sort();
+                }
+                catch
+                {
+                    MessageBox.Show("Internt problem med sortering av mapping. Sjekk at det er lagt inn minst én mappingfil. (Kode 201016)", "Innlesing av mapping", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 SaveMappingsPropertyString();
             }
         }

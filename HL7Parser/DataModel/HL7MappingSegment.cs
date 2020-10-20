@@ -17,7 +17,7 @@ namespace HL7Viewer.DataModel
         // https://corepointhealth.com/resource-center/hl7-resources/hl7-obr-segment/
         // -----------------------------------------------------------------------------------------------------
 
-
+        #region -- Field definitions --
         public int Index_L1 { get; set; }
 
         public int Index_L2 { get; set; }
@@ -34,10 +34,25 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public bool HideValue { get; set; } = false;
 
+        public string Constraint { get; set; }
 
         public string SegmentName { get; set; }
 
         public string SectionName { get; set; }
+        #endregion -- Field definitions --
+
+        public bool IsNumeric { get; set; }
+
+        /// <summary>
+        /// Min lengde for feltverdien.
+        /// </summary>
+        public int MinLenght { get; set; }
+
+        /// <summary>
+        /// Max lengde for feltverdien.
+        /// </summary>
+        public int MaxLenght { get; set; }
+
 
         // 201009-01        public Hl7MappingSection MappingSection { get; set; }
 

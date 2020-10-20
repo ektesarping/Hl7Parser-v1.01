@@ -125,9 +125,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <AdditionalFiles Include="..\..\ControlsContainer6\DependencyValidation1\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <AdditionalFiles Include="..\..\ControlsContainer6\DependencyValidation1\DependencyValidation2.layerdiagram">
+      <Link>DependencyValidation2.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="DataModel\AdditionalFiles\Eksempel.HL7" />
     <None Include="DataModel\AdditionalFiles\HL7 Parameterlist 200225.xlsx" />
     <None Include="DataModel\AdditionalFiles\Mapping_HL7.csv" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\HL7Viewer.DataModel.HL7Mappings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -145,6 +154,10 @@
   <ItemGroup>
     <Content Include="HMN icon 32x32.ico" />
     <Content Include="HMN icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\ControlsContainer6\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\..\ControlsContainer6\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

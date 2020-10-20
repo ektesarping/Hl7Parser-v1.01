@@ -15,7 +15,15 @@ namespace HL7Viewer.DataModel.Msg
     {
         public string Name { get; set; }
 
-        public string Value { get; set; }
+        private string nodeValue = String.Empty;
+        public string Value { 
+            get { return nodeValue; }
+            set
+            {
+                value = nodeValue;
+                ValidateNode();
+            } 
+        }
 
         private int level = 0;
 
@@ -54,6 +62,8 @@ namespace HL7Viewer.DataModel.Msg
         /// Navn på section i mappingen (= 1. nivå) Brukes til å linke til rett mapping segment.
         /// </summary>
         public string MappingSectionName { get; set; }
+
+        public string ErrorMsg { get; set; }
 
         /// <summary>
         /// Peker til segment i den innleste mappingen. Brukes til å vise korrekt navn på noden.
@@ -377,6 +387,28 @@ namespace HL7Viewer.DataModel.Msg
                     nodeRepeat.Children.Add(msgsubnode);
                     indexsubnode++;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validerer noden ift. valideringsreglene i mappingen.
+        /// </summary>
+        public void ValidateNode()
+        {
+            int notUsed;
+            if ((this.MappingSegment.IsNumeric) && (!int.TryParse(this.Value, out notUsed)))
+            {
+                this.ErrorMsg = "Verdien skal være numerisk";
+            }
+
+            int lengthTmp = this.Value.ToString().Length;
+            if (lengthTmp < this.MappingSegment.MinLenght)
+            {
+                this.ErrorMsg += "Verdien for kort. Skal være >=" + this.MappingSegment.MinLenght.ToString() + " karakterer";
+            }
+            else if (lengthTmp > this.MappingSegment.MaxLenght)
+            {
+                this.ErrorMsg += "Verdien for lang. Skal være <=" + this.MappingSegment.MaxLenght.ToString() + " karakterer";
             }
         }
 

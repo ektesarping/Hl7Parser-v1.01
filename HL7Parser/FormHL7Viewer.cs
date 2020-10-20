@@ -34,5 +34,23 @@ namespace HL7Viewer
             Properties.Settings.Default.Save();
             this.ucHL7.OpenMessageFile(fi);
         }
+
+        public void ShowHl7Viewer()  // Skal muligens fjernes.
+        {
+            if (this.InvokeRequired)
+            {
+                //Console.WriteLine("InvokeRequired 2");
+                //Trace.Trace.WriteLine("InvokeRequired 2", Trace.Trace.GlobalStatusType.DEBUG, false, true, true);
+
+                this.BeginInvoke(new Action(ShowHl7Viewer));
+                return;
+            }
+            else
+            {
+                //HL7Viewer.FormHL7Viewer formhl7Viewer = new HL7Viewer.FormHL7Viewer(Hl7FileFi);
+                this.Show();
+            }
+        }
+
     }
 }

@@ -67,11 +67,17 @@ namespace HL7Viewer.DataModel
             {
                 this.ForeColor = FORECOLOR_IMPORTED_FROM_MESSAGE_FILE;
             }
+
+            if (!String.IsNullOrEmpty(MsgNode.ErrorMsg ))
+            {
+                this.ForeColor = FORECOLOR_VALIDATION_ERROR;
+            }
         }
 
 
         private Color FORECOLOR_DEFAULT = Color.Black;
         private Color FORECOLOR_IMPORTED_FROM_MESSAGE_FILE = Color.Blue;
+        private Color FORECOLOR_VALIDATION_ERROR = Color.Red;
 
 
 
