@@ -15,15 +15,7 @@ namespace HL7Viewer.DataModel.Msg
     {
         public string Name { get; set; }
 
-        private string nodeValue = String.Empty;
-        public string Value { 
-            get { return nodeValue; }
-            set
-            {
-                value = nodeValue;
-                ValidateNode();
-            } 
-        }
+        public string Value { get; set; }
 
         private int level = 0;
 
@@ -63,7 +55,7 @@ namespace HL7Viewer.DataModel.Msg
         /// </summary>
         public string MappingSectionName { get; set; }
 
-        public string ErrorMsg { get; set; }
+        public string ErrorMsg { get; set; } = String.Empty;
 
         /// <summary>
         /// Peker til segment i den innleste mappingen. Brukes til å vise korrekt navn på noden.
@@ -395,20 +387,44 @@ namespace HL7Viewer.DataModel.Msg
         /// </summary>
         public void ValidateNode()
         {
-            int notUsed;
-            if ((this.MappingSegment.IsNumeric) && (!int.TryParse(this.Value, out notUsed)))
+            if (this.MappingSegment != null)
             {
-                this.ErrorMsg = "Verdien skal være numerisk";
-            }
+                if (this.level > 0)
+                {
+                    int notUsed;
+                    if ((this.MappingSegment.IsNumeric) && (!int.TryParse(this.Value, out notUsed)))
+                    {
+                        this.ErrorMsg = "Verdien skal være numerisk.;";
+                    }
 
-            int lengthTmp = this.Value.ToString().Length;
-            if (lengthTmp < this.MappingSegment.MinLenght)
-            {
-                this.ErrorMsg += "Verdien for kort. Skal være >=" + this.MappingSegment.MinLenght.ToString() + " karakterer";
-            }
-            else if (lengthTmp > this.MappingSegment.MaxLenght)
-            {
-                this.ErrorMsg += "Verdien for lang. Skal være <=" + this.MappingSegment.MaxLenght.ToString() + " karakterer";
+                    int lengthTmp = this.Value.ToString().Length;
+                    string strTmp = string.Empty;
+                    // -- Forklaring av feil lengde av stringen. 
+
+                    if (this.MappingSegment.MinLenght >= 0)
+                    {
+                        if ((this.MappingSegment.MinLenght == this.MappingSegment.MaxLenght))
+                        {
+                            strTmp = "Skal være " + this.MappingSegment.MinLenght.ToString() + " karakterer; ";
+                        }
+                        else
+                        {
+                            strTmp = "Skal være mellom " + this.MappingSegment.MinLenght.ToString() + " og " + this.MappingSegment.MaxLenght.ToString() + " karakterer; ";
+                        }
+                    }
+
+                    if (lengthTmp < this.MappingSegment.MinLenght)
+                    {
+                        this.ErrorMsg += "Verdien for kort. " + strTmp;
+                    }
+                    else if (lengthTmp > this.MappingSegment.MaxLenght)
+                    {
+                        this.ErrorMsg += "Verdien for lang. " + strTmp;
+                    }
+
+                    // Hack for å sette inn space mellom tekstene:
+                    this.ErrorMsg = this.ErrorMsg.Replace(";", " ");
+                }
             }
         }
 
@@ -527,7 +543,7 @@ namespace HL7Viewer.DataModel.Msg
         public override string ToString()
         {
             string sep = " ";
-            return this.Name + sep + " L:" + this.Level.ToString() + "/I:" + this.Index_L2.ToString() + sep + " Src: " + this.SourceString;
+            return this.MappingSegment.SegmentName + sep + this.Name + sep + " L:" + this.Level.ToString() + "/I:" + this.Index_L2.ToString() + sep + " Src: " + this.SourceString;
         }
 
 

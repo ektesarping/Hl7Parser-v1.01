@@ -46,12 +46,12 @@ namespace HL7Viewer.DataModel
         /// <summary>
         /// Min lengde for feltverdien.
         /// </summary>
-        public int MinLenght { get; set; }
+        public int MinLenght { get; set; } = -1; // For å unngå feilstatus for noder uten valideringsregel
 
         /// <summary>
         /// Max lengde for feltverdien.
         /// </summary>
-        public int MaxLenght { get; set; }
+        public int MaxLenght { get; set; } = 99999; // Dummy verdi for å unngå falsk feilmelding.
 
 
         // 201009-01        public Hl7MappingSection MappingSection { get; set; }

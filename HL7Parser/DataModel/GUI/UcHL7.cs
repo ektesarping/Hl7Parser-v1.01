@@ -332,13 +332,13 @@ namespace HL7Viewer.DataModel.GUI
                 }
                 else
                 {
-                    //Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
-                    //if (mappingTmp != null)
-                    //{
-                    //    _HL7.MappingSelected = mappingTmp;
-                    //    _HL7.ImportHL7MsgFile();
-                    //    this.Repopulate();
-                    //}
+                    Hl7Mapping mappingTmp = _HL7.HL7Mappings.GetBydisplayName(this.cboMappingFiles.SelectedItem.ToString());
+                    if (mappingTmp != null)
+                    {
+                        _HL7.MappingSelected = mappingTmp;
+                        _HL7.ImportHL7MsgFile();
+                        this.Repopulate();
+                    }
                 }
             }
             else
@@ -880,7 +880,13 @@ namespace HL7Viewer.DataModel.GUI
                     TreenodeHL7Base node = (TreenodeHL7Base)e.Node;
                     //activeTooltipnode = (TreenodeHL7Base)e.Node;
 
-                    string strTmp = HL7.InsertLinebreaks(node.MsgNode.Value, TOOLTIP_LINE_LENGTH_BEFORE_LINEBREAK);
+                    string strTmp = node.MsgNode.ErrorMsg;
+                    if (!string.IsNullOrEmpty(strTmp))
+                    {
+                        strTmp += "\r\n"; // Legger til lnjeskift hvis noden har error status.
+                    }
+
+                    strTmp += HL7.InsertLinebreaks(node.MsgNode.Value, TOOLTIP_LINE_LENGTH_BEFORE_LINEBREAK);
                     if (strTmp.Length > MIN_LINE_LENGHT_TO_SHOW_TOOLTIP)
                     {
                         toolTipTreenode.RemoveAll();

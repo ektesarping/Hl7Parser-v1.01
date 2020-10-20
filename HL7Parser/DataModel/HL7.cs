@@ -216,6 +216,7 @@ namespace HL7Viewer.DataModel
                     {
                         childnode.Value = MSG_NODE_VALUE_HIDDEN;
                     }
+                    childnode.ValidateNode();
                 }
                 MatchMsgNodeToMappingRecursive(childnode);
             }
@@ -238,6 +239,7 @@ namespace HL7Viewer.DataModel
                     {
                         childnode.Value = MSG_NODE_VALUE_HIDDEN;
                     }
+                    childnode.ValidateNode();
                 }
             }
         }

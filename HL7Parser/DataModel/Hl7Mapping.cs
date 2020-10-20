@@ -153,10 +153,10 @@ namespace HL7Viewer.DataModel
                                     {
                                         string tmp = constr.Replace("L", "");
                                         string[] fieldsLength = tmp.Split(',');
-                                        if (fieldsConstr.Length == 2)
+                                        if (fieldsLength.Length == 2)
                                         {
                                             int minTmp = 0;
-                                            if (int.TryParse(fieldsConstr[0], out minTmp))
+                                            if (int.TryParse(fieldsLength[0], out minTmp))
                                             {
                                                 segment.MinLenght = minTmp;
                                             }
@@ -166,7 +166,7 @@ namespace HL7Viewer.DataModel
                                             }
 
                                             int maxTmp = MAX_FIELD_LENGTH;
-                                            if (int.TryParse(fieldsConstr[1], out maxTmp))
+                                            if (int.TryParse(fieldsLength[1], out maxTmp))
                                             {
                                                 segment.MaxLenght = maxTmp;
                                             }
