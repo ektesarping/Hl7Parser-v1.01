@@ -391,8 +391,9 @@ namespace HL7Viewer.DataModel.Msg
             {
                 if (this.level > 0)
                 {
-                    int notUsed;
-                    if ((this.MappingSegment.IsNumeric) && (!int.TryParse(this.Value, out notUsed)))
+                    long notUsed = -1;
+                    bool valueIsNumeric = long.TryParse(this.Value, out notUsed);
+                    if ((this.MappingSegment.IsNumeric) && (!valueIsNumeric))
                     {
                         this.ErrorMsg = "Verdien skal være numerisk.;";
                     }

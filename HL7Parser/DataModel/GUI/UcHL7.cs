@@ -114,6 +114,9 @@ namespace HL7Viewer.DataModel.GUI
 
             #region  -- Splash screen --
             // --  Sjekk om splash screen skal vises (Vises kun første gang på den aktuelle dagen)  --
+            DateTime debugLastDisisplayed = Properties.Settings.Default.SplashScreenDisplayedDate;
+
+
             if (!((Properties.Settings.Default.SplashScreenDisplayedDate.Year == DateTime.Now.Year) &&
                 (Properties.Settings.Default.SplashScreenDisplayedDate.Month == DateTime.Now.Month) &&
                 (Properties.Settings.Default.SplashScreenDisplayedDate.Day == DateTime.Now.Day)))
