@@ -150,6 +150,10 @@ namespace HL7Viewer.DataModel
         }
 
 
+        /// <summary>
+        /// Oppretter meldingsnoder for de ulike nivåene i meldingsfilen. 
+        /// </summary>
+        /// <param name="strFileContent"></param>
         public void ImportHL7MsgFile(string strFileContent)
         {
             // _HL7SegmentCategories = new HL7SegmentCategories();
@@ -212,9 +216,15 @@ namespace HL7Viewer.DataModel
                 // -- Erstatt verdien til segmentet hvis det skal være skjult --
                 if (childnode.MappingSegment != null)
                 {
+                    // -- Sjekker om verdien skal skjules som *****  --
                     if (childnode.MappingSegment.HideValue)
                     {
                         childnode.Value = MSG_NODE_VALUE_HIDDEN;
+                    }
+                    // -- Sjekker om verdien skal vises i bold font --
+                    if (childnode.MappingSegment.ShowValueAsBold)
+                    {
+                        childnode.ShowAsBoldFont = true;
                     }
                     childnode.ValidateNode();
                 }
@@ -235,39 +245,46 @@ namespace HL7Viewer.DataModel
                 // -- Erstatt verdien til segmentet hvis det skal være skjult --
                 if (childnode.MappingSegment != null)
                 {
+                    // -- Sjekker om verdien skal skjules som *****  --
                     if (childnode.MappingSegment.HideValue)
                     {
                         childnode.Value = MSG_NODE_VALUE_HIDDEN;
                     }
+                    // -- Sjekker om verdien skal vises i bold font --
+                    if (childnode.MappingSegment.ShowValueAsBold)
+                    {
+                        childnode.ShowAsBoldFont = true;
+                    }
+
                     childnode.ValidateNode();
                 }
             }
         }
 
-        private HL7MappingSegments CreateSubSegments(string substringSource, HL7MappingSegment parentSegment, string segmentName)
-        {
-            HL7MappingSegments subsegments = new HL7MappingSegments();
-            // Finne subsegmenter i fields[i]
-            string[] subFields = substringSource.Split(SEPARATOR_LEVEL_1); // <-- Sjekk
+        //private HL7MappingSegments CreateSubSegments(string substringSource, HL7MappingSegment parentSegment, string segmentName)
+        //{
+        //    HL7MappingSegments subsegments = new HL7MappingSegments();
+        //    // Finne subsegmenter i fields[i]
+        //    string[] subFields = substringSource.Split(SEPARATOR_LEVEL_1); // <-- Sjekk
 
-            if (subFields.Length > 1)
-            {
-                for (int index_L2 = 0; index_L2 < subFields.Length; index_L2++)
-                {
-                    string value = subFields[index_L2];
-                    HL7MappingSegment subsegment = new HL7MappingSegment(parentSegment.SectionName, segmentName, parentSegment.Index_L1, index_L2 + 1);
-                    subsegment.ParentSegment = parentSegment;
-                    subsegments.Add(subsegment);
-                }
-            }
-            return subsegments;
-        }
+        //    if (subFields.Length > 1)
+        //    {
+        //        for (int index_L2 = 0; index_L2 < subFields.Length; index_L2++)
+        //        {
+        //            string value = subFields[index_L2];
+        //            HL7MappingSegment subsegment = new HL7MappingSegment(parentSegment.SectionName, segmentName, parentSegment.Index_L1, index_L2 + 1);
+        //            subsegment.ParentSegment = parentSegment;
+        //            subsegments.Add(subsegment);
+        //        }
+        //    }
+        //    return subsegments;
+        //}
 
-        public static string AddLinefeed(string str)
-        {
-            str += Environment.NewLine;
-            return str;
-        }
+        //public static string AddLinefeed(string str)
+        //{
+        //    str += Environment.NewLine;
+        //    return str;
+        //}
 
         /// <summary>
         /// Fjerner kommentar fra en streng. 

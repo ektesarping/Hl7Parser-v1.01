@@ -47,13 +47,14 @@ namespace HL7Viewer.DataModel
         //private const int INDEX_RP = 6;// obsolete
 
         private const int INDEX_COLLAPSED_DEFAULT = 3;
-        private const int INDEX_HIDE_VALUE = 4;
+        private const int INDEX_DISPLAY_STYLE_VALUE = 4;
         private const int INDEX_CONSTRAINT = 5;
         private const int INDEX_NAME = 6;
 
         private const string DISPLAY_NAME = "DISPLAYNAME";
         private const string STR_COLLAPSE_DEFAULT = "Y";
         private const string STR_HIDE_VALUE = "H";
+        private const string STR_BOLD_VALUE = "B";
 
         #region -- Constructor --
         public Hl7Mapping()
@@ -129,10 +130,17 @@ namespace HL7Viewer.DataModel
                                 segment.CollapsedDefault = true;
                             }
 
-                            if (GetFieldAsString(fields, INDEX_HIDE_VALUE).ToUpper() == STR_HIDE_VALUE)
+                            // -- Styrer om verdien skal erstattes av *****
+                            if (GetFieldAsString(fields, INDEX_DISPLAY_STYLE_VALUE).ToUpper() == STR_HIDE_VALUE)
                             {
                                 segment.HideValue = true;
                             }
+                            // -- Styrer om verdien skal vises i bold font
+                            if (GetFieldAsString(fields, INDEX_DISPLAY_STYLE_VALUE).ToUpper() == STR_BOLD_VALUE)
+                            {
+                                segment.ShowValueAsBold = true;
+                            }
+
 
                             // -- Constraints - Numerisk verdi og feltlengder --
                             string constraintsTmp = String.Empty;

@@ -20,13 +20,22 @@ namespace HL7Viewer.DataModel
         public bool NodeIsHidden { get; set; }
 
         public TreenodeHL7Base(bool isRoot)
-        {}
+        { }
 
         public TreenodeHL7Base(MsgNode msgNode)
         {
             this._HL7Segment = msgNode.MappingSegment;
             this.Text = msgNode.Value;
             this.MsgNode = msgNode;
+
+            if (msgNode.ShowAsBoldFont)
+            {
+                this.NodeFont = new Font("Calibri (body)", 9, FontStyle.Bold);
+            }
+            else
+            {
+                this.NodeFont = new Font("Calibri (body)", 9, FontStyle.Regular);
+            }
             msgNode.Treenode = this;
         }
 
@@ -34,7 +43,7 @@ namespace HL7Viewer.DataModel
         {
             // -- Opprett noden hvis den ikke skal skjules -- 
             if (!((skjulTomme) && (String.IsNullOrEmpty(msgNode.Value))))
-                {
+            {
                 //TreeNode treenode = new TreeNode();
                 msgNode.Treenode = this;
                 this.MsgNode = MsgNode;
@@ -68,7 +77,7 @@ namespace HL7Viewer.DataModel
                 this.ForeColor = FORECOLOR_IMPORTED_FROM_MESSAGE_FILE;
             }
 
-            if (!String.IsNullOrEmpty(MsgNode.ErrorMsg ))
+            if (!String.IsNullOrEmpty(MsgNode.ErrorMsg))
             {
                 this.ForeColor = FORECOLOR_VALIDATION_ERROR;
             }

@@ -676,10 +676,10 @@ namespace HL7Viewer.DataModel.GUI
                     HL7MappingSegment mappingSegment = selectedNode._HL7Segment;
                     if (mappingSegment != null)
                     {
-                        string value = mappingSegment.SegmentName;
+                        string value = selectedNode.MsgNode.Value;
                         if (value != null)
                         {
-                            Clipboard.SetText(mappingSegment.SectionName + "\t" + mappingSegment.SegmentName + "\t" + value);
+                            Clipboard.SetText(mappingSegment.SegmentName + "\t" + value);
                         }
                     }
                 }

@@ -65,6 +65,11 @@ namespace HL7Viewer.DataModel.Msg
 
         public TreeNode Treenode { get; set; }
 
+        /// <summary>
+        /// Viser nodeteksten i bold font.
+        /// </summary>
+        public bool ShowAsBoldFont { get; set; }
+
 
         #region -- Constructor -- 
         public MsgNode()

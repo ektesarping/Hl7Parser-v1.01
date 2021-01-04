@@ -34,6 +34,11 @@ namespace HL7Viewer.DataModel
         /// </summary>
         public bool HideValue { get; set; } = false;
 
+        /// <summary>
+        /// Viser verdien i Bold font.
+        /// </summary>
+        public bool ShowValueAsBold { get; set; } = false;
+
         public string Constraint { get; set; }
 
         public string SegmentName { get; set; }
