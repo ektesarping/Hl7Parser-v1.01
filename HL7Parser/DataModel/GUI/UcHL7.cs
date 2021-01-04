@@ -571,7 +571,13 @@ namespace HL7Viewer.DataModel.GUI
             Clipboard.SetText(str);
         }
 
+
         private void limInnHL7FilFraClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportFileContentFromClipboard();
+        }
+
+        private void ImportFileContentFromClipboard()
         {
             string str = Clipboard.GetText();
             this._HL7.ImportHL7MsgFile(str);
@@ -759,6 +765,14 @@ namespace HL7Viewer.DataModel.GUI
             {
                 this.DebugMode = !this.DebugMode;
             }
+            //else if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.C)
+            //{
+            //    CopyFileContentToClipboard();
+            //}
+            else if (e.Control && !e.Shift && !e.Alt && e.KeyCode == Keys.V)
+            {
+                ImportFileContentFromClipboard();
+            }
         }
 
         #region  -- Filesystem watcher --
@@ -916,6 +930,11 @@ namespace HL7Viewer.DataModel.GUI
         {
             TooltipEnable = !TooltipEnable;
             toolTipToolStripMenuItem.Checked = TooltipEnable;
+        }
+
+        private void limInnNyMeldingFraClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportFileContentFromClipboard();
         }
     }
 }

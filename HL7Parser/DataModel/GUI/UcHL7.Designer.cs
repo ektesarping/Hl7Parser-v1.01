@@ -54,6 +54,8 @@
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
             this.toolTipTreenode = new System.Windows.Forms.ToolTip(this.components);
+            this.limInnNyMeldingFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -79,6 +81,8 @@
             // contextMenuStripTreeview
             // 
             this.contextMenuStripTreeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.limInnNyMeldingFraClipboardToolStripMenuItem,
+            this.toolStripSeparator3,
             this.copyToolStripMenuItem,
             this.copyNavnOgVerdiToolStripMenuItem,
             this.toolStripSeparator1,
@@ -87,7 +91,7 @@
             this.toolStripSeparator2,
             this.toolTipToolStripMenuItem});
             this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
-            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 126);
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 176);
             // 
             // copyToolStripMenuItem
             // 
@@ -271,6 +275,18 @@
             this.toolTipTreenode.InitialDelay = 50;
             this.toolTipTreenode.ReshowDelay = 100;
             // 
+            // limInnNyMeldingFraClipboardToolStripMenuItem
+            // 
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Name = "limInnNyMeldingFraClipboardToolStripMenuItem";
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Text = "Lim inn ny melding fra Clipboard";
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnNyMeldingFraClipboardToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(268, 6);
+            // 
             // UcHL7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,5 +336,7 @@
         private System.Windows.Forms.ToolTip toolTipTreenode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem toolTipToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem limInnNyMeldingFraClipboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
