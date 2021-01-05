@@ -119,10 +119,10 @@ PV1	50	0				Alternate Visit ID
 PV1	51	0				Visit Indicator	
 PV1	52	0				Other Healthcare Provider	
 							
-//OBR	0	0				// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --	
-OBR	1	0					Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – OBR
-OBR	2	0	B			Placer Order Number	
-OBR	3	0	B			Filler Order Number	
+//OBR	0	0			// Meldingsseksjon. (Brukes til å slå collapse tre-noden når 'Collapse default' er satt til Y) --	
+OBR	1	0				Set IDID is a coded value data type. The value of such a field follows the formatting rules for a ST field except that it is drawn from a table of legal values. Examples of ID fields include religion and sex. – OBR
+OBR	2	0		B		Placer Order Number	
+OBR	3	0		B		Filler Order Number	
 OBR	4	0				Universal Service ID	
 OBR	5	0				Priority	
 OBR	6	0				Requested Date/time	
