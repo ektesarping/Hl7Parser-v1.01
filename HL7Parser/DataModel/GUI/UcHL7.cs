@@ -18,6 +18,28 @@ namespace HL7Viewer.DataModel.GUI
     {
         public HL7 _HL7 { get; set; } //= new HL7();  // TODO: 201008 Fjern static hvis eventhandler fra FileUpdated ikke skal brukes
 
+        // -- Font --
+        private Font font = DefaultFont;
+        public Font _Font
+        {
+            get
+            {
+                return this.font;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    this.font = DefaultFont;
+                }
+                else
+                {
+                    this.font = value;
+                }
+            }
+        }
+
+
         public bool TooltipEnable
         {
             get
@@ -67,7 +89,7 @@ namespace HL7Viewer.DataModel.GUI
                 if (chkSkjulTomme.Checked != value)
                 {
                     chkSkjulTomme.Checked = value;
-                    this.Repopulate();
+                    this.Repopulate(this._Font);
                 }
             }
         }
@@ -101,7 +123,7 @@ namespace HL7Viewer.DataModel.GUI
                 if (chkNormalVisning.Checked != value)
                 {
                     chkNormalVisning.Checked = value;
-                    this.Repopulate();
+                    this.Repopulate(this._Font);
                 }
             }
         }
@@ -111,6 +133,9 @@ namespace HL7Viewer.DataModel.GUI
         {
             InitializeComponent();
             this.DebugMode = false;
+
+            // -- Hent font fra Properties.Settings --
+            this._Font = Properties.Settings.Default.Font;
 
             #region  -- Splash screen --
             // --  Sjekk om splash screen skal vises (Vises kun første gang på den aktuelle dagen)  --
@@ -325,7 +350,7 @@ namespace HL7Viewer.DataModel.GUI
 
                             this.PopulateCboMappings();
                             // --> Lagre fileinfi.Fullname i PRoperties.Settings.Default
-                            this.Repopulate();
+                            this.Repopulate(this._Font);
                         }
                         else
                         {
@@ -340,7 +365,7 @@ namespace HL7Viewer.DataModel.GUI
                     {
                         _HL7.MappingSelected = mappingTmp;
                         _HL7.ImportHL7MsgFile();
-                        this.Repopulate();
+                        this.Repopulate(this._Font);
                     }
                 }
             }
@@ -356,7 +381,7 @@ namespace HL7Viewer.DataModel.GUI
                 {
                     _HL7.MappingSelected = mappingTmp;
                     _HL7.ImportHL7MsgFile();
-                    this.Repopulate();
+                    this.Repopulate(this._Font);
                 }
             }
         }
@@ -370,23 +395,32 @@ namespace HL7Viewer.DataModel.GUI
 
         private TreenodeHL7Base SelectedTreenode { get; set; }
 
+        private void Repopulate(Font font)
+        {
+            this.tvHL7.Font = font;
+            Repopulate();
+        }
+
+
         private void Repopulate()
         {
+            //this.tvHL7.Font = this._Font;
             tvHL7.SuspendLayout();
             this.tvHL7.Nodes.Clear();
-            TreenodeHL7Base rootNode = new TreenodeHL7Base(true);
+            
+            TreenodeHL7Base rootNode = new TreenodeHL7Base(true, tvHL7.Font);
             this._HL7.MsgRootnode.Treenode = rootNode;
-            rootNode.MsgNode = this._HL7.MsgRootnode;
+            rootNode._MsgNode = this._HL7.MsgRootnode;
 
             rootNode.Text = RootnodeText;
             this.tvHL7.Nodes.Add(rootNode);
 
             foreach (MsgNode msgChildNode in this._HL7.MsgRootnode.Children)
             {
-                TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning);
+                TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning, tvHL7.Font);
 
                 // -- Legger kun til noden hvis den ikke skal vises -- 
-                if (!treenode.NodeIsHidden)
+                if (!treenode._NodeIsHidden)
                 {
                     rootNode.Nodes.Add(treenode);
                 }
@@ -401,7 +435,7 @@ namespace HL7Viewer.DataModel.GUI
             // -- Setter tilbake fokus på den selectede noden --
             if (SelectedTreenode != null)
             {
-                TreenodeHL7Base nodeTmp = GetTreenode(SelectedTreenode.MsgNode);
+                TreenodeHL7Base nodeTmp = GetTreenode(SelectedTreenode._MsgNode);
                 if (nodeTmp != null)
                 {
                     tvHL7.SelectedNode = nodeTmp;
@@ -467,8 +501,8 @@ namespace HL7Viewer.DataModel.GUI
             {
                 if (node.Children.Count > 1)
                 {
-                    TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning);
-                    if (!treenode.NodeIsHidden)
+                    TreenodeHL7Base treenode = new TreenodeHL7Base(msgChildNode, this.SkjulTomme, this.Normalvisning, tvHL7.Font);
+                    if (!treenode._NodeIsHidden)
                     {
                         node.Treenode.Nodes.Add(treenode);
                         PopulateRecursively(msgChildNode);
@@ -653,7 +687,7 @@ namespace HL7Viewer.DataModel.GUI
                     if (mappingSegment != null)
                     {
                         //string value = mappingSegment.SegmentName;
-                        string value = selectedNode.MsgNode.Value;
+                        string value = selectedNode._MsgNode.Value;
                         if (value != null)
                         {
                             Clipboard.SetText(value);
@@ -682,7 +716,7 @@ namespace HL7Viewer.DataModel.GUI
                     HL7MappingSegment mappingSegment = selectedNode._HL7Segment;
                     if (mappingSegment != null)
                     {
-                        string value = selectedNode.MsgNode.Value;
+                        string value = selectedNode._MsgNode.Value;
                         if (value != null)
                         {
                             Clipboard.SetText(mappingSegment.SegmentName + "\t" + value);
@@ -897,13 +931,13 @@ namespace HL7Viewer.DataModel.GUI
                     TreenodeHL7Base node = (TreenodeHL7Base)e.Node;
                     //activeTooltipnode = (TreenodeHL7Base)e.Node;
 
-                    string strTmp = node.MsgNode.ErrorMsg;
+                    string strTmp = node._MsgNode.ErrorMsg;
                     if (!string.IsNullOrEmpty(strTmp))
                     {
                         strTmp += "\r\n"; // Legger til lnjeskift hvis noden har error status.
                     }
 
-                    strTmp += HL7.InsertLinebreaks(node.MsgNode.Value, TOOLTIP_LINE_LENGTH_BEFORE_LINEBREAK);
+                    strTmp += HL7.InsertLinebreaks(node._MsgNode.Value, TOOLTIP_LINE_LENGTH_BEFORE_LINEBREAK);
                     if (strTmp.Length > MIN_LINE_LENGHT_TO_SHOW_TOOLTIP)
                     {
                         toolTipTreenode.RemoveAll();
@@ -936,5 +970,65 @@ namespace HL7Viewer.DataModel.GUI
         {
             ImportFileContentFromClipboard();
         }
+
+
+        #region -- Font --
+        private void velgFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Font previousFont = this._Font;
+
+            this.fontDialog1.Apply += new System.EventHandler(this.FontDialog_OnApply);
+
+            this.fontDialog1.Font = this.tvHL7.Font;
+            this.fontDialog1.ShowApply = true;
+            this.fontDialog1.FontMustExist = true;
+            this.fontDialog1.ShowEffects = false;
+
+            DialogResult res = this.fontDialog1.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                this._Font = fontDialog1.Font;
+                tvHL7.Font = _Font;
+                this.Repopulate(this._Font);
+
+                DialogResult res2 = MessageBox.Show("Vil du endre til denne fonten? ", "Velg font", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res2 == DialogResult.Yes)
+                {
+                    Properties.Settings.Default.Font = this._Font;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    this.Repopulate(previousFont);
+                }
+            }
+            else if (res == DialogResult.Cancel)
+            {
+                this.Repopulate(previousFont);
+            }
+        }
+
+
+        /// <summary>
+        /// Setter font for treview. Setter font style til regular. Noder som skal vises i bold gjøres programatisk.
+        /// </summary>
+        /// <param name="font"></param>
+        private void SetFont(Font font)
+        {
+            this._Font = new Font(font.FontFamily, font.Size, FontStyle.Regular);
+            tvHL7.Font = _Font;
+        }
+
+        /// <summary>
+        /// Repopulerer treet uten å lagre fonten i properties. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FontDialog_OnApply(object sender, EventArgs e)
+        {
+            Font fontTmp = new Font(fontDialog1.Font.FontFamily, fontDialog1.Font.Size, FontStyle.Regular);
+            this.Repopulate(fontTmp);
+        }
+        #endregion -- Font --
     }
 }

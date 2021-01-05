@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.tvHL7 = new System.Windows.Forms.TreeView();
             this.contextMenuStripTreeview = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.limInnNyMeldingFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyNavnOgVerdiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -54,8 +56,8 @@
             this.chkNormalVisning = new System.Windows.Forms.CheckBox();
             this.cboMappingFiles = new System.Windows.Forms.ComboBox();
             this.toolTipTreenode = new System.Windows.Forms.ToolTip(this.components);
-            this.limInnNyMeldingFraClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.velgFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTreeview.SuspendLayout();
             this.menuStripHL7.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +93,19 @@
             this.toolStripSeparator2,
             this.toolTipToolStripMenuItem});
             this.contextMenuStripTreeview.Name = "contextMenuStripTreeview";
-            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 176);
+            this.contextMenuStripTreeview.Size = new System.Drawing.Size(272, 154);
+            // 
+            // limInnNyMeldingFraClipboardToolStripMenuItem
+            // 
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Name = "limInnNyMeldingFraClipboardToolStripMenuItem";
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Text = "Lim inn ny melding fra Clipboard";
+            this.limInnNyMeldingFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnNyMeldingFraClipboardToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(268, 6);
             // 
             // copyToolStripMenuItem
             // 
@@ -186,7 +200,8 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.kopierSegmenterTilClipboardToolStripMenuItem,
-            this.limInnHL7FilFraClipboardToolStripMenuItem});
+            this.limInnHL7FilFraClipboardToolStripMenuItem,
+            this.velgFontToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.editToolStripMenuItem.Text = "Rediger";
@@ -275,17 +290,12 @@
             this.toolTipTreenode.InitialDelay = 50;
             this.toolTipTreenode.ReshowDelay = 100;
             // 
-            // limInnNyMeldingFraClipboardToolStripMenuItem
+            // velgFontToolStripMenuItem
             // 
-            this.limInnNyMeldingFraClipboardToolStripMenuItem.Name = "limInnNyMeldingFraClipboardToolStripMenuItem";
-            this.limInnNyMeldingFraClipboardToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.limInnNyMeldingFraClipboardToolStripMenuItem.Text = "Lim inn ny melding fra Clipboard";
-            this.limInnNyMeldingFraClipboardToolStripMenuItem.Click += new System.EventHandler(this.limInnNyMeldingFraClipboardToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(268, 6);
+            this.velgFontToolStripMenuItem.Name = "velgFontToolStripMenuItem";
+            this.velgFontToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.velgFontToolStripMenuItem.Text = "Velg font";
+            this.velgFontToolStripMenuItem.Click += new System.EventHandler(this.velgFontToolStripMenuItem_Click);
             // 
             // UcHL7
             // 
@@ -338,5 +348,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolTipToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem limInnNyMeldingFraClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem velgFontToolStripMenuItem;
+        private System.Windows.Forms.FontDialog fontDialog1;
     }
 }

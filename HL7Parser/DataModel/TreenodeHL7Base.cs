@@ -14,39 +14,43 @@ namespace HL7Viewer.DataModel
     {
         public HL7MappingSegment _HL7Segment { get; set; }
 
-        public MsgNode MsgNode { get; set; }
+        public MsgNode _MsgNode { get; set; }
 
+        public Font _Font { get; set; }
 
-        public bool NodeIsHidden { get; set; }
+        public bool _NodeIsHidden { get; set; }
 
-        public TreenodeHL7Base(bool isRoot)
-        { }
-
-        public TreenodeHL7Base(MsgNode msgNode)
+        public TreenodeHL7Base(bool isRoot, Font font)
         {
+            this._Font = font;
+        }
+
+        public TreenodeHL7Base(MsgNode msgNode, Font font) 
+        {
+            this._Font = font;
             this._HL7Segment = msgNode.MappingSegment;
             this.Text = msgNode.Value;
-            this.MsgNode = msgNode;
+            this._MsgNode = msgNode;
 
             if (msgNode.ShowAsBoldFont)
             {
-                this.NodeFont = new Font("Calibri (body)", 9, FontStyle.Bold);
+                this.NodeFont = new Font(this._Font.FontFamily, _Font.Size, FontStyle.Bold);
             }
             else
             {
-                this.NodeFont = new Font("Calibri (body)", 9, FontStyle.Regular);
+                this.NodeFont = this._Font;
             }
             msgNode.Treenode = this;
         }
 
-        public TreenodeHL7Base(MsgNode msgNode, bool skjulTomme, bool normalvisning) : this(msgNode)
+        public TreenodeHL7Base(MsgNode msgNode, bool skjulTomme, bool normalvisning, Font font) : this(msgNode, font)
         {
             // -- Opprett noden hvis den ikke skal skjules -- 
             if (!((skjulTomme) && (String.IsNullOrEmpty(msgNode.Value))))
             {
                 //TreeNode treenode = new TreeNode();
                 msgNode.Treenode = this;
-                this.MsgNode = MsgNode;
+                this._MsgNode = _MsgNode;
 
                 this.Text = msgNode.TreeNodeText;
 
@@ -64,11 +68,11 @@ namespace HL7Viewer.DataModel
             {
                 if (msgNode.ExtraLevelforRepeatingNodes == true)
                 {
-                    NodeIsHidden = false; // Vis samlenode for repeterende noder uansett
+                    _NodeIsHidden = false; // Vis samlenode for repeterende noder uansett
                 }
                 else
                 {
-                    NodeIsHidden = true;
+                    _NodeIsHidden = true;
                 }
             }
 
@@ -77,7 +81,7 @@ namespace HL7Viewer.DataModel
                 this.ForeColor = FORECOLOR_IMPORTED_FROM_MESSAGE_FILE;
             }
 
-            if (!String.IsNullOrEmpty(MsgNode.ErrorMsg))
+            if (!String.IsNullOrEmpty(_MsgNode.ErrorMsg))
             {
                 this.ForeColor = FORECOLOR_VALIDATION_ERROR;
             }
